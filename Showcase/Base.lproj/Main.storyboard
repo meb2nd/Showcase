@@ -30,7 +30,7 @@
         <!--Script-->
         <scene sceneID="t39-nN-4Hd">
             <objects>
-                <viewController id="AbI-g8-gMn" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PDFViewController" id="AbI-g8-gMn" customClass="PDFViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qmF-Yt-b5o">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,7 +52,7 @@
         <!--Videos-->
         <scene sceneID="SwB-4F-dKi">
             <objects>
-                <tableViewController id="CEz-ec-RBd" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="VideosTableViewController" id="CEz-ec-RBd" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZQc-gX-EbW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,7 +87,7 @@
         <!--Showcase Video-->
         <scene sceneID="dGm-k1-F62">
             <objects>
-                <viewController id="low-1W-ycg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideoViewController" id="low-1W-ycg" customClass="VideoViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MMp-5n-4y3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,7 +105,7 @@
         <!--Scripts-->
         <scene sceneID="7xI-8B-re3">
             <objects>
-                <tableViewController id="vU7-wj-Wqt" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ScriptsTableViewController" id="vU7-wj-Wqt" customClass="ScriptsTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VJk-fp-lZm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,7 +175,7 @@
         <!--Scripts-->
         <scene sceneID="jlz-OT-JrC">
             <objects>
-                <tableViewController id="VRd-EW-vNA" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FavoriteScriptsTableViewController" id="VRd-EW-vNA" customClass="FavoriteScriptsTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8JV-iG-MoS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -210,6 +210,6 @@
         <image name="heart" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ghu-ZE-g58"/>
+        <segue reference="jGN-Vq-chK"/>
     </inferredMetricsTieBreakers>
 </document>
