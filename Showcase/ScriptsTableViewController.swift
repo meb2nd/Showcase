@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import FirebaseAuthUI
 
 class ScriptsTableViewController: UITableViewController {
 
+    var user: User?
+    var _authHandle: AuthStateDidChangeListenerHandle!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,11 +22,18 @@ class ScriptsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        configureAuth()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    deinit {
+
+        Auth.auth().removeStateDidChangeListener(_authHandle)
     }
 
     // MARK: - Table view data source
@@ -91,5 +102,30 @@ class ScriptsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: Actions
+    
+    @IBAction func showLoginView(_ sender: AnyObject) {
+        loginSession()
+    }
+    
+    
+    @IBAction func signOut(_ sender: UIButton) {
+        logoutSession()
+    }
 
+}
+
+// MARK: - ScriptsTableViewController: FUIAuthViewController 
+extension ScriptsTableViewController: FUIAuthViewController {
+    
+    
+    func refreshData() {
+        
+    }
+    
+    func enableUI(_ enable: Bool) {
+        
+    }
 }
