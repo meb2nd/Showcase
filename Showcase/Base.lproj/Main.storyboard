@@ -66,7 +66,7 @@
         <!--Videos-->
         <scene sceneID="OFK-15-9Gk">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="GlW-tH-YWs" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="GlW-tH-YWs" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DGv-2a-K9j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,6 +87,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GlW-tH-YWs" id="vei-cW-PlE"/>
+                                    <outlet property="delegate" destination="GlW-tH-YWs" id="QZj-b8-bsl"/>
+                                </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMG-ZJ-xO8">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
@@ -205,6 +209,9 @@
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" identifier="LoginButtonWidth" id="HlB-mh-Pz3"/>
                                                         </constraints>
                                                         <state key="normal" title="Log In"/>
+                                                        <connections>
+                                                            <action selector="showLoginView:" destination="H3p-Xn-M4a" eventType="touchUpInside" id="DRS-st-T68"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -226,6 +233,10 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="H3p-Xn-M4a" id="FPw-gj-MD0"/>
+                                            <outlet property="delegate" destination="H3p-Xn-M4a" id="UUM-b2-60g"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                             </stackView>
@@ -240,8 +251,17 @@
                         <viewLayoutGuide key="safeArea" id="AQA-Wa-m12"/>
                     </view>
                     <navigationItem key="navigationItem" title="Scripts" id="BtW-yi-BFV">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="twb-qD-Njl"/>
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="twb-qD-Njl">
+                            <connections>
+                                <action selector="signOut:" destination="H3p-Xn-M4a" id="XH0-V6-m4p"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="loginStackView" destination="fYe-X8-K5z" id="oZJ-wR-at3"/>
+                        <outlet property="logoutButton" destination="twb-qD-Njl" id="0HL-az-mAN"/>
+                        <outlet property="scriptsTableView" destination="rWc-hW-U7x" id="OJL-0D-z4s"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iqt-6Y-svy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
