@@ -16,6 +16,7 @@ protocol FUIAuthViewController: class {
     func refreshData()
     var _authHandle: AuthStateDidChangeListenerHandle! {set get}
     var user: User? {set get}
+    var userName: String {set get}
     
 }
 
@@ -83,6 +84,8 @@ extension FUIAuthViewController where Self: UIViewController {
                 self.resetTabBar()
                 self.user = activeUser
                 self.signedInStatus(isSignedIn: true)
+                let name = user!.email!.components(separatedBy: "@")[0]
+                self.userName = name
             }
         })
     }

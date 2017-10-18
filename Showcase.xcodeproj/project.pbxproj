@@ -19,6 +19,7 @@
 		12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3421F9639D700F92872 /* VideosTableViewController.swift */; };
 		12B5B3461F9646F500F92872 /* FUIAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */; };
 		12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */; };
+		12B5B34A1F97A1B800F92872 /* ModalLoadingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */; };
 		D86BF2B17CA96FA45B30700F /* Pods_Showcase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A2AA8867EA55EF3C7D0B96A /* Pods_Showcase.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		12B5B3421F9639D700F92872 /* VideosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosTableViewController.swift; sourceTree = "<group>"; };
 		12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewController.swift; sourceTree = "<group>"; };
 		12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalLoadingWindow.swift; sourceTree = "<group>"; };
 		3B10BEABC99B57114DA58577 /* Pods-Showcase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.debug.xcconfig"; sourceTree = "<group>"; };
 		6A2AA8867EA55EF3C7D0B96A /* Pods_Showcase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Showcase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B9A2857FFBB50B1872ED35 /* Pods-Showcase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.release.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			children = (
 				125788E21F95500600ACA76A /* AppDelegate.swift */,
 				125788E61F95500600ACA76A /* Main.storyboard */,
+				12B5B34B1F97A21E00F92872 /* Views */,
 				125788F61F95533800ACA76A /* Supporting Files */,
 				125788EB1F95500600ACA76A /* LaunchScreen.storyboard */,
 				12B5B3441F963A1F00F92872 /* Controllers */,
@@ -106,6 +109,14 @@
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		12B5B34B1F97A21E00F92872 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		92D8A0A0F4EE78951AE3A9CD /* Pods */ = {
@@ -298,6 +309,7 @@
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,
 				125788E31F95500600ACA76A /* AppDelegate.swift in Sources */,
+				12B5B34A1F97A1B800F92872 /* ModalLoadingWindow.swift in Sources */,
 				12B5B33F1F96393600F92872 /* PDFViewController.swift in Sources */,
 				12B5B3461F9646F500F92872 /* FUIAuthViewController.swift in Sources */,
 				12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */,
