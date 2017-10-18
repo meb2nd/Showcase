@@ -12,6 +12,11 @@
 		125788EA1F95500600ACA76A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 125788E91F95500600ACA76A /* Assets.xcassets */; };
 		125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 125788EB1F95500600ACA76A /* LaunchScreen.storyboard */; };
 		125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 125788F71F95545100ACA76A /* GoogleService-Info.plist */; };
+		129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */; };
+		129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A21F97D38000DBDBAA /* NetworkClient.swift */; };
+		129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A31F97D38000DBDBAA /* QuoteClient.swift */; };
+		129CB7A71F97D38000DBDBAA /* QuoteConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A41F97D38000DBDBAA /* QuoteConstants.swift */; };
+		12A04A491F97F04600C75CC7 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A04A481F97F04500C75CC7 /* GCDBlackBox.swift */; };
 		12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */; };
 		12B5B33D1F96389D00F92872 /* FavoriteScriptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */; };
 		12B5B33F1F96393600F92872 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33E1F96393600F92872 /* PDFViewController.swift */; };
@@ -31,6 +36,11 @@
 		125788EC1F95500600ACA76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		125788EE1F95500600ACA76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		125788F71F95545100ACA76A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		129CB7A21F97D38000DBDBAA /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		129CB7A31F97D38000DBDBAA /* QuoteClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteClient.swift; sourceTree = "<group>"; };
+		129CB7A41F97D38000DBDBAA /* QuoteConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteConstants.swift; sourceTree = "<group>"; };
+		12A04A481F97F04500C75CC7 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptsTableViewController.swift; sourceTree = "<group>"; };
 		12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScriptsTableViewController.swift; sourceTree = "<group>"; };
 		12B5B33E1F96393600F92872 /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +87,8 @@
 		125788E11F95500600ACA76A /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				12A04A481F97F04500C75CC7 /* GCDBlackBox.swift */,
+				129CB79E1F97D27F00DBDBAA /* Models */,
 				125788E21F95500600ACA76A /* AppDelegate.swift */,
 				125788E61F95500600ACA76A /* Main.storyboard */,
 				12B5B34B1F97A21E00F92872 /* Views */,
@@ -95,6 +107,25 @@
 				125788EE1F95500600ACA76A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		129CB79E1F97D27F00DBDBAA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				129CB7A11F97D36200DBDBAA /* Clients */,
+				129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		129CB7A11F97D36200DBDBAA /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				129CB7A31F97D38000DBDBAA /* QuoteClient.swift */,
+				129CB7A41F97D38000DBDBAA /* QuoteConstants.swift */,
+				129CB7A21F97D38000DBDBAA /* NetworkClient.swift */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 		12B5B3441F963A1F00F92872 /* Controllers */ = {
@@ -309,12 +340,17 @@
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,
 				125788E31F95500600ACA76A /* AppDelegate.swift in Sources */,
+				129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */,
 				12B5B34A1F97A1B800F92872 /* ModalLoadingWindow.swift in Sources */,
 				12B5B33F1F96393600F92872 /* PDFViewController.swift in Sources */,
+				12A04A491F97F04600C75CC7 /* GCDBlackBox.swift in Sources */,
+				129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */,
 				12B5B3461F9646F500F92872 /* FUIAuthViewController.swift in Sources */,
+				129CB7A71F97D38000DBDBAA /* QuoteConstants.swift in Sources */,
 				12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */,
 				12B5B3411F96397F00F92872 /* VideoViewController.swift in Sources */,
 				12B5B33D1F96389D00F92872 /* FavoriteScriptsTableViewController.swift in Sources */,
+				129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

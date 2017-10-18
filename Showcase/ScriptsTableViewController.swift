@@ -78,19 +78,27 @@ class ScriptsTableViewController: UIViewController {
         
         guard !hasShownQuote else {return}
         
-        quoteScreen = ModalLoadingWindow(frame: self.view.bounds)
-        quoteScreen!.title = "Obi-Wan has taught you well."
-        quoteScreen!.subTitle = "Star Wars: Episode VI - Return of the Jedi"
-        self.view.addSubview(self.quoteScreen!)
+        QuoteClient.sharedInstance().getMovieQuote { (movieQuote, error) in
+            
+            performUIUpdatesOnMain {
+                self.quoteScreen = ModalLoadingWindow(frame: self.view.bounds)
+                self.quoteScreen!.title = movieQuote?.quote ?? "Obi-Wan has taught you well."
+                self.quoteScreen!.subTitle = movieQuote?.movie ?? "Star Wars: Episode VI - Return of the Jedi"
+                self.view.addSubview(self.quoteScreen!)
+                
+                // set the timer
+                Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
+            }
+        }
         
-        // set the timer
-        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
+        
+        
     }
     
     @objc func dismissQuote(){
         // Dismiss the view from here
         quoteScreen?.hide()
-        hasShownQuote = true
+        // hasShownQuote = true
     }
     
 }

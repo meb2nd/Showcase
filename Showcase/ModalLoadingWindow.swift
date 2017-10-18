@@ -72,6 +72,12 @@ public class ModalLoadingWindow: UIView{
         titleLabel!.textColor = UIColor.white
         titleLabel!.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
         titleLabel!.textAlignment = .center
+        
+        // Following lines added to permit word wrapping
+        titleLabel!.numberOfLines = 0
+        titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
+        titleLabel?.preferredMaxLayoutWidth = frame.width
+        
         titleLabel!.translatesAutoresizingMaskIntoConstraints = false
     }
     
