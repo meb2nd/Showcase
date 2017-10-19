@@ -30,10 +30,8 @@ extension FUIAuthViewController where Self: UIViewController {
         
         if (isSignedIn) {
             
-           // configureDatabase()
-          //  configureStorage()
-           // configureRemoteConfig()
-          //  fetchConfig()
+            FIRDatabaseClient.sharedInstance.configureDatabase()
+            FIRDatabaseClient.sharedInstance.configureStorage()
         }
     }
     

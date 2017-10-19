@@ -2,7 +2,7 @@
 //  Script+CoreDataProperties.swift
 //  Showcase
 //
-//  Created by Pete Barnes on 10/18/17.
+//  Created by Pete Barnes on 10/19/17.
 //  Copyright © 2017 Pete Barnes. All rights reserved.
 //
 //
@@ -17,13 +17,14 @@ extension Script {
         return NSFetchRequest<Script>(entityName: "Script")
     }
 
-    @NSManaged public var title: String?
-    @NSManaged public var genre: String?
+    @NSManaged public var dateCreated: NSDate?
+    @NSManaged public var dateModified: NSDate?
+    @NSManaged public var document: NSData?
     @NSManaged public var favorite: Bool
     @NSManaged public var gender: String?
-    @NSManaged public var document: NSData?
-    @NSManaged public var dateCreated: NSDate?
-    @NSManaged public var url: URL?
+    @NSManaged public var genre: String?
+    @NSManaged public var title: String?
+    @NSManaged public var url: String?
     @NSManaged public var videos: NSSet?
 
 }
