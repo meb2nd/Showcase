@@ -60,6 +60,9 @@ extension FUIAuthViewController where Self: UIViewController {
     }
     
     func configureAuth() {
+        
+        // TODO:  Look into sublcassing FUIAuthPickerViewController ro customize the login view. Per: https://github.com/firebase/FirebaseUI-iOS/tree/master/FirebaseAuthUI#customizing-firebaseui-for-authentication
+        
         // Listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener({ (auth, user) in
             
