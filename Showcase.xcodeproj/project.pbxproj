@@ -12,6 +12,8 @@
 		125788EA1F95500600ACA76A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 125788E91F95500600ACA76A /* Assets.xcassets */; };
 		125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 125788EB1F95500600ACA76A /* LaunchScreen.storyboard */; };
 		125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 125788F71F95545100ACA76A /* GoogleService-Info.plist */; };
+		1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE531F9A4ACA006B599D /* WatermarkPage.swift */; };
+		1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */; };
 		129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */; };
 		129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A21F97D38000DBDBAA /* NetworkClient.swift */; };
 		129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A31F97D38000DBDBAA /* QuoteClient.swift */; };
@@ -44,6 +46,8 @@
 		125788EC1F95500600ACA76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		125788EE1F95500600ACA76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		125788F71F95545100ACA76A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1292FE531F9A4ACA006B599D /* WatermarkPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkPage.swift; sourceTree = "<group>"; };
+		1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewClient.swift; sourceTree = "<group>"; };
 		129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		129CB7A21F97D38000DBDBAA /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		129CB7A31F97D38000DBDBAA /* QuoteClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteClient.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */,
 				12C8E4021F98359100D808F6 /* Model.xcdatamodeld */,
 				12C8E40D1F984F3300D808F6 /* FIRDatabaseClient.swift */,
+				1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 		12B5B34B1F97A21E00F92872 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1292FE531F9A4ACA006B599D /* WatermarkPage.swift */,
 				12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */,
 			);
 			name = Views;
@@ -362,6 +368,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
+				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
+				1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */,
 				12C8E40A1F983DE400D808F6 /* Video+CoreDataProperties.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,
 				12C8E40E1F984F3300D808F6 /* FIRDatabaseClient.swift in Sources */,

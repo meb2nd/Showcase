@@ -8,8 +8,13 @@
 
 import UIKit
 import CoreData
+import FirebaseAuth
 
-class FavoriteScriptsTableViewController: CoreDataTableViewController {
+class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthViewClient {
+    
+    // MARK: - Properties
+    var user: User?
+    var userName = "Anonymous"
     
     // MARK: - Outlets
     
@@ -90,19 +95,8 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         
-        if segue.identifier! == "showPDF" {
-            
-            if let pdfVC = segue.destination as? PDFViewController,
-                let indexPath = tableView.indexPathForSelectedRow {
-                    
-                    // Pass data to the Photo Album View Controller
-                    let script = fetchedResultsController!.object(at: indexPath) as! Script
-                    pdfVC.script = script
-            }
-        }
+        segueToShowPDF(segue, userName: userName)
     }
     
     // Pass tableview to super class

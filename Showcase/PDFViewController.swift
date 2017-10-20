@@ -6,16 +6,23 @@
 //  Copyright © 2017 Pete Barnes. All rights reserved.
 //
 //  This class based on information found at: https://www.hackingwithswift.com/whats-new-in-ios-11
+//                                            https://stackoverflow.com/questions/30203010/how-do-i-change-the-z-index-or-stack-order-of-uiview
+//                                            https://developer.apple.com/videos/play/wwdc2017/241/
 
 import UIKit
 import PDFKit
+import FirebaseAuth
 
-class PDFViewController: UIViewController {
+class PDFViewController: UIViewController, FUIAuthViewClient {
     
-    // MARK: Properties
+    // MARK: - Properties
     var script: Script!
     var pdfView: PDFView!
     var activityView: UIActivityIndicatorView!
+    var user: User?
+    var userName = "Anonymous"
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         
@@ -39,6 +46,12 @@ class PDFViewController: UIViewController {
         pdfView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         pdfView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
+        // Center document on gray background
+        pdfView.autoScales = true
+        pdfView.backgroundColor = UIColor.lightGray
+
+        self.view.sendSubview(toBack: pdfView)
+        
         // load the PDF and display it
         
         // Disable UI
@@ -48,10 +61,13 @@ class PDFViewController: UIViewController {
             performUIUpdatesOnMain {
                 switch pdfResult {
                 case .success(let document) :
+                    document.delegate = self
+                    self.addWatermark(to: document)
                     self.pdfView.document = document
+                
                 default:
                     self.pdfView.document = nil
-                    AlertViewHelper.presentAlert(self, title: "Script Unavailble", message: "This document requested could not be found.")
+                    AlertViewHelper.presentAlert(self, title: "Script Unavailble", message: "The document requested could not be found.")
                 }
                 
                 // Renable UI
@@ -76,4 +92,74 @@ class PDFViewController: UIViewController {
      }
      */
     
+    // Mark - Print PDF
+    func printPdf () {
+        if let document = script.document,
+            UIPrintInteractionController.canPrint(document as Data) {
+            let printInfo = UIPrintInfo(dictionary: nil)
+            printInfo.jobName = script.title!
+            printInfo.outputType = .general
+            
+            let printController = UIPrintInteractionController.shared
+            printController.printInfo = printInfo
+            printController.showsNumberOfCopies = false
+            
+            printController.printingItem = script.document
+            
+            printController.present(animated: true)
+        }
+    }
+    
+}
+
+// MARK: - PDFViewController: PDFDocumentDelegate
+
+extension PDFViewController: PDFDocumentDelegate {
+    func classForPage() -> AnyClass {
+        return WatermarkPage.self
+    }
+}
+
+// MARK: - PDFViewController (Watermark functions)
+
+extension PDFViewController {
+    
+    fileprivate func generateWatermark() -> String {
+        
+        var watermark = userName.uppercased()
+        
+        if watermark.characters.count >= 16 {
+            watermark = String(watermark.truncated())
+        } else {
+            var padding:Int = (15 - watermark.count)/2
+            
+            while padding > 0 {
+                watermark = " " + watermark
+                padding -= 1
+            }
+        }
+        
+        return watermark
+    }
+    
+    fileprivate func addWatermark(to document: (PDFDocument)) {
+        
+        let watermark = generateWatermark()
+        
+        for index in 0 ... document.pageCount - 1 {
+            
+            if let page = document.page(at: index) as? WatermarkPage {
+                
+                page.watermark = watermark as NSString
+            }
+        }
+    }
+}
+
+// MARK - String
+// This extension is from: https://medium.com/@johnsundell/exploring-the-new-string-api-in-swift-4-ce7d2c1cae00
+extension String {
+    func truncated() -> Substring {
+        return prefix(15)
+    }
 }

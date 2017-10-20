@@ -162,3 +162,26 @@ extension CoreDataTableViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
+// MARK: - CoreDataTableViewController (Common Segues)
+
+extension CoreDataTableViewController {
+
+    func segueToShowPDF(_ segue: UIStoryboardSegue, userName: String) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        if segue.identifier! == "showPDF" {
+            
+            if let pdfVC = segue.destination as? PDFViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                
+                // Pass data to the Photo Album View Controller
+                let script = fetchedResultsController!.object(at: indexPath) as! Script
+                pdfVC.script = script
+                pdfVC.userName = userName
+            }
+        }
+    }
+    
+}
+
