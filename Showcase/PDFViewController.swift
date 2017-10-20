@@ -22,6 +22,15 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     var user: User?
     var userName = "Anonymous"
     
+    // MARK: - Outlets
+    
+    @IBOutlet weak var printButton: UIBarButtonItem!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
+    @IBOutlet weak var videosButton: UIBarButtonItem!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
+    
+    
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -29,11 +38,10 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         super.viewDidLoad()
         
         activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-        activityView.center = self.view.center
+        activityView.center = view.center
         activityView.hidesWhenStopped = true
-        activityView.startAnimating()
         
-        self.view.addSubview(activityView)
+        view.addSubview(activityView)
         
         // create and add the PDF view
         pdfView = PDFView()
@@ -50,12 +58,14 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         pdfView.autoScales = true
         pdfView.backgroundColor = UIColor.lightGray
 
-        self.view.sendSubview(toBack: pdfView)
+        view.sendSubview(toBack: pdfView)
         
-        // load the PDF and display it
+        
         
         // Disable UI
+        enableUI(false)
         
+        // load the PDF and display it
         FIRDatabaseClient.sharedInstance.fetchPDF(for: script) { (pdfResult) in
             
             performUIUpdatesOnMain {
@@ -71,7 +81,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
                 }
                 
                 // Renable UI
-                self.activityView.stopAnimating()
+                self.enableUI(true)
             }
         }
     }
@@ -81,6 +91,31 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Actions
+    
+    @IBAction func logout(_ sender: Any) {
+    }
+    
+    @IBAction func print(_ sender: Any) {
+    }
+    
+    @IBAction func toggleFavorite(_ sender: Any) {
+    }
+    
+    @IBAction func viewVideos(_ sender: Any) {
+    }
+    
+    // MARK: - UI Functions
+    
+    func enableUI (_ isEnabled: Bool) {
+        
+        printButton.isEnabled = isEnabled
+        favoriteButton.isEnabled = isEnabled
+        videosButton.isEnabled = isEnabled
+        logoutButton.isEnabled = isEnabled
+        isEnabled ? activityView.stopAnimating(): activityView.startAnimating()
+        
+    }
     
     /*
      // MARK: - Navigation
