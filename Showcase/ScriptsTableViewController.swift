@@ -8,8 +8,9 @@
 
 import UIKit
 import FirebaseAuthUI
+import CoreData
 
-class ScriptsTableViewController: UIViewController {
+class ScriptsTableViewController: CoreDataTableViewController {
 
     // MARK: - Properties
     
@@ -36,6 +37,18 @@ class ScriptsTableViewController: UIViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "dateCreated", ascending: false)]
+        
+        // Create the FetchedResultsController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        
         configureAuth()
     }
     
@@ -60,6 +73,10 @@ class ScriptsTableViewController: UIViewController {
     }
     */
     
+    // Pass tableview to super class
+    override func getTableView() -> UITableView {
+        return scriptsTableView
+    }
     
     // MARK: Actions
     
@@ -90,9 +107,6 @@ class ScriptsTableViewController: UIViewController {
                 Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
             }
         }
-        
-        
-        
     }
     
     @objc func dismissQuote(){
@@ -101,34 +115,18 @@ class ScriptsTableViewController: UIViewController {
         // hasShownQuote = true
     }
     
-}
+    // MARK: - ScriptsTableViewController: UITableViewDataSource
 
-// MARK: - ScriptsTableViewController: UITableViewDataSource
-
-extension ScriptsTableViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // Configure the cell...
+        let script = fetchedResultsController!.object(at: indexPath) as! Script
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ScriptCell", for: indexPath)
+
+        cell.textLabel?.text = script.title
+        cell.detailTextLabel?.text = script.genre
         
         return cell
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-}
-
-
-extension ScriptsTableViewController: UITableViewDelegate {
-    
     
     /*
      // Override to support conditional editing of the table view.
@@ -168,7 +166,6 @@ extension ScriptsTableViewController: UITableViewDelegate {
 
 // MARK: - ScriptsTableViewController: FUIAuthViewController 
 extension ScriptsTableViewController: FUIAuthViewController {
-    
     
     func refreshData() {
         
