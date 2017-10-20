@@ -7,17 +7,32 @@
 //
 
 import UIKit
+import CoreData
 
-class FavoriteScriptsTableViewController: UITableViewController {
-
+class FavoriteScriptsTableViewController: CoreDataTableViewController {
+    
+    // MARK: - Outlets
+    
+    @IBOutlet var scriptsTableView: UITableView!
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
+        let predicate = NSPredicate(format: "favorite = %@", argumentArray: [true])
+        fr.predicate = predicate
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "dateCreated", ascending: false)]
+        
+        // Create the FetchedResultsController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,17 +40,6 @@ class FavoriteScriptsTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,5 +95,23 @@ class FavoriteScriptsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // Pass tableview to super class
+    override func getTableView() -> UITableView {
+        return scriptsTableView
+    }
+    
+    // MARK: - ScriptsTableViewController: UITableViewDataSource
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let script = fetchedResultsController!.object(at: indexPath) as! Script
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ScriptCell", for: indexPath)
+        
+        cell.textLabel?.text = script.title
+        cell.detailTextLabel?.text = script.genre
+        
+        return cell
+    }
 
 }
