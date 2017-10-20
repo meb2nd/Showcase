@@ -166,20 +166,23 @@ extension FIRDatabaseClient {
         }
     }
     
-    func fetchPDF(for script: Script, context: NSManagedObjectContext) -> PDFResult {
+    func fetchPDF(for script: Script, completion: @escaping (PDFResult) -> Void) {
         
         // If we already have the document just return it
         if let document = script.document {
             guard let pdf = PDFDocument(data: document as Data) else {
-                // Couldn't create an pdf
-                return .failure(ScriptError.pdfCreationError)
+                // Couldn't create a pdf
+                completion(.failure(ScriptError.pdfCreationError))
+                return
             }
-            return .success(pdf)
+            completion(.success(pdf))
+            return
         }
         
         // Otherwise if we have a valid URL try to download it
         guard let pdfURL = script.url else {
-            return .failure(ScriptError.invalidPDFURL)
+            completion(.failure(ScriptError.invalidPDFURL))
+            return
         }
         
         // Download the pdf
@@ -187,18 +190,34 @@ extension FIRDatabaseClient {
             
             guard error == nil else {
                 print("Error downloading: \(error as Optional)")
+                completion(.failure(error!))
                 return
             }
             
             // Save the downloaded pdf
-            context.performAndWait {
-                script.document = data as NSData?
-            }
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
             
-            self.saveIfNeeded(context)
+            stack.performBackgroundBatchOperation() { (workerContext) in
+                
+                let backgroundScript = workerContext.object(with: script.objectID) as! Script
+                
+                workerContext.performAndWait {
+                    backgroundScript.document = data as NSData?
+                }
+                
+                self.saveIfNeeded(workerContext)
+                
+                guard let data = data,
+                    let pdf = PDFDocument(data: data) else {
+                        // Couldn't create a pdf
+                        completion(.failure(ScriptError.pdfCreationError))
+                        return
+                }
+                
+                completion(.success(pdf))
+            }
         }
-        
-        return .downloading
     }
 }
 

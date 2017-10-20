@@ -58,15 +58,23 @@ class ScriptsTableViewController: CoreDataTableViewController {
         Auth.auth().removeStateDidChangeListener(_authHandle)
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier! == "showPDF" {
+            
+            if let pdfVC = segue.destination as? PDFViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                
+                // Pass data to the Photo Album View Controller
+                let script = fetchedResultsController!.object(at: indexPath) as! Script
+                pdfVC.script = script
+            }
+        }
     }
-    */
     
     // Pass tableview to super class
     override func getTableView() -> UITableView {
