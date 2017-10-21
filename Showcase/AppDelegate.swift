@@ -33,6 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Start Autosaving
         stack.autoSave(10)
         
+        do {
+            try stack.dropAllData()
+        } catch {
+            print("Error during drop all data")
+        }
+        
         return true
     }
     

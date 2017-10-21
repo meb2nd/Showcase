@@ -4,17 +4,17 @@
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="document" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" attributeType="String" syncable="YES"/>
         <relationship name="videos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Video" inverseName="script" inverseEntity="Video" syncable="YES"/>
         <fetchIndex name="byDateCreatedIndex">
             <fetchIndexElement property="dateCreated" type="Binary" order="ascending"/>
         </fetchIndex>
-        <fetchIndex name="byFavoriteIndex">
-            <fetchIndexElement property="favorite" type="Binary" order="ascending"/>
+        <fetchIndex name="byIsFavoriteIndex">
+            <fetchIndexElement property="isFavorite" type="Binary" order="ascending"/>
         </fetchIndex>
         <fetchIndex name="byGenderIndex">
             <fetchIndexElement property="gender" type="Binary" order="ascending"/>

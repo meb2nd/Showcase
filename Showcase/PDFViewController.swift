@@ -21,6 +21,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     var activityView: UIActivityIndicatorView!
     var user: User?
     var userName = "Anonymous"
+    var isFavorite = false
     
     // MARK: - Outlets
     
@@ -80,6 +81,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
                 
                 // Renable UI
                 self.enableUI(true)
+                self.favoriteButton.tintColor = (self.script.isFavorite) ? nil : .black
             }
         }
     }
@@ -100,6 +102,30 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     }
     
     @IBAction func toggleFavorite(_ sender: Any) {
+        
+        let shouldFavorite = !isFavorite
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        let context = stack.context
+        let mainContextScript = context.object(with: script.objectID) as! Script
+        
+        context.performAndWait {
+            mainContextScript.isFavorite = shouldFavorite
+            do {
+                if context.hasChanges {
+                    try context.save()
+                }
+                self.isFavorite = shouldFavorite
+                performUIUpdatesOnMain {
+                    self.favoriteButton.tintColor = (shouldFavorite) ? nil : .black
+                }
+                
+            } catch {
+                let saveError = error as NSError
+                print("Unable to Save Script")
+                print("\(saveError), \(saveError.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func viewVideos(_ sender: Any) {

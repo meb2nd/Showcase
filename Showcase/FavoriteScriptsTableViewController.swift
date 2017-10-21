@@ -31,7 +31,7 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         
         // Create a fetchrequest
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
-        let predicate = NSPredicate(format: "favorite = %@", argumentArray: [true])
+        let predicate = NSPredicate(format: "isFavorite = %@", argumentArray: [true])
         fr.predicate = predicate
         fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
                               NSSortDescriptor(key: "dateCreated", ascending: false)]

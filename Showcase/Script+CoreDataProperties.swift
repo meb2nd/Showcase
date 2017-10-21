@@ -20,7 +20,7 @@ extension Script {
     @NSManaged public var dateCreated: NSDate?
     @NSManaged public var dateModified: NSDate?
     @NSManaged public var document: NSData?
-    @NSManaged public var favorite: Bool
+    @NSManaged public var isFavorite: Bool
     @NSManaged public var gender: String?
     @NSManaged public var genre: String?
     @NSManaged public var title: String?
