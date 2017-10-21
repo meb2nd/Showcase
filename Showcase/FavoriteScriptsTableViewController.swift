@@ -13,8 +13,15 @@ import FirebaseAuth
 class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthViewClient {
     
     // MARK: - Properties
-    var user: User?
     var userName = "Anonymous"
+    var user: User? {
+        didSet {
+            if user != oldValue {
+                createFetchController()
+            }
+        }
+    }
+    
     
     // MARK: - Outlets
     
@@ -24,20 +31,6 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Get the stack
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-        
-        // Create a fetchrequest
-        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
-        let predicate = NSPredicate(format: "isFavorite = %@", argumentArray: [true])
-        fr.predicate = predicate
-        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
-                              NSSortDescriptor(key: "dateCreated", ascending: false)]
-        
-        // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,9 +92,32 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         segueToShowPDF(segue, userName: userName)
     }
     
-    // Pass tableview to super class
+    // MARK: - CoredDataTableViewController functions
+    
     override func getTableView() -> UITableView {
         return scriptsTableView
+    }
+    
+    fileprivate func createFetchController() {
+        
+        guard let user = user else {
+            fetchedResultsController = nil
+            return
+        }
+        
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
+        let predicate = NSPredicate(format: "isFavorite = %@ AND uid = %@", argumentArray: [true, user.uid])
+        fr.predicate = predicate
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "dateCreated", ascending: false)]
+        
+        // Create the FetchedResultsController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
     }
     
     // MARK: - ScriptsTableViewController: UITableViewDataSource

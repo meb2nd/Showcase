@@ -22,7 +22,7 @@ class CoreDataTableViewController: UIViewController {
             // reload the table
             fetchedResultsController?.delegate = self
             executeSearch()
-            tableView.reloadData()
+            tableView?.reloadData()
         }
     }
     

@@ -24,6 +24,7 @@ extension Script {
     @NSManaged public var gender: String?
     @NSManaged public var genre: String?
     @NSManaged public var title: String?
+    @NSManaged public var uid: String?
     @NSManaged public var url: String?
     @NSManaged public var videos: NSSet?
 

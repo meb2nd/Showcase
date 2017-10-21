@@ -113,11 +113,12 @@ extension FIRDatabaseClient {
             let dateCreated = script["dateCreated"],
             let dateModified = script["dateModified"],
             let genre = script["genre"],
-            let gender = script["gender"] else {
+            let gender = script["gender"],
+            let uid = Auth.auth().currentUser?.uid else {
                 // Don't have enough information to construct a Photo
                 return nil }
         let fetchRequest: NSFetchRequest<Script> = Script.fetchRequest()
-        let predicate = NSPredicate(format: "url = %@", argumentArray: [pdfURL])
+        let predicate = NSPredicate(format: "uid = %@ AND url = %@", argumentArray: [uid, pdfURL])
         fetchRequest.predicate = predicate
         var fetchedScripts: [Script]?
         let dateFormatter = DateFormatter()
@@ -133,6 +134,10 @@ extension FIRDatabaseClient {
                 context.performAndWait {
                     existingScript.dateModified = modifiedDate as NSDate
                     existingScript.document = nil
+                    existingScript.gender = gender
+                    existingScript.url = pdfURL
+                    existingScript.genre = genre
+                    existingScript.title = title
                 }
             }
             
@@ -148,6 +153,7 @@ extension FIRDatabaseClient {
             newScript.url = pdfURL
             newScript.genre = genre
             newScript.title = title
+            newScript.uid = uid
             newScript.dateCreated = (dateFormatter.date(from: dateCreated) ?? Date()) as NSDate
             newScript.dateModified = (dateFormatter.date(from: dateModified) ?? Date()) as NSDate
         }

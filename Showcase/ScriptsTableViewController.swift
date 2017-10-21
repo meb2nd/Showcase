@@ -11,14 +11,23 @@ import FirebaseAuthUI
 import CoreData
 
 class ScriptsTableViewController: CoreDataTableViewController {
-
+    
     // MARK: - Properties
     
-    var user: User?
-    var userName = "Anonymous"
-    var _authHandle: AuthStateDidChangeListenerHandle!
     var hasShownQuote = false
     var quoteScreen: ModalLoadingWindow?
+    var userName = "Anonymous"
+    var _authHandle: AuthStateDidChangeListenerHandle!
+    var user: User? {
+        didSet {
+            if user != oldValue {
+                createFetchController()
+                if let tabBarController = tabBarController, let user = user {
+                    injectViewController(tabBarController, withUser: user)
+                }
+            }
+        }
+    }
     
     // MARK: - Outlets
     
@@ -30,21 +39,6 @@ class ScriptsTableViewController: CoreDataTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //sectionNameKeyPath: #keyPath(Quote.author)
-        // Get the stack
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-        
-        // Create a fetchrequest
-        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
-        fr.sortDescriptors = [NSSortDescriptor(key: "genre", ascending: true),
-                              NSSortDescriptor(key: "title", ascending: true),
-                              NSSortDescriptor(key: "dateCreated", ascending: false)]
-        
-        // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: #keyPath(Script.genre), cacheName: nil)
-        
         configureAuth()
     }
     
@@ -55,66 +49,80 @@ class ScriptsTableViewController: CoreDataTableViewController {
     }
     
     deinit {
-
+        
         Auth.auth().removeStateDidChangeListener(_authHandle)
     }
-
+    
     // MARK: - Navigation
-
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         segueToShowPDF(segue, userName: userName)
     }
     
-    // Pass tableview to super class
+    // MARK: - CoredDataTableViewController functions
+    
     override func getTableView() -> UITableView {
         return scriptsTableView
     }
     
-    // MARK: Actions
+    fileprivate func createFetchController() {
+        
+        guard let user = user else {
+            fetchedResultsController = nil
+            return
+        }
+        
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
+        let predicate = NSPredicate(format: "uid = %@", argumentArray: [user.uid])
+        fr.predicate = predicate
+        fr.sortDescriptors = [NSSortDescriptor(key: "genre", ascending: true),
+                              NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "dateCreated", ascending: false)]
+        
+        // Create the FetchedResultsController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: #keyPath(Script.genre), cacheName: nil)
+    }
+    
+    fileprivate func injectViewController (_ viewController: UIViewController, withUser user: User) {
+        
+        // Following code is based upon information found at: http://cleanswifter.com/dependency-injection-with-storyboards/
+        if let tabVC = viewController as? UITabBarController {
+            for controller in tabVC.viewControllers ?? [] {
+                injectViewController(controller, withUser: user)
+            }
+        } else if let navVC = viewController as? UINavigationController{
+            for controller in navVC.viewControllers {
+                injectViewController(controller, withUser: user)
+            }
+        } else if let firstViewController = viewController as? FUIAuthViewClient {
+            firstViewController.user = user
+        }
+    }
+    
+    // MARK: - Actions
     
     @IBAction func showLoginView(_ sender: Any) {
         loginSession()
     }
     
-
+    
     @IBAction func signOut(_ sender: Any) {
         logoutSession()
     }
     
-    // Auto dismiss function located at: https://stackoverflow.com/questions/33861565/how-to-show-a-message-on-screen-for-a-few-seconds
-    
-    func showQuoteIfNeeded() {
-        
-        guard !hasShownQuote else {return}
-        
-        QuoteClient.sharedInstance().getMovieQuote { (movieQuote, error) in
-            
-            performUIUpdatesOnMain {
-                self.quoteScreen = ModalLoadingWindow(frame: self.view.bounds)
-                self.quoteScreen!.title = movieQuote?.quote ?? "Obi-Wan has taught you well."
-                self.quoteScreen!.subTitle = movieQuote?.movie ?? "Star Wars: Episode VI - Return of the Jedi"
-                self.view.addSubview(self.quoteScreen!)
-                
-                // set the timer
-                Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
-            }
-        }
-    }
-    
-    @objc func dismissQuote(){
-        // Dismiss the view from here
-        quoteScreen?.hide()
-        // hasShownQuote = true
-    }
-    
     // MARK: - ScriptsTableViewController: UITableViewDataSource
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let script = fetchedResultsController!.object(at: indexPath) as! Script
         let cell = tableView.dequeueReusableCell(withIdentifier: "ScriptCell", for: indexPath)
-
+        
         cell.textLabel?.text = script.title
         cell.detailTextLabel?.text = "Gender: \(script.gender?.capitalized ?? " ")"
         
@@ -157,11 +165,15 @@ class ScriptsTableViewController: CoreDataTableViewController {
      */
 }
 
-// MARK: - ScriptsTableViewController: FUIAuthViewController 
+// MARK: - ScriptsTableViewController: FUIAuthViewController
+
 extension ScriptsTableViewController: FUIAuthViewController {
     
     func refreshData() {
-        
+        fetchedResultsController = nil
+        if let favoritesVC = tabBarController?.viewControllers?[1] as? FavoriteScriptsTableViewController {
+            favoritesVC.fetchedResultsController = nil
+        }
     }
     
     func enableUI(_ enable: Bool) {
@@ -171,5 +183,36 @@ extension ScriptsTableViewController: FUIAuthViewController {
         logoutButton.isEnabled = enable
         tabBarController?.tabBar.isUserInteractionEnabled = enable
         if enable {showQuoteIfNeeded()}
+    }
+}
+
+// MARK - ScriptsTableViewController (Quote display functions)
+
+extension ScriptsTableViewController {
+    
+    // Auto dismiss function located at: https://stackoverflow.com/questions/33861565/how-to-show-a-message-on-screen-for-a-few-seconds
+    
+    func showQuoteIfNeeded() {
+        
+        guard !hasShownQuote else {return}
+        
+        QuoteClient.sharedInstance().getMovieQuote { (movieQuote, error) in
+            
+            performUIUpdatesOnMain {
+                self.quoteScreen = ModalLoadingWindow(frame: self.view.bounds)
+                self.quoteScreen!.title = movieQuote?.quote ?? "Obi-Wan has taught you well."
+                self.quoteScreen!.subTitle = movieQuote?.movie ?? "Star Wars: Episode VI - Return of the Jedi"
+                self.view.addSubview(self.quoteScreen!)
+                
+                // set the timer
+                Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
+            }
+        }
+    }
+    
+    @objc func dismissQuote(){
+        // Dismiss the view from here
+        quoteScreen?.hide()
+        // hasShownQuote = true
     }
 }

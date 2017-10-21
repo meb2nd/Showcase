@@ -8,6 +8,7 @@
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" attributeType="String" syncable="YES"/>
         <attribute name="url" attributeType="String" syncable="YES"/>
         <relationship name="videos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Video" inverseName="script" inverseEntity="Video" syncable="YES"/>
         <fetchIndex name="byDateCreatedIndex">
@@ -31,6 +32,9 @@
         <fetchIndex name="byDateModifiedIndex">
             <fetchIndexElement property="dateModified" type="Binary" order="ascending"/>
         </fetchIndex>
+        <fetchIndex name="byUIDIndex">
+            <fetchIndexElement property="uid" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -45,7 +49,7 @@
         </fetchIndex>
     </entity>
     <elements>
-        <element name="Script" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Script" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="Video" positionX="-54" positionY="45" width="128" height="105"/>
     </elements>
 </model>
