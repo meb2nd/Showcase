@@ -31,18 +31,19 @@ class ScriptsTableViewController: CoreDataTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        //sectionNameKeyPath: #keyPath(Quote.author)
         // Get the stack
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let stack = delegate.stack
         
         // Create a fetchrequest
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
-        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+        fr.sortDescriptors = [NSSortDescriptor(key: "genre", ascending: true),
+                              NSSortDescriptor(key: "title", ascending: true),
                               NSSortDescriptor(key: "dateCreated", ascending: false)]
         
         // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: #keyPath(Script.genre), cacheName: nil)
         
         configureAuth()
     }
@@ -115,7 +116,7 @@ class ScriptsTableViewController: CoreDataTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ScriptCell", for: indexPath)
 
         cell.textLabel?.text = script.title
-        cell.detailTextLabel?.text = script.genre
+        cell.detailTextLabel?.text = "Gender: \(script.gender?.capitalized ?? " ")"
         
         return cell
     }

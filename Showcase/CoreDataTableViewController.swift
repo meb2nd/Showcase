@@ -81,7 +81,7 @@ extension CoreDataTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let fc = fetchedResultsController {
-            return fc.sections![section].name
+            return fc.sections![section].name.capitalized
         } else {
             return nil
         }
@@ -184,4 +184,5 @@ extension CoreDataTableViewController {
     }
     
 }
+
 
