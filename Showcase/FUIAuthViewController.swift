@@ -48,7 +48,7 @@ extension FUIAuthViewController where Self: UIViewController {
         if let tabBarController = self.tabBarController,
             let controllers = tabBarController.viewControllers {
             for controller in controllers {
-                if let navController = controller.navigationController,
+                if let navController = controller as? UINavigationController,
                     navController.viewControllers.count > 1 {
                     navController.popToRootViewController(animated: true)
                 }

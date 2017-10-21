@@ -174,7 +174,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
             printController.present(animated: true)
         }
     }
-    
 }
 
 
