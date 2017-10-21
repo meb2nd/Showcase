@@ -42,6 +42,11 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         activityView.center = view.center
         activityView.hidesWhenStopped = true
         
+        let buttonIcon = UIImage(named: "heart")
+        favoriteButton.title = nil
+        favoriteButton.image = buttonIcon
+        
+        
         view.addSubview(activityView)
         
         // create and add the PDF view
