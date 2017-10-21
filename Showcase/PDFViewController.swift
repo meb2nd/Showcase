@@ -66,13 +66,11 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         enableUI(false)
         
         // load the PDF and display it
-        FIRDatabaseClient.sharedInstance.fetchPDF(for: script) { (pdfResult) in
+        FIRDatabaseClient.sharedInstance.fetchPDF(for: script, userName: userName) { (pdfResult) in
             
             performUIUpdatesOnMain {
                 switch pdfResult {
                 case .success(let document) :
-                    document.delegate = self
-                    self.addWatermark(to: document)
                     self.pdfView.document = document
                 
                 default:
@@ -94,9 +92,11 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     // MARK: - Actions
     
     @IBAction func logout(_ sender: Any) {
+        logoutSession()
     }
     
     @IBAction func print(_ sender: Any) {
+        printPdf ()
     }
     
     @IBAction func toggleFavorite(_ sender: Any) {
@@ -147,49 +147,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     
 }
 
-// MARK: - PDFViewController: PDFDocumentDelegate
-
-extension PDFViewController: PDFDocumentDelegate {
-    func classForPage() -> AnyClass {
-        return WatermarkPage.self
-    }
-}
-
-// MARK: - PDFViewController (Watermark functions)
-
-extension PDFViewController {
-    
-    fileprivate func generateWatermark() -> String {
-        
-        var watermark = userName.uppercased()
-        
-        if watermark.characters.count >= 16 {
-            watermark = String(watermark.truncated())
-        } else {
-            var padding:Int = (15 - watermark.count)/2
-            
-            while padding > 0 {
-                watermark = " " + watermark
-                padding -= 1
-            }
-        }
-        
-        return watermark
-    }
-    
-    fileprivate func addWatermark(to document: (PDFDocument)) {
-        
-        let watermark = generateWatermark()
-        
-        for index in 0 ... document.pageCount - 1 {
-            
-            if let page = document.page(at: index) as? WatermarkPage {
-                
-                page.watermark = watermark as NSString
-            }
-        }
-    }
-}
 
 // MARK - String
 // This extension is from: https://medium.com/@johnsundell/exploring-the-new-string-api-in-swift-4-ce7d2c1cae00

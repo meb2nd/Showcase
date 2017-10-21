@@ -4,6 +4,7 @@
 //
 //  Created by Pete Barnes on 10/18/17.
 //  Copyright © 2017 Pete Barnes. All rights reserved.
+//  This class based on information found at: https://developer.apple.com/videos/play/wwdc2017/241/
 //
 
 import Foundation
@@ -166,7 +167,7 @@ extension FIRDatabaseClient {
         }
     }
     
-    func fetchPDF(for script: Script, completion: @escaping (PDFResult) -> Void) {
+    func fetchPDF(for script: Script, userName: String, completion: @escaping (PDFResult) -> Void) {
         
         // If we already have the document just return it
         if let document = script.document {
@@ -194,6 +195,17 @@ extension FIRDatabaseClient {
                 return
             }
             
+            guard let data = data,
+                let pdf = PDFDocument(data: data) else {
+                    // Couldn't create a pdf
+                    completion(.failure(ScriptError.pdfCreationError))
+                    return
+            }
+            
+            // Watermark the PDF
+            pdf.delegate = self
+            self.addWatermark(to: pdf, userName: userName)
+            
             // Save the downloaded pdf
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let stack = appDelegate.stack
@@ -203,21 +215,56 @@ extension FIRDatabaseClient {
                 let backgroundScript = workerContext.object(with: script.objectID) as! Script
                 
                 workerContext.performAndWait {
-                    backgroundScript.document = data as NSData?
+                    backgroundScript.document = pdf.dataRepresentation() as NSData?
                 }
                 
                 self.saveIfNeeded(workerContext)
-                
-                guard let data = data,
-                    let pdf = PDFDocument(data: data) else {
-                        // Couldn't create a pdf
-                        completion(.failure(ScriptError.pdfCreationError))
-                        return
-                }
-                
                 completion(.success(pdf))
             }
         }
     }
 }
 
+// MARK: - FIRDatabaseClient (PDF Watermark functions)
+
+extension FIRDatabaseClient {
+    
+    fileprivate func generateWatermark(userName: String) -> String {
+        
+        var watermark = userName.uppercased()
+        
+        if watermark.characters.count >= 16 {
+            watermark = String(watermark.truncated())
+        } else {
+            var padding:Int = (15 - watermark.count)/2
+            
+            while padding > 0 {
+                watermark = " " + watermark
+                padding -= 1
+            }
+        }
+        
+        return watermark
+    }
+    
+    fileprivate func addWatermark(to document: (PDFDocument), userName: String) {
+        
+        let watermark = generateWatermark(userName: userName)
+        
+        for index in 0 ... document.pageCount - 1 {
+            
+            if let page = document.page(at: index) as? WatermarkPage {
+                
+                page.watermark = watermark as NSString
+            }
+        }
+    }
+}
+
+// MARK: - FIRDatabaseClient: PDFDocumentDelegate
+
+extension FIRDatabaseClient: PDFDocumentDelegate {
+    func classForPage() -> AnyClass {
+        return WatermarkPage.self
+    }
+}

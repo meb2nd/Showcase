@@ -107,9 +107,9 @@
 		125788E11F95500600ACA76A /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				125788E21F95500600ACA76A /* AppDelegate.swift */,
 				12A04A481F97F04500C75CC7 /* GCDBlackBox.swift */,
 				129CB79E1F97D27F00DBDBAA /* Models */,
-				125788E21F95500600ACA76A /* AppDelegate.swift */,
 				125788E61F95500600ACA76A /* Main.storyboard */,
 				12B5B34B1F97A21E00F92872 /* Views */,
 				125788F61F95533800ACA76A /* Supporting Files */,
@@ -141,6 +141,7 @@
 				12C8E4021F98359100D808F6 /* Model.xcdatamodeld */,
 				12C8E40D1F984F3300D808F6 /* FIRDatabaseClient.swift */,
 				1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */,
+				1292FE531F9A4ACA006B599D /* WatermarkPage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -174,7 +175,6 @@
 		12B5B34B1F97A21E00F92872 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1292FE531F9A4ACA006B599D /* WatermarkPage.swift */,
 				12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */,
 			);
 			name = Views;
