@@ -28,14 +28,12 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     @IBOutlet weak var captureVideoButton: UIBarButtonItem!
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createFetchController()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Navigation
@@ -52,12 +50,7 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         }
     }
     
-    @IBAction func logout(_ sender: Any) {
-        logoutSession()
-    }
-    
-    
-    // MARK: - CoredDataTableViewController functions
+    // MARK: - CoreDataTableViewController functions
     
     override func getTableView() -> UITableView {
         return videosTableView
@@ -97,6 +90,181 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         return cell
     }
     
+    // MARK: - Actions
+    
+    @IBAction func logout(_ sender: Any) {
+        logoutSession()
+    }
+    
+    @IBAction func pickAnImageFromCamera(_ sender: Any) {
+        
+        startCameraFromViewController(viewController: self, withDelegate: self)
+    }
+    
+    // MARK:  Helper
+    
+    func startCameraFromViewController(viewController: UIViewController, withDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) -> Bool {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) == false {
+            return false
+        }
+        
+        let cameraController = UIImagePickerController()
+        cameraController.mediaTypes = [kUTTypeMovie as NSString as String]
+        cameraController.sourceType = .camera
+        cameraController.cameraCaptureMode = .video
+        cameraController.allowsEditing = false
+        cameraController.delegate = delegate
+        cameraController.videoMaximumDuration = TimeInterval(30.0)
+        
+        present(cameraController, animated: true, completion: nil)
+        return true
+    }
+}
+
+// MARK: - VideosTableViewController: UIImagePickerControllerDelegate
+
+extension VideosTableViewController: UIImagePickerControllerDelegate {
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
+        
+        dismiss(animated: true, completion: nil)
+        // Handle a movie capture
+        if mediaType == kUTTypeMovie {
+            guard let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL else { return }
+            
+            let fm = FileManager.default
+            
+            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+            
+            // https://stackoverflow.com/questions/41162610/create-directory-in-swift-3-0
+            let videoPath = "showcase_videos/" + Auth.auth().currentUser!.uid
+            let videoDirectory = documentDirectory.appendingPathComponent(videoPath)
+            let videoURLString = videoPath + "/\(Double(Date.timeIntervalSinceReferenceDate * 1000)).MOV"
+            let url = documentDirectory.appendingPathComponent(videoURLString)
+            
+            if !fm.fileExists(atPath: videoDirectory.path) {
+                do {
+                    try fm.createDirectory(atPath: videoDirectory.path, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    print("Couldn't create document directory")
+                }
+            }
+            
+            print("Document directory is \(videoDirectory)")
+            
+            do {
+                try fm.moveItem(at: movieURL as URL, to: url)
+                print("Moved the movie file from the temporary directory.")
+                print("New location is: \(url)")
+            } catch {
+                let saveError = error as NSError
+                print("Failed to move the movie file from the temporary directory.")
+                print("\(saveError), \(saveError.localizedDescription)")
+                return
+            }
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            
+            stack.performBackgroundBatchOperation() { (workerContext) in
+                
+                let backgroundScript = workerContext.object(with: self.script.objectID) as! Script
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .medium
+                var newVideo: Video!
+                
+                workerContext.performAndWait {
+                    newVideo = Video(context: workerContext)
+                    newVideo.script = backgroundScript
+                    newVideo.url = videoURLString
+                    newVideo.title = backgroundScript.title! + " - \(dateFormatter.string(from: Date()))"
+                    newVideo.dateCreated = Date() as NSDate
+                }
+                
+                do {
+                    if workerContext.hasChanges {
+                        try workerContext.save()
+                    }
+                } catch {
+                    let saveError = error as NSError
+                    print("Unable to Save Video")
+                    print("\(saveError), \(saveError.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
+        var title = "Success"
+        var message = "Video was saved"
+        if let _ = error {
+            title = "Error"
+            message = "Video failed to save"
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIImagePickerController
+// https://stackoverflow.com/questions/33058691/use-uiimagepickercontroller-in-landscape-mode-in-swift-2-0
+
+extension UIImagePickerController
+{
+    override open var shouldAutorotate: Bool {
+        return true
+    }
+    override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .all
+    }
+}
+// MARK: - VideosTableViewController: UITableViewDelegate
+
+extension VideosTableViewController: UITableViewDelegate {
+    
+    // Code below based on code found at:   https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/MediaPlaybackGuide/Contents/Resources/en.lproj/GettingStarted/GettingStarted.html
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let video = fetchedResultsController!.object(at: indexPath) as? Video,
+            let videoURLString = video.url {
+            let fm = FileManager.default
+            
+            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+
+            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+            
+            print("Trying to load video file at url = + \(videoURL)")
+            
+            // Create an AVPlayer, passing it the URL.
+            let player = AVPlayer(url: videoURL)
+            
+            // Create a new AVPlayerViewController and pass it a reference to the player.
+            let controller = AVPlayerViewController()
+            controller.player = player
+            
+            // Modally present the player and call the player's play() method when complete.
+            present(controller, animated: true) {
+                player.play()
+            }
+        }
+    }
+    
+    // Following based on code fouund at:  https://www.hackingwithswift.com/example-code/uikit/how-to-customize-swipe-edit-buttons-in-a-uitableview
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             self.deleteVideoIndexPath = indexPath
@@ -112,15 +280,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         return [delete, share]
     }
     
+    // MARK: Helpers
     // The code for the delete functionality is based on information found at the following URL:
     // https://www.andrewcbancroft.com/2015/07/16/uitableview-swipe-to-delete-workflow-in-swift/
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            deleteVideoIndexPath = indexPath
-            confirmDelete()
-        }
-    }
     
     func confirmDelete() {
         let alert = UIAlertController(title: "Delete Video", message: "Are you sure you want to permanently delete this Video?", preferredStyle: .actionSheet)
@@ -177,7 +339,6 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
             }
             
             deleteVideoIndexPath = nil
-
         }
     }
     
@@ -203,12 +364,10 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
             
             print("Trying to load video file at url = + \(videoURL)")
             
-            
             let videoToShare = documentDirectory.absoluteString + videoURLString
-            let url = NSURL(fileURLWithPath: videoToShare)
+            let url = URL(fileURLWithPath: videoToShare)
             
             let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            
             
             controller.completionWithItemsHandler = {
                 (activity, success, items, error) in
@@ -231,175 +390,6 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
             }
             
             present(controller, animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func pickAnImageFromCamera(_ sender: Any) {
-        
-        startCameraFromViewController(viewController: self, withDelegate: self)
-    }
-    
-    func startCameraFromViewController(viewController: UIViewController, withDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) -> Bool {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) == false {
-            return false
-        }
-        
-        let cameraController = UIImagePickerController()
-        cameraController.mediaTypes = [kUTTypeMovie as NSString as String]
-        cameraController.sourceType = .camera
-        cameraController.cameraCaptureMode = .video
-        cameraController.allowsEditing = false
-        cameraController.delegate = delegate
-        cameraController.videoMaximumDuration = TimeInterval(30.0)
-        
-        present(cameraController, animated: true, completion: nil)
-        return true
-    }
-    
-    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
-        var title = "Success"
-        var message = "Video was saved"
-        if let _ = error {
-            title = "Error"
-            message = "Video failed to save"
-        }
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-// MARK: - UIImagePickerControllerDelegate
-extension VideosTableViewController: UIImagePickerControllerDelegate {
-    
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        let mediaType = info[UIImagePickerControllerMediaType] as! NSString
-        
-        
-        
-        dismiss(animated: true, completion: nil)
-        // Handle a movie capture
-        if mediaType == kUTTypeMovie {
-            guard let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL else { return }
-            
-            let fm = FileManager.default
-            
-            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-            // https://stackoverflow.com/questions/41162610/create-directory-in-swift-3-0
-            let videoPath = "showcase_videos/" + Auth.auth().currentUser!.uid
-            
-            let videoDirectory = documentDirectory.appendingPathComponent(videoPath)
-            
-            let videoURLString = videoPath + "/\(Double(Date.timeIntervalSinceReferenceDate * 1000)).MOV"
-            
-            let url = documentDirectory.appendingPathComponent(videoURLString)
-            
-            if !fm.fileExists(atPath: videoDirectory.path) {
-                do {
-                    try fm.createDirectory(atPath: videoDirectory.path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    print("Couldn't create document directory")
-                }
-            }
-            
-            print("Document directory is \(videoDirectory)")
-            
-            do {
-                try fm.moveItem(at: movieURL as URL, to: url)
-                print("Moved the movie file from the temporary directory.")
-                print("New location is: \(url)")
-            } catch {
-                let saveError = error as NSError
-                print("Failed to move the movie file from the temporary directory.")
-                print("\(saveError), \(saveError.localizedDescription)")
-                return
-            }
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let stack = appDelegate.stack
-            
-            
-            stack.performBackgroundBatchOperation() { (workerContext) in
-                
-                let backgroundScript = workerContext.object(with: self.script.objectID) as! Script
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                dateFormatter.timeStyle = .medium
-                var newVideo: Video!
-                
-                workerContext.performAndWait {
-                    newVideo = Video(context: workerContext)
-                    newVideo.script = backgroundScript
-                    newVideo.url = videoURLString
-                    newVideo.title = backgroundScript.title! + " - \(dateFormatter.string(from: Date()))"
-                    newVideo.dateCreated = Date() as NSDate
-                }
-                
-                do {
-                    if workerContext.hasChanges {
-                        try workerContext.save()
-                    }
-                } catch {
-                    let saveError = error as NSError
-                    print("Unable to Save Video")
-                    print("\(saveError), \(saveError.localizedDescription)")
-                }
-            }
-        }
-    }
-}
-
-
-// https://stackoverflow.com/questions/33058691/use-uiimagepickercontroller-in-landscape-mode-in-swift-2-0
-extension UIImagePickerController
-{
-    override open var shouldAutorotate: Bool {
-        return true
-    }
-    override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        return .all
-    }
-}
-
-extension VideosTableViewController: UITableViewDelegate {
-    
-    // https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/MediaPlaybackGuide/Contents/Resources/en.lproj/GettingStarted/GettingStarted.html
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if let video = fetchedResultsController!.object(at: indexPath) as? Video,
-            let videoURLString = video.url {
-            let fm = FileManager.default
-            
-            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-
-            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
-            
-            print("Trying to load video file at url = + \(videoURL)")
-
-            
-            // Create an AVPlayer, passing it the URL.
-            let player = AVPlayer(url: videoURL)
-            
-            // Create a new AVPlayerViewController and pass it a reference to the player.
-            let controller = AVPlayerViewController()
-            controller.player = player
-            
-            // Modally present the player and call the player's play() method when complete.
-            present(controller, animated: true) {
-                player.play()
-            }
         }
     }
 }
