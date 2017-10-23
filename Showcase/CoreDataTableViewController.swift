@@ -14,7 +14,7 @@ import CoreData
 class CoreDataTableViewController: UIViewController {
     
     // MARK: Properties
-    var tableView: UITableView!
+    var tableView: UITableView?
     
     var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
         didSet {
@@ -124,7 +124,7 @@ extension CoreDataTableViewController {
 extension CoreDataTableViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
+        tableView?.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
@@ -133,9 +133,9 @@ extension CoreDataTableViewController: NSFetchedResultsControllerDelegate {
         
         switch (type) {
         case .insert:
-            tableView.insertSections(set, with: .fade)
+            tableView?.insertSections(set, with: .fade)
         case .delete:
-            tableView.deleteSections(set, with: .fade)
+            tableView?.deleteSections(set, with: .fade)
         default:
             // irrelevant in our case
             break
@@ -146,43 +146,40 @@ extension CoreDataTableViewController: NSFetchedResultsControllerDelegate {
         
         switch(type) {
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            tableView?.insertRows(at: [newIndexPath!], with: .fade)
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView?.deleteRows(at: [indexPath!], with: .fade)
         case .update:
-            tableView.reloadRows(at: [indexPath!], with: .fade)
+            tableView?.reloadRows(at: [indexPath!], with: .fade)
         case .move:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            tableView?.deleteRows(at: [indexPath!], with: .fade)
+            tableView?.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
+        tableView?.endUpdates()
     }
 }
 
 // MARK: - CoreDataTableViewController (Common Segues)
 
 extension CoreDataTableViewController {
-
+    
     func segueToShowPDF(_ segue: UIStoryboardSegue, userName: String) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier! == "showPDF" {
+        if segue.identifier! == "showPDF",
+            let pdfVC = segue.destination as? PDFViewController,
+            let indexPath = tableView?.indexPathForSelectedRow {
             
-            if let pdfVC = segue.destination as? PDFViewController,
-                let indexPath = tableView.indexPathForSelectedRow {
-                
-                // Pass data to the Photo Album View Controller
-                let script = fetchedResultsController!.object(at: indexPath) as! Script
-                pdfVC.script = script
-                pdfVC.userName = userName
-            }
+            // Pass data to the Photo Album View Controller
+            let script = fetchedResultsController!.object(at: indexPath) as! Script
+            pdfVC.script = script
+            pdfVC.userName = userName
         }
     }
-    
 }
 
 

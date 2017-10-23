@@ -38,8 +38,9 @@
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="file" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <relationship name="script" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Script" inverseName="videos" inverseEntity="Script" syncable="YES"/>
         <fetchIndex name="byDateCreatedIndex">
             <fetchIndexElement property="dateCreated" type="Binary" order="ascending"/>
@@ -47,9 +48,12 @@
         <fetchIndex name="byScriptIndex">
             <fetchIndexElement property="script" type="Binary" order="ascending"/>
         </fetchIndex>
+        <fetchIndex name="byTitleIndex">
+            <fetchIndexElement property="title" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="Script" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="Video" positionX="-54" positionY="45" width="128" height="105"/>
+        <element name="Video" positionX="-54" positionY="45" width="128" height="120"/>
     </elements>
 </model>

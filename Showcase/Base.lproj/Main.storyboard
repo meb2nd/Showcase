@@ -59,7 +59,7 @@
                                     <barButtonItem title="Videos" id="shb-LR-t15">
                                         <connections>
                                             <action selector="viewVideos:" destination="AbI-g8-gMn" id="chI-JP-YYz"/>
-                                            <segue destination="GlW-tH-YWs" kind="show" identifier="showVideosList" id="a4t-b4-jJa"/>
+                                            <segue destination="bev-Lp-aD6" kind="show" identifier="showVideosList" id="inB-Pe-kYg"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -86,61 +86,84 @@
             </objects>
             <point key="canvasLocation" x="2559" y="197"/>
         </scene>
-        <!--Videos-->
-        <scene sceneID="OFK-15-9Gk">
+        <!--Videos Table View Controller-->
+        <scene sceneID="TkN-eg-kGY">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="GlW-tH-YWs" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="DGv-2a-K9j">
+                <viewController title="Videos Table View Controller" hidesBottomBarWhenPushed="YES" id="bev-Lp-aD6" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NJH-tx-Wx8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2L-Vt-FmS">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zb3-7P-xR3">
+                                <rect key="frame" x="0.0" y="64" width="375" height="539"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="cgW-3o-ZNy">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VideoCell" textLabel="2MX-5X-VBE" style="IBUITableViewCellStyleDefault" id="YuD-pj-Kgg">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cgW-3o-ZNy" id="caJ-MJ-Fre">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YuD-pj-Kgg" id="hLD-iN-tHr">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2MX-5X-VBE">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="low-1W-ycg" kind="show" identifier="playVideo" id="gib-on-Hvb"/>
+                                            <segue destination="low-1W-ycg" kind="show" identifier="playVideo" id="PpM-yA-Hpe"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="GlW-tH-YWs" id="vei-cW-PlE"/>
-                                    <outlet property="delegate" destination="GlW-tH-YWs" id="QZj-b8-bsl"/>
+                                    <outlet property="dataSource" destination="bev-Lp-aD6" id="a13-pd-60B"/>
+                                    <outlet property="delegate" destination="bev-Lp-aD6" id="Nyw-x2-QNk"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMG-ZJ-xO8">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sl7-PG-MP4">
+                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Capture Video" id="cCh-lh-QS1"/>
+                                    <barButtonItem title="Capture Video" id="Azf-kJ-KFM">
+                                        <connections>
+                                            <action selector="pickAnImageFromCamera:" destination="bev-Lp-aD6" id="Cfi-4I-jvq"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="e2L-Vt-FmS" firstAttribute="top" secondItem="pwD-qa-7pc" secondAttribute="top" identifier="tableViewTop" id="5bt-dv-Mhy"/>
-                            <constraint firstItem="TMG-ZJ-xO8" firstAttribute="bottom" secondItem="pwD-qa-7pc" secondAttribute="bottom" identifier="toolbarBottom" id="E9u-cd-eOg"/>
-                            <constraint firstItem="e2L-Vt-FmS" firstAttribute="leading" secondItem="pwD-qa-7pc" secondAttribute="leading" identifier="tableViewLeading" id="Fm4-P7-ntv"/>
-                            <constraint firstItem="TMG-ZJ-xO8" firstAttribute="trailing" secondItem="pwD-qa-7pc" secondAttribute="trailing" identifier="toolbarTrailing" id="K1b-8z-eEz"/>
-                            <constraint firstItem="e2L-Vt-FmS" firstAttribute="trailing" secondItem="pwD-qa-7pc" secondAttribute="trailing" identifier="tableViewTrailing" id="nSk-ha-qkq"/>
-                            <constraint firstItem="e2L-Vt-FmS" firstAttribute="bottom" secondItem="TMG-ZJ-xO8" secondAttribute="top" identifier="tableViewBottom" id="ni8-4f-cJ2"/>
-                            <constraint firstItem="TMG-ZJ-xO8" firstAttribute="leading" secondItem="pwD-qa-7pc" secondAttribute="leading" identifier="toolbarLeading" id="vMs-AE-VAl"/>
+                            <constraint firstItem="sl7-PG-MP4" firstAttribute="leading" secondItem="Zb3-7P-xR3" secondAttribute="leading" id="0tb-Yt-zFl"/>
+                            <constraint firstItem="sl7-PG-MP4" firstAttribute="top" secondItem="Zb3-7P-xR3" secondAttribute="bottom" id="112-fU-DhM"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="leading" secondItem="Ehn-3m-0he" secondAttribute="leading" id="Hjn-iA-byo"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="top" secondItem="Ehn-3m-0he" secondAttribute="top" id="Stl-2j-6Pj"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerY" secondItem="NJH-tx-Wx8" secondAttribute="centerY" id="V5r-eD-2rP"/>
+                            <constraint firstItem="sl7-PG-MP4" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" id="X96-03-qsx"/>
+                            <constraint firstItem="Ehn-3m-0he" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" id="dLN-Q0-290"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerX" secondItem="NJH-tx-Wx8" secondAttribute="centerX" id="zcT-gG-6tK"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="pwD-qa-7pc"/>
+                        <viewLayoutGuide key="safeArea" id="Ehn-3m-0he"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Videos" id="BMD-Mr-sV4">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="l6M-cV-zrJ"/>
+                    <navigationItem key="navigationItem" title="Videos" id="Zmf-Uh-L3y">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="C8E-wo-881">
+                            <connections>
+                                <action selector="logout:" destination="bev-Lp-aD6" id="HXg-Ot-a7I"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="captureVideoButton" destination="Azf-kJ-KFM" id="BdZ-CS-2P4"/>
+                        <outlet property="logoutButton" destination="C8E-wo-881" id="Kue-IY-VMt"/>
+                        <outlet property="videosTableView" destination="Zb3-7P-xR3" id="JNB-a0-eyI"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3ly-Ih-iRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mg4-29-6AQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3518" y="197"/>
+            <point key="canvasLocation" x="3520.8000000000002" y="196.55172413793105"/>
         </scene>
         <!--Showcase Video-->
         <scene sceneID="dGm-k1-F62">

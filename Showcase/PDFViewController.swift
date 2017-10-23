@@ -62,7 +62,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         // Center document on gray background
         pdfView.autoScales = true
         pdfView.backgroundColor = UIColor.lightGray
-
+        
         view.sendSubview(toBack: pdfView)
         
         
@@ -77,7 +77,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
                 switch pdfResult {
                 case .success(let document) :
                     self.pdfView.document = document
-                
+                    
                 default:
                     self.pdfView.document = nil
                     AlertViewHelper.presentAlert(self, title: "Script Unavailble", message: "The document requested could not be found.")
@@ -147,15 +147,19 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier! == "showVideosList",
+            let videosTableVC = segue.destination as? VideosTableViewController  {
+            
+            // Pass data to the Videos Table View Controller
+            videosTableVC.script = script
+        }
+    }
+    
     
     // Mark - Print PDF
     func printPdf () {

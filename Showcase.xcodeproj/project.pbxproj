@@ -22,7 +22,6 @@
 		12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */; };
 		12B5B33D1F96389D00F92872 /* FavoriteScriptsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */; };
 		12B5B33F1F96393600F92872 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B33E1F96393600F92872 /* PDFViewController.swift */; };
-		12B5B3411F96397F00F92872 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3401F96397F00F92872 /* VideoViewController.swift */; };
 		12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3421F9639D700F92872 /* VideosTableViewController.swift */; };
 		12B5B3461F9646F500F92872 /* FUIAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */; };
 		12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */; };
@@ -56,7 +55,6 @@
 		12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptsTableViewController.swift; sourceTree = "<group>"; };
 		12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScriptsTableViewController.swift; sourceTree = "<group>"; };
 		12B5B33E1F96393600F92872 /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
-		12B5B3401F96397F00F92872 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		12B5B3421F9639D700F92872 /* VideosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosTableViewController.swift; sourceTree = "<group>"; };
 		12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewController.swift; sourceTree = "<group>"; };
 		12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
 				12C8E4151F99A74F00D808F6 /* AlertViewHelper.swift */,
 				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
-				12B5B3401F96397F00F92872 /* VideoViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
 			);
 			name = Controllers;
@@ -386,7 +383,6 @@
 				12C8E40B1F983DE400D808F6 /* Script.swift in Sources */,
 				12C8E4141F99462E00D808F6 /* CoreDataTableViewController.swift in Sources */,
 				12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */,
-				12B5B3411F96397F00F92872 /* VideoViewController.swift in Sources */,
 				12B5B33D1F96389D00F92872 /* FavoriteScriptsTableViewController.swift in Sources */,
 				12C8E40C1F983DE400D808F6 /* Script+CoreDataProperties.swift in Sources */,
 				129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */,

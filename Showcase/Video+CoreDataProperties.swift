@@ -18,8 +18,9 @@ extension Video {
     }
 
     @NSManaged public var dateCreated: NSDate?
-    @NSManaged public var file: NSData?
     @NSManaged public var thumbnail: NSData?
+    @NSManaged public var title: String?
+    @NSManaged public var url: String?
     @NSManaged public var script: Script?
 
 }
