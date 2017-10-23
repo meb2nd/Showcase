@@ -20,6 +20,7 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
 
     // MARK: - Properties
     var script: Script!
+    var deleteVideoIndexPath: IndexPath? = nil
     
     // MARK: - Outlets
     
@@ -86,50 +87,156 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         let video = fetchedResultsController!.object(at: indexPath) as! Video
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath)
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        
         cell.textLabel?.text = video.script?.title
-        cell.detailTextLabel?.text = video.dateCreated?.description
+        cell.detailTextLabel?.text = "Recorded \(dateFormatter.string(from: video.dateCreated! as Date))"
         
         return cell
     }
     
-    @IBAction func pickAnImageFromAlbum(_ sender: Any) {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            self.deleteVideoIndexPath = indexPath
+            self.confirmDelete()
+        }
         
-        setUpImagePicker (sourceType: .savedPhotosAlbum)
+        let share = UITableViewRowAction(style: .normal, title: "Share") { (action, indexPath) in
+            self.shareVideo(indexPath: indexPath)
+        }
+        
+        share.backgroundColor = UIColor.blue
+        
+        return [delete, share]
+    }
+    
+    // The code for the delete functionality is based on information found at the following URL:
+    // https://www.andrewcbancroft.com/2015/07/16/uitableview-swipe-to-delete-workflow-in-swift/
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteVideoIndexPath = indexPath
+            confirmDelete()
+        }
+    }
+    
+    func confirmDelete() {
+        let alert = UIAlertController(title: "Delete Video", message: "Are you sure you want to permanently delete this Video?", preferredStyle: .actionSheet)
+        
+        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteVideo)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeleteVideo)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+        
+        // Support display in iPad
+        alert.popoverPresentationController?.sourceView = view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.size.width / 2.0, y: view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func handleDeleteVideo(alertAction: UIAlertAction!) -> Void {
+        if let indexPath = deleteVideoIndexPath,
+            let video = fetchedResultsController!.object(at: indexPath) as? Video,
+            let videoURLString = video.url {
+            
+            let fm = FileManager.default
+            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+            
+            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+            
+            print("Trying to delete video file at url = + \(videoURL)")
+            
+            do {
+                try fm.removeItem(at: videoURL)
+            } catch {
+                print("Failed to delete video file at url = + \(videoURL)")
+            }
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.stack.context
+            
+            if let video = context.object(with: video.objectID) as? Video {
+                
+                context.delete(video)
+                
+                context.performAndWait {
+                    do {
+                        if context.hasChanges {
+                            try context.save()
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+            
+            deleteVideoIndexPath = nil
+
+        }
+    }
+    
+    func cancelDeleteVideo(alertAction: UIAlertAction!) {
+        deleteVideoIndexPath = nil
+    }
+    
+    // Code for the completionWithItemsHandler in the following method is based upon information found at the following URL
+    // http://seanwernimont.weebly.com/blog/december-02nd-2015
+    
+    func shareVideo(indexPath: IndexPath) {
+        
+        if let video = fetchedResultsController!.object(at: indexPath) as? Video,
+            let videoURLString = video.url  {
+            
+            let fm = FileManager.default
+            
+            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+            
+            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+            
+            print("Trying to load video file at url = + \(videoURL)")
+            
+            
+            let videoToShare = documentDirectory.absoluteString + videoURLString
+            let url = NSURL(fileURLWithPath: videoToShare)
+            
+            let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            
+            
+            controller.completionWithItemsHandler = {
+                (activity, success, items, error) in
+                if(success && error == nil){
+                    
+                    self.dismiss(animated: true, completion: nil)
+                    
+                } else {
+                    
+                    let controller = UIAlertController()
+                    controller.title = "Video Share Incomplete"
+                    controller.message = "Share was either cancelled or failed."
+                    
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in controller.dismiss(animated: true, completion: nil)
+                    }
+                    
+                    controller.addAction(okAction)
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+            
+            present(controller, animated: true, completion: nil)
+        }
     }
     
     @IBAction func pickAnImageFromCamera(_ sender: Any) {
         
         startCameraFromViewController(viewController: self, withDelegate: self)
-    }
-    
-    func setUpImagePicker (sourceType: UIImagePickerControllerSourceType) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = sourceType
-        if sourceType == .camera {
-            imagePicker.cameraCaptureMode = .video
-        }
-        //imagePicker.allowsEditing = true
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func startMediaBrowserFromViewController(viewController: UIViewController, usingDelegate delegate: UINavigationControllerDelegate & UIImagePickerControllerDelegate) -> Bool {
-        // 1
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) == false {
-            return false
-        }
-        
-        // 2
-        let mediaUI = UIImagePickerController()
-        mediaUI.sourceType = .savedPhotosAlbum
-        mediaUI.mediaTypes = [kUTTypeMovie as NSString as String]
-        mediaUI.allowsEditing = true
-        mediaUI.delegate = delegate
-        
-        // 3
-        present(mediaUI, animated: true, completion: nil)
-        return true
     }
     
     func startCameraFromViewController(viewController: UIViewController, withDelegate delegate: UIImagePickerControllerDelegate & UINavigationControllerDelegate) -> Bool {
@@ -225,14 +332,15 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
                 
                 let backgroundScript = workerContext.object(with: self.script.objectID) as! Script
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .medium
                 var newVideo: Video!
                 
                 workerContext.performAndWait {
                     newVideo = Video(context: workerContext)
                     newVideo.script = backgroundScript
                     newVideo.url = videoURLString
-                    newVideo.title = backgroundScript.title // ?? "" + " - \(dateFormatter.string(from: Date()))"
+                    newVideo.title = backgroundScript.title! + " - \(dateFormatter.string(from: Date()))"
                     newVideo.dateCreated = Date() as NSDate
                 }
                 
@@ -264,6 +372,8 @@ extension UIImagePickerController
 
 extension VideosTableViewController: UITableViewDelegate {
     
+    // https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/MediaPlaybackGuide/Contents/Resources/en.lproj/GettingStarted/GettingStarted.html
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let video = fetchedResultsController!.object(at: indexPath) as? Video,
@@ -293,4 +403,3 @@ extension VideosTableViewController: UITableViewDelegate {
         }
     }
 }
-
