@@ -13,6 +13,8 @@ import MediaPlayer
 import MobileCoreServices
 import Photos
 import FirebaseAuth
+import AVKit
+import AVFoundation
 
 class VideosTableViewController: CoreDataTableViewController, UINavigationControllerDelegate {
 
@@ -35,15 +37,19 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         // Dispose of any resources that can be recreated.
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier! == "playVideo",
+            let videoVC = segue.destination as? VideoViewController,
+            let indexPath = tableView?.indexPathForSelectedRow,
+            let video = fetchedResultsController!.object(at: indexPath) as? Video {
+            
+            // Pass data to the Video View Controller
+            videoVC.video = video
+        }
     }
-    */
     
     @IBAction func logout(_ sender: Any) {
         logoutSession()
@@ -202,6 +208,8 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
             
             do {
                 try fm.moveItem(at: movieURL as URL, to: url)
+                print("Moved the movie file from the temporary directory.")
+                print("New location is: \(url)")
             } catch {
                 let saveError = error as NSError
                 print("Failed to move the movie file from the temporary directory.")
@@ -242,6 +250,8 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
     }
 }
 
+
+// https://stackoverflow.com/questions/33058691/use-uiimagepickercontroller-in-landscape-mode-in-swift-2-0
 extension UIImagePickerController
 {
     override open var shouldAutorotate: Bool {
@@ -254,5 +264,33 @@ extension UIImagePickerController
 
 extension VideosTableViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let video = fetchedResultsController!.object(at: indexPath) as? Video,
+            let videoURLString = video.url {
+            let fm = FileManager.default
+            
+            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+            }
+
+            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+            
+            print("Trying to load video file at url = + \(videoURL)")
+
+            
+            // Create an AVPlayer, passing it the URL.
+            let player = AVPlayer(url: videoURL)
+            
+            // Create a new AVPlayerViewController and pass it a reference to the player.
+            let controller = AVPlayerViewController()
+            controller.player = player
+            
+            // Modally present the player and call the player's play() method when complete.
+            present(controller, animated: true) {
+                player.play()
+            }
+        }
+    }
 }
 

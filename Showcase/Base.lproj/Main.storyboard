@@ -114,9 +114,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="low-1W-ycg" kind="show" identifier="playVideo" id="PpM-yA-Hpe"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

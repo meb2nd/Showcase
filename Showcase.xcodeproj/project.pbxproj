@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12468D051F9E2C5B00863EFD /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D041F9E2C5B00863EFD /* VideoViewController.swift */; };
 		125788E31F95500600ACA76A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125788E21F95500600ACA76A /* AppDelegate.swift */; };
 		125788E81F95500600ACA76A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 125788E61F95500600ACA76A /* Main.storyboard */; };
 		125788EA1F95500600ACA76A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 125788E91F95500600ACA76A /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12468D041F9E2C5B00863EFD /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		125788DF1F95500600ACA76A /* Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		125788E21F95500600ACA76A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		125788E71F95500600ACA76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				12C8E4151F99A74F00D808F6 /* AlertViewHelper.swift */,
 				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
+				12468D041F9E2C5B00863EFD /* VideoViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 			files = (
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
 				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
+				12468D051F9E2C5B00863EFD /* VideoViewController.swift in Sources */,
 				1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */,
 				12C8E40A1F983DE400D808F6 /* Video+CoreDataProperties.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,

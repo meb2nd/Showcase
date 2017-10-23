@@ -174,7 +174,7 @@ extension CoreDataTableViewController {
             let pdfVC = segue.destination as? PDFViewController,
             let indexPath = tableView?.indexPathForSelectedRow {
             
-            // Pass data to the Photo Album View Controller
+            // Pass data to the PDF View Controller
             let script = fetchedResultsController!.object(at: indexPath) as! Script
             pdfVC.script = script
             pdfVC.userName = userName
