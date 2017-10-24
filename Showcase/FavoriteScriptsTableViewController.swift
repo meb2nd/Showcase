@@ -37,6 +37,12 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func signOut(_ sender: Any) {
+        logoutSession()
+    }
 
 
     /*

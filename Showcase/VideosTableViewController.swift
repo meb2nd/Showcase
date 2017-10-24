@@ -37,20 +37,6 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         createFetchController()
         
     }
-
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier! == "playVideo",
-            let videoVC = segue.destination as? VideoViewController,
-            let indexPath = tableView?.indexPathForSelectedRow,
-            let video = fetchedResultsController!.object(at: indexPath) as? Video {
-            
-            // Pass data to the Video View Controller
-            videoVC.video = video
-        }
-    }
     
     // MARK: - CoreDataTableViewController functions
     

@@ -356,7 +356,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorites" id="KwC-Ge-sR2">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="dqm-kq-gdn"/>
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="dqm-kq-gdn">
+                            <connections>
+                                <action selector="signOut:" destination="VRd-EW-vNA" id="VWQ-m4-jBj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="scriptsTableView" destination="8JV-iG-MoS" id="v6y-7g-9lj"/>
