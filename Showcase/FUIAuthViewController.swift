@@ -45,14 +45,18 @@ extension FUIAuthViewController where Self: UIViewController {
 extension FUIAuthViewController where Self: UIViewController {
 
     fileprivate func resetTabBar() {
+        
         if let tabBarController = self.tabBarController,
             let controllers = tabBarController.viewControllers {
             for controller in controllers {
                 if let navController = controller as? UINavigationController,
                     navController.viewControllers.count > 1 {
-                    navController.popToRootViewController(animated: true)
+                    // Need pop to root without animation to prevent issue with setting tab bar controller
+                    // https://stackoverflow.com/questions/21681185/tabbar-disappears-when-selectedindex-value-changes-on-ios-7
+                    navController.popToRootViewController(animated: false)
                 }
             }
+            
             tabBarController.selectedIndex = 0
         }
     }
