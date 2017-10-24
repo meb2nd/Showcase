@@ -9,13 +9,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Showcase/VideosTableViewController.swift"
-            timestampString = "530494666.039451"
+            filePath = "Showcase/Video.swift"
+            timestampString = "530499641.294175"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "confirmDelete()"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "init(title:script:url:insertInto:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Showcase/Video.swift"
+            timestampString = "530499702.008359"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "getThumbnailFrom(videoURLString:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -182,14 +182,12 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium
                 dateFormatter.timeStyle = .medium
-                var newVideo: Video!
                 
                 workerContext.performAndWait {
-                    newVideo = Video(context: workerContext)
-                    newVideo.script = backgroundScript
-                    newVideo.url = videoURLString
-                    newVideo.title = backgroundScript.title! + " - \(dateFormatter.string(from: Date()))"
-                    newVideo.dateCreated = Date() as NSDate
+                    _ = Video(title: backgroundScript.title! + " - \(dateFormatter.string(from: Date()))",
+                        script: backgroundScript,
+                        url: videoURLString,
+                        insertInto: workerContext)
                 }
                 
                 do {
