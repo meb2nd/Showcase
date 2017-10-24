@@ -33,7 +33,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        videosTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5)
         createFetchController()
+        
     }
 
     // MARK: - Navigation
@@ -86,6 +88,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         
         cell.textLabel?.text = video.script?.title
         cell.detailTextLabel?.text = "Recorded \(dateFormatter.string(from: video.dateCreated! as Date))"
+        if let imageData = video.thumbnail {
+            cell.imageView?.image = UIImage(data: imageData as Data)
+        }
         
         return cell
     }
@@ -114,7 +119,7 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         cameraController.cameraCaptureMode = .video
         cameraController.allowsEditing = false
         cameraController.delegate = delegate
-        cameraController.videoMaximumDuration = TimeInterval(30.0)
+        cameraController.videoMaximumDuration = TimeInterval(90.0)
         
         present(cameraController, animated: true, completion: nil)
         return true
