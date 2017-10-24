@@ -17,10 +17,11 @@ import AVKit
 import AVFoundation
 
 class VideosTableViewController: CoreDataTableViewController, UINavigationControllerDelegate {
-
+    
     // MARK: - Properties
     var script: Script!
     var deleteVideoIndexPath: IndexPath? = nil
+    var videoOutput: AVPlayerItemVideoOutput!
     
     // MARK: - Outlets
     
@@ -234,13 +235,48 @@ extension VideosTableViewController: UITableViewDelegate {
             guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
                 return
             }
-
+            
             let videoURL = documentDirectory.appendingPathComponent(videoURLString)
             
             print("Trying to load video file at url = + \(videoURL)")
             
             // Create an AVPlayer, passing it the URL.
-            let player = AVPlayer(url: videoURL)
+            //let player = AVPlayer(url: videoURL)
+            
+            // https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
+            
+            // For filter affect
+            
+            let avAsset = AVURLAsset(url: videoURL)
+            
+            let filter = CIFilter(name: "CIPhotoEffectTonal")!
+            let composition = AVVideoComposition(asset: avAsset, applyingCIFiltersWithHandler: { request in
+                
+
+                filter.setDefaults()
+                
+                
+                // Clamp to avoid blurring transparent pixels at the image edges
+                //let source = request.sourceImage.clampedToExtent()
+                let source = request.sourceImage
+                filter.setValue(source, forKey: kCIInputImageKey)
+                
+                // Vary filter parameters based on video timing
+                //let seconds = CMTimeGetSeconds(request.compositionTime)
+                //filter.setValue(seconds * 10.0, forKey: kCIInputRadiusKey)
+                
+                // Crop the blurred output to the bounds of the original image
+                //let output = filter.outputImage!.cropped(to: request.sourceImage.extent)
+                let output = filter.outputImage!
+                
+                // Provide the filter output to the composition
+                request.finish(with: output, context: nil)
+            })
+            
+            
+            let playerItem = AVPlayerItem(asset: avAsset)
+            playerItem.videoComposition = composition
+            let player = AVPlayer(playerItem: playerItem)
             
             // Create a new AVPlayerViewController and pass it a reference to the player.
             let controller = AVPlayerViewController()

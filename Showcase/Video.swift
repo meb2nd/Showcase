@@ -51,7 +51,7 @@ public class Video: NSManagedObject {
             let imgGenerator = AVAssetImageGenerator(asset: asset)
             imgGenerator.appliesPreferredTrackTransform = true
             let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-            let thumbnail = UIImage(cgImage: cgImage)
+            let thumbnail = UIImage(cgImage: applyFilter(toImage: cgImage)!)
             // return UIImage(CGImage: imageRef scale: 1.0 , orientation: UIImageOrientation.Right)   in case problem with orientation
             let thumbnailImageData = UIImagePNGRepresentation(thumbnail)
             
@@ -62,5 +62,18 @@ public class Video: NSManagedObject {
             print("*** Error generating thumbnail: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    private func applyFilter(toImage originalImage: CGImage) -> CGImage? {
+        
+        // Apply Black & White filter to image
+        let ciContext = CIContext(options: nil)
+        let coreImage = CIImage(cgImage: originalImage)
+        let filter = CIFilter(name: "CIPhotoEffectTonal" )
+        filter!.setDefaults()
+        filter!.setValue(coreImage, forKey: kCIInputImageKey)
+        let filteredImageData = filter!.value(forKey: kCIOutputImageKey) as! CIImage
+        let filteredImageRef = ciContext.createCGImage(filteredImageData, from: filteredImageData.extent)
+        return filteredImageRef
     }
 }
