@@ -243,37 +243,45 @@ extension VideosTableViewController: UITableViewDelegate {
             // Create an AVPlayer, passing it the URL.
             //let player = AVPlayer(url: videoURL)
             
-            // https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
+            // Filter code based on infomrmation found at:  https://stackoverflow.com/questions/39114863/applying-a-cifilter-to-a-video-file-and-saving-it
+            //                                              https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
             
             // For filter affect
             
             let avAsset = AVURLAsset(url: videoURL)
+            let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")!
             
-            let filter = CIFilter(name: "CIPhotoEffectTonal")!
+            // https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
+            let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
+            let watermarkImage = CIImage(image: UIImage(named: "watermark")!)!
+            
             let composition = AVVideoComposition(asset: avAsset, applyingCIFiltersWithHandler: { request in
                 
-
-                filter.setDefaults()
+                tonalFilter.setDefaults()
                 
-                
-                // Clamp to avoid blurring transparent pixels at the image edges
-                //let source = request.sourceImage.clampedToExtent()
-                let source = request.sourceImage
-                filter.setValue(source, forKey: kCIInputImageKey)
+                // Clamp to avoid issues with transparent pixels at the image edges
+                // Useful in the event other affects (e.g. blurring) are added later...
+                let source = request.sourceImage.clampedToExtent()
+                tonalFilter.setValue(source, forKey: kCIInputImageKey)
                 
                 // Vary filter parameters based on video timing
                 //let seconds = CMTimeGetSeconds(request.compositionTime)
                 //filter.setValue(seconds * 10.0, forKey: kCIInputRadiusKey)
                 
-                // Crop the blurred output to the bounds of the original image
-                //let output = filter.outputImage!.cropped(to: request.sourceImage.extent)
-                let output = filter.outputImage!
+                let tonalOutput = tonalFilter.outputImage!
+                
+                // Add watermark
+                watermarkFilter.setValue(tonalOutput, forKey: kCIInputBackgroundImageKey)
+                let transform = CGAffineTransform(translationX: request.sourceImage.extent.width - watermarkImage.extent.width - 2, y: 0)
+                watermarkFilter.setValue(watermarkImage.transformed(by: transform), forKey: kCIInputImageKey)
+                
+                // Crop the final output to the bounds of the original image
+                let output = watermarkFilter.outputImage!.cropped(to: request.sourceImage.extent)
                 
                 // Provide the filter output to the composition
                 request.finish(with: output, context: nil)
             })
-            
-            
+           
             let playerItem = AVPlayerItem(asset: avAsset)
             playerItem.videoComposition = composition
             let player = AVPlayer(playerItem: playerItem)
