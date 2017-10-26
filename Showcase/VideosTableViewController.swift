@@ -240,13 +240,10 @@ extension VideosTableViewController: UITableViewDelegate {
             
             print("Trying to load video file at url = + \(videoURL)")
             
-            // Create an AVPlayer, passing it the URL.
-            //let player = AVPlayer(url: videoURL)
-            
             // Filter code based on infomrmation found at:  https://stackoverflow.com/questions/39114863/applying-a-cifilter-to-a-video-file-and-saving-it
             //                                              https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
             
-            // For filter affect
+            // For black & white filter affect
             
             let avAsset = AVURLAsset(url: videoURL)
             let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")!
@@ -254,7 +251,8 @@ extension VideosTableViewController: UITableViewDelegate {
             // https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
             let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
             let watermarkImage = CIImage(image: UIImage(named: "watermark")!)!
-            
+
+            // Begin composition
             let composition = AVVideoComposition(asset: avAsset, applyingCIFiltersWithHandler: { request in
                 
                 tonalFilter.setDefaults()
@@ -272,16 +270,56 @@ extension VideosTableViewController: UITableViewDelegate {
                 
                 // Add watermark
                 watermarkFilter.setValue(tonalOutput, forKey: kCIInputBackgroundImageKey)
-                let transform = CGAffineTransform(translationX: request.sourceImage.extent.width - watermarkImage.extent.width - 2, y: 0)
-                watermarkFilter.setValue(watermarkImage.transformed(by: transform), forKey: kCIInputImageKey)
+                let watermarkTransform: CGAffineTransform = CGAffineTransform(translationX: request.sourceImage.extent.width - watermarkImage.extent.width - 2, y: 0)
+                watermarkFilter.setValue(watermarkImage.transformed(by: watermarkTransform), forKey: kCIInputImageKey)
                 
                 // Crop the final output to the bounds of the original image
-                let output = watermarkFilter.outputImage!.cropped(to: request.sourceImage.extent)
+                let watermarkOutput = watermarkFilter.outputImage!
+                
+                // Add title
+                // Create overlay title
+                let titleLayer = CATextLayer()
+                
+                let shadow = NSShadow()
+                shadow.shadowColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                shadow.shadowOffset = CGSize(width: 0, height: 2)
+                
+                // Attributed string
+                let myAttributes = [
+                    NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Bold", size: 10.0)! , // font
+                    NSAttributedStringKey.foregroundColor: UIColor.white, // font color
+                    NSAttributedStringKey.shadow: shadow   // shadow
+                ]
+                let myAttributedString = NSAttributedString(string: video.title ?? "No Title", attributes: myAttributes )
+                titleLayer.string = myAttributedString
+                //titleLayer.font = CTFontCreateWithName("HelveticaNeue-Bold" as CFString, 18, nil)
+                titleLayer.fontSize = 10
+                //titleLayer.foregroundColor
+                titleLayer.shadowOpacity = 0
+                // https://stackoverflow.com/questions/3815443/how-to-get-text-in-a-catextlayer-to-be-clear
+                titleLayer.contentsScale = UIScreen.main.scale
+                titleLayer.isWrapped = true
+                //titleLayer.alignmentMode = kCAAlignmentCenter
+                
+                let scale = UIScreen.main.scale
+                
+                titleLayer.frame = CGRect(x: 0, y: 50, width: request.sourceImage.extent.width / scale, height: request.sourceImage.extent.height / (6 * scale))
+                
+                let titleUIImage = titleLayer.imageFromLayer(layer: titleLayer)
+                let titleFilter = CIFilter(name: "CISourceOverCompositing")!
+                let titleImage = CIImage(image: titleUIImage!)!
+                titleFilter.setValue(watermarkOutput, forKey: kCIInputBackgroundImageKey)
+                let titleTransform = CGAffineTransform(translationX: 5, y: request.sourceImage.extent.height - titleImage.extent.height)
+
+                titleFilter.setValue(titleImage.transformed(by: titleTransform), forKey: kCIInputImageKey)
+                
+                // Crop the final output to the bounds of the original image
+                let output = titleFilter.outputImage!.cropped(to: request.sourceImage.extent)
                 
                 // Provide the filter output to the composition
                 request.finish(with: output, context: nil)
             })
-           
+            
             let playerItem = AVPlayerItem(asset: avAsset)
             playerItem.videoComposition = composition
             let player = AVPlayer(playerItem: playerItem)
@@ -293,6 +331,23 @@ extension VideosTableViewController: UITableViewDelegate {
             // Modally present the player and call the player's play() method when complete.
             present(controller, animated: true) {
                 player.play()
+                
+                
+            /*
+ 
+                 
+                 for sharing do the following:
+                 
+                 let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset1920x1200)
+                 export.outputFileType = AVFileTypeQuickTimeMovie
+                 export.outputURL = outURL
+                 export.videoComposition = composition
+                 
+                 export.exportAsynchronouslyWithCompletionHandler(/*...*/)
+ 
+ */
+                
+                
             }
         }
     }
@@ -426,3 +481,18 @@ extension VideosTableViewController: UITableViewDelegate {
         }
     }
 }
+
+extension CALayer {
+    
+    
+    // https://stackoverflow.com/questions/3454356/uiimage-from-calayer-iphone-sdk
+    func imageFromLayer(layer: CALayer) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return outputImage
+    }
+}
+
