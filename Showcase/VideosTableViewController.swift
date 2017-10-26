@@ -12,7 +12,6 @@ import CoreData
 import MediaPlayer
 import MobileCoreServices
 import Photos
-import FirebaseAuth
 import AVKit
 import AVFoundation
 
@@ -132,66 +131,7 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
         if mediaType == kUTTypeMovie {
             guard let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL else { return }
             
-            let fm = FileManager.default
-            
-            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-            
-            // https://stackoverflow.com/questions/41162610/create-directory-in-swift-3-0
-            let videoPath = "showcase_videos/" + Auth.auth().currentUser!.uid
-            let videoDirectory = documentDirectory.appendingPathComponent(videoPath)
-            let videoURLString = videoPath + "/\(Double(Date.timeIntervalSinceReferenceDate * 1000)).MOV"
-            let url = documentDirectory.appendingPathComponent(videoURLString)
-            
-            if !fm.fileExists(atPath: videoDirectory.path) {
-                do {
-                    try fm.createDirectory(atPath: videoDirectory.path, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    print("Couldn't create document directory")
-                }
-            }
-            
-            print("Document directory is \(videoDirectory)")
-            
-            do {
-                try fm.moveItem(at: movieURL as URL, to: url)
-                print("Moved the movie file from the temporary directory.")
-                print("New location is: \(url)")
-            } catch {
-                let saveError = error as NSError
-                print("Failed to move the movie file from the temporary directory.")
-                print("\(saveError), \(saveError.localizedDescription)")
-                return
-            }
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let stack = appDelegate.stack
-            
-            stack.performBackgroundBatchOperation() { (workerContext) in
-                
-                let backgroundScript = workerContext.object(with: self.script.objectID) as! Script
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                dateFormatter.timeStyle = .medium
-                
-                workerContext.performAndWait {
-                    _ = Video(title: backgroundScript.title! + " - \(dateFormatter.string(from: Date()))",
-                        script: backgroundScript,
-                        url: videoURLString,
-                        insertInto: workerContext)
-                }
-                
-                do {
-                    if workerContext.hasChanges {
-                        try workerContext.save()
-                    }
-                } catch {
-                    let saveError = error as NSError
-                    print("Unable to Save Video")
-                    print("\(saveError), \(saveError.localizedDescription)")
-                }
-            }
+            VideoManager.sharedInstance.saveVideo(atURL: movieURL as URL, forScript: self.script)
         }
     }
     
