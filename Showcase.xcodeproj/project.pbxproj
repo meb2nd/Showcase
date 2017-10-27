@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */; };
 		12468D091FA27E9400863EFD /* VideoViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D081FA27E9400863EFD /* VideoViewHelper.swift */; };
 		12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D0A1FA28C8D00863EFD /* VideoManager.swift */; };
 		125788E31F95500600ACA76A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125788E21F95500600ACA76A /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewControllerExtensions.swift; sourceTree = "<group>"; };
 		12468D081FA27E9400863EFD /* VideoViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewHelper.swift; sourceTree = "<group>"; };
 		12468D0A1FA28C8D00863EFD /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
 		125788DF1F95500600ACA76A /* Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,17 +136,17 @@
 		129CB79E1F97D27F00DBDBAA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */,
 				12C8E4051F983DE400D808F6 /* Video.swift */,
 				12C8E4061F983DE400D808F6 /* Video+CoreDataProperties.swift */,
 				12C8E4071F983DE400D808F6 /* Script.swift */,
 				12C8E4081F983DE400D808F6 /* Script+CoreDataProperties.swift */,
 				129CB7A11F97D36200DBDBAA /* Clients */,
-				129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */,
 				12C8E4021F98359100D808F6 /* Model.xcdatamodeld */,
 				12C8E40D1F984F3300D808F6 /* FIRDatabaseClient.swift */,
 				1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */,
-				1292FE531F9A4ACA006B599D /* WatermarkPage.swift */,
 				12468D0A1FA28C8D00863EFD /* VideoManager.swift */,
+				1292FE531F9A4ACA006B599D /* WatermarkPage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -162,15 +164,16 @@
 		12B5B3441F963A1F00F92872 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				12C8E4131F99462E00D808F6 /* CoreDataTableViewController.swift */,
-				12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */,
-				12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */,
-				12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */,
-				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
 				12C8E4151F99A74F00D808F6 /* AlertViewHelper.swift */,
-				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
+				12C8E4131F99462E00D808F6 /* CoreDataTableViewController.swift */,
+				1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */,
+				12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
+				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
+				12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */,
+				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
 				12468D081FA27E9400863EFD /* VideoViewHelper.swift */,
+				12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */,
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
 				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
 				12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */,

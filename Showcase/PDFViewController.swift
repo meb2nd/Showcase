@@ -66,7 +66,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         view.sendSubview(toBack: pdfView)
         
         
-        
         // Disable UI
         enableUI(false)
         
@@ -88,11 +87,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
                 self.favoriteButton.tintColor = (self.script.isFavorite) ? nil : .black
             }
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Actions
@@ -179,7 +173,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         }
     }
 }
-
 
 // MARK - String
 // This extension is from: https://medium.com/@johnsundell/exploring-the-new-string-api-in-swift-4-ce7d2c1cae00
