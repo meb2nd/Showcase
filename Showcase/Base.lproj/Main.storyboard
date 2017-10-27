@@ -58,7 +58,6 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="mMo-KH-Di9"/>
                                     <barButtonItem title="Videos" id="shb-LR-t15">
                                         <connections>
-                                            <action selector="viewVideos:" destination="AbI-g8-gMn" id="chI-JP-YYz"/>
                                             <segue destination="bev-Lp-aD6" kind="show" identifier="showVideosList" id="inB-Pe-kYg"/>
                                         </connections>
                                     </barButtonItem>

@@ -126,9 +126,6 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         }
     }
     
-    @IBAction func viewVideos(_ sender: Any) {
-    }
-    
     // MARK: - UI Functions
     
     func enableUI (_ isEnabled: Bool) {
