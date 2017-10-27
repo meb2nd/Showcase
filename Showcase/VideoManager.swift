@@ -15,6 +15,45 @@ class VideoManager {
     
     private init() {}
     
+    func delete(video: Video) {
+        
+        let fm = FileManager.default
+        
+        guard  let videoURLString = video.url,
+            
+            let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first  else {
+                return
+            }
+            
+            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+            
+            print("Trying to delete video file at url = + \(videoURL)")
+            
+            do {
+                try fm.removeItem(at: videoURL)
+            } catch {
+                print("Failed to delete video file at url = + \(videoURL)")
+            }
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.stack.context
+            
+            if let video = context.object(with: video.objectID) as? Video {
+                
+                context.delete(video)
+                
+                context.performAndWait {
+                    do {
+                        if context.hasChanges {
+                            try context.save()
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+    }
+    
     func saveVideo(atURL videoURL: URL, forScript script: Script) {
         
         let fm = FileManager.default

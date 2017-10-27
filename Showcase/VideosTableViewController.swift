@@ -212,41 +212,9 @@ extension VideosTableViewController: UITableViewDelegate {
     
     func handleDeleteVideo(alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteVideoIndexPath,
-            let video = fetchedResultsController!.object(at: indexPath) as? Video,
-            let videoURLString = video.url {
+            let video = fetchedResultsController!.object(at: indexPath) as? Video {
             
-            let fm = FileManager.default
-            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-            
-            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
-            
-            print("Trying to delete video file at url = + \(videoURL)")
-            
-            do {
-                try fm.removeItem(at: videoURL)
-            } catch {
-                print("Failed to delete video file at url = + \(videoURL)")
-            }
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.stack.context
-            
-            if let video = context.object(with: video.objectID) as? Video {
-                
-                context.delete(video)
-                
-                context.performAndWait {
-                    do {
-                        if context.hasChanges {
-                            try context.save()
-                        }
-                    } catch {
-                        print(error)
-                    }
-                }
-            }
+            VideoManager.sharedInstance.delete(video: video)
             
             deleteVideoIndexPath = nil
         }
