@@ -41,13 +41,7 @@ class ScriptsTableViewController: CoreDataTableViewController {
         super.viewDidLoad()
         configureAuth()
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     deinit {
         
         Auth.auth().removeStateDidChangeListener(_authHandle)

@@ -16,6 +16,8 @@ class VideoViewHelper {
     
     private init() {}
     
+    // MARK: - Main Video Functions
+    
     func play(video: Video, presentingController: UIViewController) {
         
         let fm = FileManager.default
@@ -48,7 +50,7 @@ class VideoViewHelper {
             let tonalOutput = tonalFilter.outputImage!
             
             // Add watermark
-            // https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
+            // Code below based on information from:  https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
             let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
             let watermarkImage = CIImage(image: UIImage(named: "watermark")!)!
             watermarkFilter.setValue(tonalOutput, forKey: kCIInputBackgroundImageKey)
@@ -72,7 +74,7 @@ class VideoViewHelper {
             titleLayer.string = myAttributedString
             titleLayer.fontSize = 10
             titleLayer.shadowOpacity = 0
-            // https://stackoverflow.com/questions/3815443/how-to-get-text-in-a-catextlayer-to-be-clear
+            // Code fix for pixelated font found at: https://stackoverflow.com/questions/3815443/how-to-get-text-in-a-catextlayer-to-be-clear
             let scale = UIScreen.main.scale
             titleLayer.contentsScale = scale
             titleLayer.isWrapped = true
@@ -124,6 +126,8 @@ class VideoViewHelper {
         }
     }
     
+    
+    // Code below is based on information found at: http://seanwernimont.weebly.com/blog/december-02nd-2015
     func share(video: Video, presentingController: UIViewController) {
         
         let fm = FileManager.default
@@ -165,6 +169,8 @@ class VideoViewHelper {
         presentingController.present(controller, animated: true, completion: nil)
     }
 }
+
+// MARK: - CALayer (Helper functions)
 
 extension CALayer {
     

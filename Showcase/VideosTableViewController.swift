@@ -220,9 +220,6 @@ extension VideosTableViewController: UITableViewDelegate {
         deleteVideoIndexPath = nil
     }
     
-    // Code for the completionWithItemsHandler in the following method is based upon information found at the following URL
-    // http://seanwernimont.weebly.com/blog/december-02nd-2015
-    
     func shareVideo(indexPath: IndexPath) {
         
         if let video = fetchedResultsController!.object(at: indexPath) as? Video {

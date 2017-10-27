@@ -15,6 +15,8 @@ class VideoManager {
     
     private init() {}
     
+    // MARK: - Main Video Functions
+    
     func delete(video: Video) {
         
         let fm = FileManager.default
