@@ -11,16 +11,12 @@ import UIKit
 import CoreData
 import MediaPlayer
 import MobileCoreServices
-import Photos
-import AVKit
-import AVFoundation
 
 class VideosTableViewController: CoreDataTableViewController, UINavigationControllerDelegate {
     
     // MARK: - Properties
     var script: Script!
     var deleteVideoIndexPath: IndexPath? = nil
-    var videoOutput: AVPlayerItemVideoOutput!
     
     // MARK: - Outlets
     
@@ -229,58 +225,9 @@ extension VideosTableViewController: UITableViewDelegate {
     
     func shareVideo(indexPath: IndexPath) {
         
-        if let video = fetchedResultsController!.object(at: indexPath) as? Video,
-            let videoURLString = video.url  {
+        if let video = fetchedResultsController!.object(at: indexPath) as? Video {
             
-            let fm = FileManager.default
-            
-            guard let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-            }
-            
-            let videoURL = documentDirectory.appendingPathComponent(videoURLString)
-            
-            print("Trying to load video file at url = + \(videoURL)")
-            
-            let videoToShare = documentDirectory.absoluteString + videoURLString
-            let url = URL(fileURLWithPath: videoToShare)
-            
-            let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            
-            controller.completionWithItemsHandler = {
-                (activity, success, items, error) in
-                if(success && error == nil){
-                    
-                    self.dismiss(animated: true, completion: nil)
-                    
-                } else {
-                    
-                    let controller = UIAlertController()
-                    controller.title = "Video Share Incomplete"
-                    controller.message = "Share was either cancelled or failed."
-                    
-                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in controller.dismiss(animated: true, completion: nil)
-                    }
-                    
-                    controller.addAction(okAction)
-                    self.present(controller, animated: true, completion: nil)
-                }
-            }
-            
-            present(controller, animated: true, completion: nil)
+            VideoViewHelper.sharedInstance.share(video: video, presentingController: self)
         }
-    }
-}
-
-extension CALayer {
-    
-    // https://stackoverflow.com/questions/3454356/uiimage-from-calayer-iphone-sdk
-    func imageFromLayer(layer: CALayer) -> UIImage? {
-        
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
-        layer.render(in: UIGraphicsGetCurrentContext()!)
-        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return outputImage
     }
 }

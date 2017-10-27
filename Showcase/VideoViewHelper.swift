@@ -123,4 +123,58 @@ class VideoViewHelper {
             
         }
     }
+    
+    func share(video: Video, presentingController: UIViewController) {
+        
+        let fm = FileManager.default
+        
+        guard let videoURLString = video.url,
+            let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return
+        }
+        
+        let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+        
+        print("Trying to load video file at url = + \(videoURL)")
+        
+        let videoToShare = documentDirectory.absoluteString + videoURLString
+        let url = URL(fileURLWithPath: videoToShare)
+        
+        let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        
+        controller.completionWithItemsHandler = { (activity, success, items, error) in
+            
+            if(success && error == nil) {
+                
+                presentingController.dismiss(animated: true, completion: nil)
+                
+            } else {
+                
+                let controller = UIAlertController()
+                controller.title = "Video Share Incomplete"
+                controller.message = "Share was either cancelled or failed."
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in controller.dismiss(animated: true, completion: nil)
+                }
+                
+                controller.addAction(okAction)
+                presentingController.present(controller, animated: true, completion: nil)
+            }
+        }
+        
+        presentingController.present(controller, animated: true, completion: nil)
+    }
+}
+
+extension CALayer {
+    
+    // https://stackoverflow.com/questions/3454356/uiimage-from-calayer-iphone-sdk
+    func imageFromLayer(layer: CALayer) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return outputImage
+    }
 }
