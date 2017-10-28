@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
+import FirebaseFacebookAuthUI
 
 protocol FUIAuthViewController: class {
     
@@ -36,6 +37,7 @@ extension FUIAuthViewController where Self: UIViewController {
     }
     
     func loginSession() {
+        //FUIAuth.defaultAuthUI()?.delegate = self
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
         self.present(authViewController, animated: true, completion: nil)
     }
@@ -68,7 +70,7 @@ extension FUIAuthViewController where Self: UIViewController {
         // Listen for changes in the authorization state
         _authHandle = Auth.auth().addStateDidChangeListener({ (auth, user) in
             
-            let provider: [FUIAuthProvider] = [FUIGoogleAuth()]
+            let provider: [FUIAuthProvider] = [FUIFacebookAuth(), FUIGoogleAuth()]
             FUIAuth.defaultAuthUI()?.providers = provider
             
             self.refreshData()
@@ -89,8 +91,14 @@ extension FUIAuthViewController where Self: UIViewController {
                 self.resetTabBar()
                 self.user = activeUser
                 self.signedInStatus(isSignedIn: true)
-                let name = user!.email!.components(separatedBy: "@")[0]
-                self.userName = name
+
+                if let name = user!.email?.components(separatedBy: "@")[0] {
+                    self.userName = name
+                } else if let displayName = user?.displayName {
+                    self.userName = displayName
+                } else {
+                    self.userName = "Anonymous"
+                }
             }
         })
     }

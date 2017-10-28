@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */; };
+		1240E2841FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */; };
 		12468D091FA27E9400863EFD /* VideoViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D081FA27E9400863EFD /* VideoViewHelper.swift */; };
 		12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D0A1FA28C8D00863EFD /* VideoManager.swift */; };
 		125788E31F95500600ACA76A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125788E21F95500600ACA76A /* AppDelegate.swift */; };
@@ -42,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewControllerExtensions.swift; sourceTree = "<group>"; };
+		1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowcaseAuthPickerViewController.swift; sourceTree = "<group>"; };
+		1240E2851FA379A3005A6551 /* Showcase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Showcase.entitlements; sourceTree = "<group>"; };
 		12468D081FA27E9400863EFD /* VideoViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewHelper.swift; sourceTree = "<group>"; };
 		12468D0A1FA28C8D00863EFD /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
 		125788DF1F95500600ACA76A /* Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Showcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +114,7 @@
 		125788E11F95500600ACA76A /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				1240E2851FA379A3005A6551 /* Showcase.entitlements */,
 				125788E21F95500600ACA76A /* AppDelegate.swift */,
 				12A04A481F97F04500C75CC7 /* GCDBlackBox.swift */,
 				129CB79E1F97D27F00DBDBAA /* Models */,
@@ -169,6 +173,7 @@
 				1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */,
 				12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
+				1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */,
 				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
 				12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */,
 				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
@@ -239,6 +244,11 @@
 					125788DE1F95500600ACA76A = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -378,6 +388,7 @@
 				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
 				12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */,
 				1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */,
+				1240E2841FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift in Sources */,
 				12C8E40A1F983DE400D808F6 /* Video+CoreDataProperties.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,
 				12C8E40E1F984F3300D808F6 /* FIRDatabaseClient.swift in Sources */,
@@ -536,6 +547,7 @@
 			baseConfigurationReference = 3B10BEABC99B57114DA58577 /* Pods-Showcase.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Showcase/Showcase.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5FNV85WPP;
 				INFOPLIST_FILE = Showcase/Info.plist;
@@ -552,6 +564,7 @@
 			baseConfigurationReference = F2B9A2857FFBB50B1872ED35 /* Pods-Showcase.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Showcase/Showcase.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5FNV85WPP;
 				INFOPLIST_FILE = Showcase/Info.plist;
