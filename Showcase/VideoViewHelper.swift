@@ -19,7 +19,7 @@ class VideoViewHelper {
     // MARK: - Main Video Functions
     
     func play(video: Video, presentingController: UIViewController) {
-
+        
         
         // Begin composition
         let (comp, asset) = createComposition(forVideo: video)
@@ -41,71 +41,66 @@ class VideoViewHelper {
         // Modally present the player and call the player's play() method when complete.
         presentingController.present(controller, animated: true) {
             player.play()
-            
-            
-            /*
-             
-             
-             for sharing do the following:
-             
-             let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset1920x1200)
-             export.outputFileType = AVFileTypeQuickTimeMovie
-             export.outputURL = outURL
-             export.videoComposition = composition
-             Filemanager.default.removeItem(at: output) // Delete exisiting temp file if exists
-             export.exportAsynchronouslyWithCompletionHandler(/*...*/)  // Open share when done
-             
-             */
-            
         }
     }
     
     
     // Code below is based on information found at: http://seanwernimont.weebly.com/blog/december-02nd-2015
+    //                                              https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
+    //                                              https://www.lynda.com/Swift-tutorials/AVFoundation-Essentials-iOS-Swift/504183-2.html
     func share(video: Video, presentingController: UIViewController) {
         
-        let fm = FileManager.default
+        // Begin composition
+        let (comp, asset) = createComposition(forVideo: video)
         
-        guard let videoURLString = video.url,
-            let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        guard let composition = comp,
+            let avAsset = asset else {
+                AlertViewHelper.presentAlert(presentingController, title: "Video Error", message: "Cannot play the requested video.")
                 return
         }
         
-        let videoURL = documentDirectory.appendingPathComponent(videoURLString)
-        
-        print("Trying to load video file at url = + \(videoURL)")
-        
-        let videoToShare = documentDirectory.absoluteString + videoURLString
-        let url = URL(fileURLWithPath: videoToShare)
-        
-        let controller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        
-        controller.completionWithItemsHandler = { (activity, success, items, error) in
-            
-            if(success && error == nil) {
-                
-                presentingController.dismiss(animated: true, completion: nil)
-                
-            } else {
-                
-                let controller = UIAlertController()
-                controller.title = "Video Share Incomplete"
-                controller.message = "Share was either cancelled or failed."
-                
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in controller.dismiss(animated: true, completion: nil)
-                }
-                
-                controller.addAction(okAction)
-                presentingController.present(controller, animated: true, completion: nil)
-            }
+        let videoToShare = NSTemporaryDirectory() + "tempMonologue.mp4"
+        let shareURL = URL(fileURLWithPath: videoToShare)
+        guard let export = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPreset1920x1080) else {return}
+        export.outputFileType = AVFileType.mp4
+        export.outputURL = shareURL
+        export.videoComposition = composition
+        do {
+            try FileManager.default.removeItem(at: shareURL) // Delete exisiting temp file if exists
+        } catch {
+            print("There was an error deleting temp video file: \(error)")
         }
         
-        presentingController.present(controller, animated: true, completion: nil)
+        export.exportAsynchronously(completionHandler: {
+            switch export.status {
+            case .completed:
+                print("success")
+                performUIUpdatesOnMain {
+                    self.presentActivityView(withURL: shareURL, presentingController: presentingController)
+                }
+                break
+            case .cancelled:
+                print("cancelled")
+                break
+            case .exporting:
+                print("exporting")
+                break
+            case .failed:
+                print("failed: \(String(describing: export.error))")
+                break
+            case .unknown:
+                print("unknown")
+                break
+            case .waiting:
+                print("waiting")
+                break
+            }
+        })
     }
     
     // MARK:  Helper Functions
     
-    func createTitleImage(forVideo video: Video, request: AVAsynchronousCIImageFilteringRequest) -> UIImage? {
+    fileprivate func createTitleImage(forVideo video: Video, request: AVAsynchronousCIImageFilteringRequest) -> UIImage? {
         
         let titleLayer = CATextLayer()
         let shadow = NSShadow()
@@ -134,8 +129,8 @@ class VideoViewHelper {
         return titleUIImage
     }
     
-    func createComposition(forVideo video: Video) -> (AVVideoComposition?, AVAsset?) {
-       
+    fileprivate func createComposition(forVideo video: Video) -> (AVVideoComposition?, AVAsset?) {
+        
         let fm = FileManager.default
         
         guard let videoURLString = video.url,
@@ -191,6 +186,33 @@ class VideoViewHelper {
         })
         
         return (composition, avAsset)
+    }
+    
+    fileprivate func presentActivityView(withURL url: URL, presentingController: UIViewController) {
+        
+        let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        
+        activityController.completionWithItemsHandler = { (activity, success, items, error) in
+            
+            if (success && error == nil) {
+                
+                presentingController.dismiss(animated: true, completion: nil)
+                
+            } else {
+                
+                let alertController = UIAlertController()
+                alertController.title = "Video Share Incomplete"
+                alertController.message = "Share was either cancelled or failed."
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in alertController.dismiss(animated: true, completion: nil)
+                }
+                
+                alertController.addAction(okAction)
+                presentingController.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+        presentingController.present(activityController, animated: true, completion: nil)
     }
 }
 
