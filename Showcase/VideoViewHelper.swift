@@ -19,82 +19,16 @@ class VideoViewHelper {
     // MARK: - Main Video Functions
     
     func play(video: Video, presentingController: UIViewController) {
-        
-        let fm = FileManager.default
-        
-        guard let videoURLString = video.url,
-            let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                return
-        }
-        
-        let videoURL = documentDirectory.appendingPathComponent(videoURLString)
-        
-        print("Trying to load video file at url = + \(videoURL)")
-        
-        // Filter code based on information found at:  https://stackoverflow.com/questions/39114863/applying-a-cifilter-to-a-video-file-and-saving-it
-        //                                              https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
-        
-        
-        let avAsset = AVURLAsset(url: videoURL)
+
         
         // Begin composition
-        let composition = AVVideoComposition(asset: avAsset, applyingCIFiltersWithHandler: { request in
-            
-            // Add black & white filter affect
-            // Clamp to avoid issues with transparent pixels at the image edges
-            // Useful in the event other affects (e.g. blurring) are added later...
-            let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")!
-            tonalFilter.setDefaults()
-            let source = request.sourceImage.clampedToExtent()
-            tonalFilter.setValue(source, forKey: kCIInputImageKey)
-            let tonalOutput = tonalFilter.outputImage!
-            
-            // Add watermark
-            // Code below based on information from:  https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
-            let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
-            let watermarkImage = CIImage(image: UIImage(named: "watermark")!)!
-            watermarkFilter.setValue(tonalOutput, forKey: kCIInputBackgroundImageKey)
-            let watermarkTransform: CGAffineTransform = CGAffineTransform(translationX: request.sourceImage.extent.width - watermarkImage.extent.width - 2, y: 0)
-            watermarkFilter.setValue(watermarkImage.transformed(by: watermarkTransform), forKey: kCIInputImageKey)
-            let watermarkOutput = watermarkFilter.outputImage!
-            
-            // Add title overlay
-            let titleLayer = CATextLayer()
-            let shadow = NSShadow()
-            shadow.shadowColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            shadow.shadowOffset = CGSize(width: 0, height: 2)
-            
-            // Attributed string
-            let myAttributes = [
-                NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Bold", size: 10.0)! , // font
-                NSAttributedStringKey.foregroundColor: UIColor.white, // font color
-                NSAttributedStringKey.shadow: shadow   // shadow
-            ]
-            let myAttributedString = NSAttributedString(string: video.title ?? "No Title", attributes: myAttributes )
-            titleLayer.string = myAttributedString
-            titleLayer.fontSize = 10
-            titleLayer.shadowOpacity = 0
-            // Code fix for pixelated font found at: https://stackoverflow.com/questions/3815443/how-to-get-text-in-a-catextlayer-to-be-clear
-            let scale = UIScreen.main.scale
-            titleLayer.contentsScale = scale
-            titleLayer.isWrapped = true
-            titleLayer.alignmentMode = kCAAlignmentCenter
-            titleLayer.frame = CGRect(x: 0, y: 50, width: request.sourceImage.extent.width / scale, height: request.sourceImage.extent.height / (6 * scale))
-            
-            let titleUIImage = titleLayer.imageFromLayer(layer: titleLayer)
-            let titleFilter = CIFilter(name: "CISourceOverCompositing")!
-            let titleImage = CIImage(image: titleUIImage!)!
-            titleFilter.setValue(watermarkOutput, forKey: kCIInputBackgroundImageKey)
-            let titleTransform = CGAffineTransform(translationX: 5, y: request.sourceImage.extent.height - titleImage.extent.height)
-            
-            titleFilter.setValue(titleImage.transformed(by: titleTransform), forKey: kCIInputImageKey)
-            
-            // Crop the final output to the bounds of the original image
-            let output = titleFilter.outputImage!.cropped(to: request.sourceImage.extent)
-            
-            // Provide the filter output to the composition
-            request.finish(with: output, context: nil)
-        })
+        let (comp, asset) = createComposition(forVideo: video)
+        
+        guard let composition = comp,
+            let avAsset = asset else {
+                AlertViewHelper.presentAlert(presentingController, title: "Video Error", message: "Cannot play the requested video.")
+                return
+        }
         
         let playerItem = AVPlayerItem(asset: avAsset)
         playerItem.videoComposition = composition
@@ -118,8 +52,8 @@ class VideoViewHelper {
              export.outputFileType = AVFileTypeQuickTimeMovie
              export.outputURL = outURL
              export.videoComposition = composition
-             
-             export.exportAsynchronouslyWithCompletionHandler(/*...*/)
+             Filemanager.default.removeItem(at: output) // Delete exisiting temp file if exists
+             export.exportAsynchronouslyWithCompletionHandler(/*...*/)  // Open share when done
              
              */
             
@@ -167,6 +101,96 @@ class VideoViewHelper {
         }
         
         presentingController.present(controller, animated: true, completion: nil)
+    }
+    
+    // MARK:  Helper Functions
+    
+    func createTitleImage(forVideo video: Video, request: AVAsynchronousCIImageFilteringRequest) -> UIImage? {
+        
+        let titleLayer = CATextLayer()
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        shadow.shadowOffset = CGSize(width: 0, height: 2)
+        
+        // Attributed string
+        let myAttributes = [
+            NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Bold", size: 10.0)! , // font
+            NSAttributedStringKey.foregroundColor: UIColor.white, // font color
+            NSAttributedStringKey.shadow: shadow   // shadow
+        ]
+        let myAttributedString = NSAttributedString(string: video.title ?? "No Title", attributes: myAttributes )
+        titleLayer.string = myAttributedString
+        titleLayer.fontSize = 10
+        titleLayer.shadowOpacity = 0
+        // Code fix for pixelated font found at: https://stackoverflow.com/questions/3815443/how-to-get-text-in-a-catextlayer-to-be-clear
+        let scale = UIScreen.main.scale
+        titleLayer.contentsScale = scale
+        titleLayer.isWrapped = true
+        titleLayer.alignmentMode = kCAAlignmentCenter
+        titleLayer.frame = CGRect(x: 0, y: 50, width: request.sourceImage.extent.width / scale, height: request.sourceImage.extent.height / (6 * scale))
+        
+        let titleUIImage = titleLayer.imageFromLayer(layer: titleLayer)
+        
+        return titleUIImage
+    }
+    
+    func createComposition(forVideo video: Video) -> (AVVideoComposition?, AVAsset?) {
+       
+        let fm = FileManager.default
+        
+        guard let videoURLString = video.url,
+            let documentDirectory = fm.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                return (nil, nil)
+        }
+        
+        let videoURL = documentDirectory.appendingPathComponent(videoURLString)
+        
+        print("Trying to load video file at url = + \(videoURL)")
+        
+        // Filter code based on information found at:  https://stackoverflow.com/questions/39114863/applying-a-cifilter-to-a-video-file-and-saving-it
+        //                                              https://developer.apple.com/videos/play/wwdc2015/510/?time=1222
+        
+        
+        let avAsset = AVURLAsset(url: videoURL)
+        
+        let composition = AVVideoComposition(asset: avAsset, applyingCIFiltersWithHandler: { request in
+            
+            // Add black & white filter affect
+            // Clamp to avoid issues with transparent pixels at the image edges
+            // Useful in the event other affects (e.g. blurring) are added later...
+            let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")!
+            tonalFilter.setDefaults()
+            let source = request.sourceImage.clampedToExtent()
+            tonalFilter.setValue(source, forKey: kCIInputImageKey)
+            let tonalOutput = tonalFilter.outputImage!
+            
+            // Add watermark
+            // Code below based on information from:  https://medium.com/@dzungnguyen.hcm/add-overlay-image-to-video-21d9cc03c9eb
+            let watermarkFilter = CIFilter(name: "CISourceOverCompositing")!
+            let watermarkImage = CIImage(image: UIImage(named: "watermark")!)!
+            watermarkFilter.setValue(tonalOutput, forKey: kCIInputBackgroundImageKey)
+            let watermarkTransform: CGAffineTransform = CGAffineTransform(translationX: request.sourceImage.extent.width - watermarkImage.extent.width - 2, y: 0)
+            watermarkFilter.setValue(watermarkImage.transformed(by: watermarkTransform), forKey: kCIInputImageKey)
+            let watermarkOutput = watermarkFilter.outputImage!
+            
+            // Add title overlay
+            
+            let titleUIImage = self.createTitleImage(forVideo: video, request: request)
+            let titleFilter = CIFilter(name: "CISourceOverCompositing")!
+            let titleImage = CIImage(image: titleUIImage!)!
+            titleFilter.setValue(watermarkOutput, forKey: kCIInputBackgroundImageKey)
+            let titleTransform = CGAffineTransform(translationX: 5, y: request.sourceImage.extent.height - titleImage.extent.height)
+            
+            titleFilter.setValue(titleImage.transformed(by: titleTransform), forKey: kCIInputImageKey)
+            
+            // Crop the final output to the bounds of the original image
+            let output = titleFilter.outputImage!.cropped(to: request.sourceImage.extent)
+            
+            // Provide the filter output to the composition
+            request.finish(with: output, context: nil)
+        })
+        
+        return (composition, avAsset)
     }
 }
 
