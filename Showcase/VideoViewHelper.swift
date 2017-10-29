@@ -18,14 +18,25 @@ class VideoViewHelper {
     
     // MARK: - Main Video Functions
     
+    fileprivate func presentLoadingWindow(withTitle title: String, subtitle: String?, presentingController: UIViewController) -> ModalLoadingWindow {
+        let loadingWindow = ModalLoadingWindow(frame: presentingController.view.bounds)
+        loadingWindow.title = "Loading Video"
+        loadingWindow.subTitle = "Please wait ..."
+        presentingController.view.addSubview(loadingWindow)
+        return loadingWindow
+    }
+    
     func play(video: Video, presentingController: UIViewController) {
         
+        // Prepare loading window
+        let loadingWindow = presentLoadingWindow(withTitle: "Loading Video", subtitle: "Please wait ...", presentingController: presentingController)
         
         // Begin composition
         let (comp, asset) = createComposition(forVideo: video)
         
         guard let composition = comp,
             let avAsset = asset else {
+                loadingWindow.hide()
                 AlertViewHelper.presentAlert(presentingController, title: "Video Error", message: "Cannot play the requested video.")
                 return
         }
@@ -40,6 +51,7 @@ class VideoViewHelper {
         
         // Modally present the player and call the player's play() method when complete.
         presentingController.present(controller, animated: true) {
+            loadingWindow.hide()
             player.play()
         }
     }
@@ -50,12 +62,16 @@ class VideoViewHelper {
     //                                              https://www.lynda.com/Swift-tutorials/AVFoundation-Essentials-iOS-Swift/504183-2.html
     func share(video: Video, presentingController: UIViewController) {
         
+        // Prepare loading window
+        let loadingWindow = presentLoadingWindow(withTitle: "Loading Video", subtitle: "Please wait ...", presentingController: presentingController)
+        
         // Begin composition
         let (comp, asset) = createComposition(forVideo: video)
         
         guard let composition = comp,
             let avAsset = asset else {
-                AlertViewHelper.presentAlert(presentingController, title: "Video Error", message: "Cannot play the requested video.")
+                loadingWindow.hide()
+                AlertViewHelper.presentAlert(presentingController, title: "Video Error", message: "Cannot share the requested video.")
                 return
         }
         
@@ -76,23 +92,38 @@ class VideoViewHelper {
             case .completed:
                 print("success")
                 performUIUpdatesOnMain {
-                    self.presentActivityView(withURL: shareURL, presentingController: presentingController)
+                    self.presentActivityView(withURL: shareURL, presentingController: presentingController, loadingView: loadingWindow)
                 }
                 break
             case .cancelled:
                 print("cancelled")
+                performUIUpdatesOnMain {
+                    loadingWindow.hide()
+                }
                 break
             case .exporting:
                 print("exporting")
+                performUIUpdatesOnMain {
+                    loadingWindow.hide()
+                }
                 break
             case .failed:
                 print("failed: \(String(describing: export.error))")
+                performUIUpdatesOnMain {
+                    loadingWindow.hide()
+                }
                 break
             case .unknown:
                 print("unknown")
+                performUIUpdatesOnMain {
+                    loadingWindow.hide()
+                }
                 break
             case .waiting:
                 print("waiting")
+                performUIUpdatesOnMain {
+                    loadingWindow.hide()
+                }
                 break
             }
         })
@@ -188,7 +219,7 @@ class VideoViewHelper {
         return (composition, avAsset)
     }
     
-    fileprivate func presentActivityView(withURL url: URL, presentingController: UIViewController) {
+    fileprivate func presentActivityView(withURL url: URL, presentingController: UIViewController, loadingView: ModalLoadingWindow) {
         
         let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         
@@ -212,7 +243,9 @@ class VideoViewHelper {
             }
         }
         
-        presentingController.present(activityController, animated: true, completion: nil)
+        presentingController.present(activityController, animated: true, completion: {
+            loadingView.hide()
+        })
     }
 }
 
