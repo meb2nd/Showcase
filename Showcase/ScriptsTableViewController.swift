@@ -40,6 +40,7 @@ class ScriptsTableViewController: CoreDataTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureAuth()
+        setNavigationBarColors()
     }
 
     deinit {

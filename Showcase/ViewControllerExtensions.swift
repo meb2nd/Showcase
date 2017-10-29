@@ -18,6 +18,14 @@ extension UIViewController {
             print("unable to sign out: \(error)")
         }
     }
+    
+    func setNavigationBarColors() {
+        
+        let barColor =  UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.0)
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = barColor
+        navigationController?.toolbar.barTintColor =  UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.0)
+    }
 }
 
 // https://github.com/firebase/FirebaseUI-iOS/tree/5ed77bced4552bdff7aaf41e8b95bba5f84d4e40/samples/swift

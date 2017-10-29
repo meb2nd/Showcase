@@ -17,11 +17,11 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     // MARK: - Properties
     var script: Script!
     var deleteVideoIndexPath: IndexPath? = nil
+    var captureVideoButton1: UIBarButtonItem!
     
     // MARK: - Outlets
     
     @IBOutlet weak var videosTableView: UITableView!
-    @IBOutlet weak var captureVideoButton: UIBarButtonItem!
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     
@@ -32,6 +32,16 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         videosTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5)
         createFetchController()
         
+        captureVideoButton1 = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItems = [captureVideoButton1, spacer]
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: false)
     }
     
     // MARK: - CoreDataTableViewController functions
@@ -82,8 +92,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     @IBAction func logout(_ sender: Any) {
         logoutSession()
     }
+
     
-    @IBAction func pickAnImageFromCamera(_ sender: Any) {
+   @objc func pickAnImageFromCamera() {
         
         startCameraFromViewController(viewController: self, withDelegate: self)
     }

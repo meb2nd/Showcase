@@ -22,15 +22,13 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
     var user: User?
     var userName = "Anonymous"
     var isFavorite = false
+    var printButton: UIBarButtonItem!
+    var favoriteButton: UIBarButtonItem!
+    var videosButton: UIBarButtonItem!
     
     // MARK: - Outlets
-    
-    @IBOutlet weak var printButton: UIBarButtonItem!
-    @IBOutlet weak var favoriteButton: UIBarButtonItem!
-    @IBOutlet weak var videosButton: UIBarButtonItem!
+
     @IBOutlet weak var logoutButton: UIBarButtonItem!
-    
-    
     
     // MARK: - Life Cycle
     
@@ -38,12 +36,17 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         
         super.viewDidLoad()
         
+        // https://www.hackingwithswift.com/example-code/uikit/how-to-show-and-hide-a-toolbar-inside-a-uinavigationcontroller
+        
+        printButton = UIBarButtonItem(title: "Print", style: .plain, target: self, action: #selector(printPdf))
+        favoriteButton = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(toggleFavorite))
+        videosButton = UIBarButtonItem(title: "Videos", style: .plain, target: self, action: #selector(showVideos))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItems = [printButton, spacer, favoriteButton, spacer, videosButton]
+        
         activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
         activityView.center = view.center
         activityView.hidesWhenStopped = true
-        
-        let buttonIcon = UIImage(named: "heart")
-        favoriteButton.image = buttonIcon
         
         view.addSubview(activityView)
         
@@ -88,6 +91,16 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: false)
+    }
+    
     // MARK: - Actions
     
     @IBAction func logout(_ sender: Any) {
@@ -98,7 +111,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         printPdf ()
     }
     
-    @IBAction func toggleFavorite(_ sender: Any) {
+    @objc func toggleFavorite() {
         
         let shouldFavorite = !isFavorite
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -150,9 +163,13 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         }
     }
     
+    @objc func showVideos() {
+        performSegue(withIdentifier: "showVideosList", sender: self)
+    }
+    
     
     // Mark - Print PDF
-    func printPdf () {
+    @objc func printPdf () {
         if let document = script.document,
             UIPrintInteractionController.canPrint(document as Data) {
             let printInfo = UIPrintInfo(dictionary: nil)

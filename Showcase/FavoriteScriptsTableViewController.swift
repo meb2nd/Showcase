@@ -30,6 +30,7 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBarColors()
     }
     
     // MARK: - Actions

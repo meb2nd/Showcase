@@ -39,31 +39,6 @@
                     <view key="view" contentMode="scaleToFill" id="qmF-Yt-b5o">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H1F-WK-EjF">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Print" id="1Hf-yv-GA5">
-                                        <connections>
-                                            <action selector="print:" destination="AbI-g8-gMn" id="qz7-iF-zDT"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6Fk-Q0-SVm"/>
-                                    <barButtonItem title="Favorite" id="upo-PV-cTh">
-                                        <connections>
-                                            <action selector="toggleFavorite:" destination="AbI-g8-gMn" id="5l6-v2-eD5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="mMo-KH-Di9"/>
-                                    <barButtonItem title="Videos" id="shb-LR-t15">
-                                        <connections>
-                                            <segue destination="bev-Lp-aD6" kind="show" identifier="showVideosList" id="inB-Pe-kYg"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="VVa-8D-nVI"/>
                     </view>
@@ -75,10 +50,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="favoriteButton" destination="upo-PV-cTh" id="bkJ-PI-zJ6"/>
                         <outlet property="logoutButton" destination="QGD-72-XaZ" id="NpX-Dq-u7g"/>
-                        <outlet property="printButton" destination="1Hf-yv-GA5" id="C6p-pO-6MR"/>
-                        <outlet property="videosButton" destination="shb-LR-t15" id="O3E-tF-ycW"/>
+                        <segue destination="bev-Lp-aD6" kind="show" identifier="showVideosList" id="jYR-3m-5Oe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="23B-l7-F6s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -88,7 +61,7 @@
         <!--Videos Table View Controller-->
         <scene sceneID="TkN-eg-kGY">
             <objects>
-                <viewController title="Videos Table View Controller" hidesBottomBarWhenPushed="YES" id="bev-Lp-aD6" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VideosTableViewController" title="Videos Table View Controller" hidesBottomBarWhenPushed="YES" id="bev-Lp-aD6" customClass="VideosTableViewController" customModule="Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NJH-tx-Wx8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,25 +100,12 @@
                                     <outlet property="delegate" destination="bev-Lp-aD6" id="Nyw-x2-QNk"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sl7-PG-MP4">
-                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
-                                <items>
-                                    <barButtonItem title="Capture Video" id="Azf-kJ-KFM">
-                                        <connections>
-                                            <action selector="pickAnImageFromCamera:" destination="bev-Lp-aD6" id="Cfi-4I-jvq"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sl7-PG-MP4" firstAttribute="leading" secondItem="Zb3-7P-xR3" secondAttribute="leading" id="0tb-Yt-zFl"/>
-                            <constraint firstItem="sl7-PG-MP4" firstAttribute="top" secondItem="Zb3-7P-xR3" secondAttribute="bottom" id="112-fU-DhM"/>
                             <constraint firstItem="Zb3-7P-xR3" firstAttribute="leading" secondItem="Ehn-3m-0he" secondAttribute="leading" id="Hjn-iA-byo"/>
                             <constraint firstItem="Zb3-7P-xR3" firstAttribute="top" secondItem="Ehn-3m-0he" secondAttribute="top" id="Stl-2j-6Pj"/>
                             <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerY" secondItem="NJH-tx-Wx8" secondAttribute="centerY" id="V5r-eD-2rP"/>
-                            <constraint firstItem="sl7-PG-MP4" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" id="X96-03-qsx"/>
                             <constraint firstItem="Ehn-3m-0he" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" id="dLN-Q0-290"/>
                             <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerX" secondItem="NJH-tx-Wx8" secondAttribute="centerX" id="zcT-gG-6tK"/>
                         </constraints>
@@ -159,7 +119,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="captureVideoButton" destination="Azf-kJ-KFM" id="BdZ-CS-2P4"/>
                         <outlet property="logoutButton" destination="C8E-wo-881" id="Kue-IY-VMt"/>
                         <outlet property="videosTableView" destination="Zb3-7P-xR3" id="JNB-a0-eyI"/>
                     </connections>
@@ -285,6 +244,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gPo-hs-iD7">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="H3p-Xn-M4a" kind="relationship" relationship="rootViewController" id="cIf-SS-gVR"/>
                     </connections>
@@ -304,6 +266,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Pln-0j-24T">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="VRd-EW-vNA" kind="relationship" relationship="rootViewController" id="VNg-tm-hoU"/>
                     </connections>
