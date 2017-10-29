@@ -16,6 +16,7 @@
 		125788EA1F95500600ACA76A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 125788E91F95500600ACA76A /* Assets.xcassets */; };
 		125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 125788EB1F95500600ACA76A /* LaunchScreen.storyboard */; };
 		125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 125788F71F95545100ACA76A /* GoogleService-Info.plist */; };
+		12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */; };
 		1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE531F9A4ACA006B599D /* WatermarkPage.swift */; };
 		1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */; };
 		129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */; };
@@ -54,6 +55,7 @@
 		125788EC1F95500600ACA76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		125788EE1F95500600ACA76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		125788F71F95545100ACA76A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowcaseAuthPickerViewController.xib; sourceTree = "<group>"; };
 		1292FE531F9A4ACA006B599D /* WatermarkPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkPage.swift; sourceTree = "<group>"; };
 		1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewClient.swift; sourceTree = "<group>"; };
 		129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */,
 				12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
+				12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */,
 				1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */,
 				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
 				12B5B33A1F96387800F92872 /* ScriptsTableViewController.swift */,
@@ -278,6 +281,7 @@
 				125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */,
 				125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */,
 				125788EA1F95500600ACA76A /* Assets.xcassets in Resources */,
+				12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */,
 				125788E81F95500600ACA76A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

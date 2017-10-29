@@ -37,7 +37,7 @@ extension FUIAuthViewController where Self: UIViewController {
     }
     
     func loginSession() {
-        //FUIAuth.defaultAuthUI()?.delegate = self
+        FUIAuth.defaultAuthUI()?.delegate = self
         let authViewController = FUIAuth.defaultAuthUI()!.authViewController()
         self.present(authViewController, animated: true, completion: nil)
     }
