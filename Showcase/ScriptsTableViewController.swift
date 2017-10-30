@@ -124,6 +124,15 @@ class ScriptsTableViewController: CoreDataTableViewController {
         
         return cell
     }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        if let fc = fetchedResultsController,
+            let fetchedObjectCount = fc.fetchedObjects?.count {
+            return fetchedObjectCount > tableView.visibleCells.count ? fc.sectionIndexTitles: nil
+        } else {
+            return nil
+        }
+    }
 }
 
 // MARK: - ScriptsTableViewController: FUIAuthViewController
