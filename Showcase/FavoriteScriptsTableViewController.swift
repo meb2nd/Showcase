@@ -83,6 +83,7 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         
         cell.textLabel?.text = script.title
         cell.detailTextLabel?.text = script.genre
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

@@ -83,6 +83,7 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         if let imageData = video.thumbnail {
             cell.imageView?.image = UIImage(data: imageData as Data)
         }
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

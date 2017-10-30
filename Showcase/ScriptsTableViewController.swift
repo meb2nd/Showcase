@@ -120,6 +120,7 @@ class ScriptsTableViewController: CoreDataTableViewController {
         
         cell.textLabel?.text = script.title
         cell.detailTextLabel?.text = "Gender: \(script.gender?.capitalized ?? " ")"
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
