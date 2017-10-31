@@ -17,7 +17,29 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     // MARK: - Properties
     var script: Script!
     var deleteVideoIndexPath: IndexPath? = nil
-    var captureVideoButton1: UIBarButtonItem!
+    var captureVideoButton: UIBarButtonItem!
+    var priorCount = 0
+    var hasCapturedFirstVideo = false
+    
+    fileprivate func displayPopover(at indexPath: IndexPath) {
+        if let cell = videosTableView.cellForRow(at: indexPath) {
+            let popover = StoryboardManager.videosTablePopoverViewController()
+            popover.modalPresentationStyle = .popover
+            popover.popoverPresentationController?.delegate = self
+            popover.popoverPresentationController?.sourceView = cell
+            popover.popoverPresentationController?.sourceRect = cell.bounds
+            popover.popoverPresentationController?.permittedArrowDirections = .any
+            popover.preferredContentSize = CGSize(width: 320, height: 100)
+            present(popover, animated: true, completion: nil)
+        }
+    }
+    
+    var firstVideoIndexPath: IndexPath! {
+        didSet {
+            
+            //displayPopover(at: firstVideoIndexPath)
+        }
+    }
     
     // MARK: - Outlets
     
@@ -32,11 +54,10 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         videosTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5)
         createFetchController()
         
-        captureVideoButton1 = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))
+        captureVideoButton = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        toolbarItems = [captureVideoButton1, spacer]
-        
+        toolbarItems = [captureVideoButton, spacer]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +89,8 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     }
     
     // MARK: - ScriptsTableViewController: UITableViewDataSource
+    // Code for popover functionality based on information cound at:  https://stackoverflow.com/questions/27353691/uipopoverpresentationcontroller-displaying-popover-as-full-screen
+    //
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -85,7 +108,32 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         }
         cell.accessoryType = .disclosureIndicator
         
+        if hasCapturedFirstVideo,
+            indexPath.row == 0 {
+            
+            performUIUpdatesOnMain() {
+                self.displayPopover(at: indexPath)
+            }
+        }
+        
         return cell
+    }
+    
+    // MARK: - VideosTableViewController: NSFetchedResultsControllerDelegate
+    
+    override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+        guard let currentCount = fetchedResultsController?.fetchedObjects?.count else {return}
+        
+        if currentCount == 1 && priorCount == 0 {
+            hasCapturedFirstVideo = true
+        } else {
+            hasCapturedFirstVideo = false
+        }
+        
+        priorCount = currentCount
+        
+        super.controllerDidChangeContent(controller)
     }
     
     // MARK: - Actions
@@ -238,5 +286,19 @@ extension VideosTableViewController: UITableViewDelegate {
             
             VideoViewHelper.sharedInstance.share(video: video, presentingController: self)
         }
+    }
+}
+
+// MARK: VideosTableViewController: UIPopoverPresentationControllerDelegate
+
+extension VideosTableViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        return .none
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
 }

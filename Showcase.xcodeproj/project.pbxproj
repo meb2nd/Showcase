@@ -19,6 +19,11 @@
 		12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */; };
 		1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE531F9A4ACA006B599D /* WatermarkPage.swift */; };
 		1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */; };
+		1295101E1FA68C44001CA3CC /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1295101D1FA68C44001CA3CC /* GeneralSettings.swift */; };
+		129510201FA68D3C001CA3CC /* StoryboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1295101F1FA68D3C001CA3CC /* StoryboardManager.swift */; };
+		129510221FA785D9001CA3CC /* VideosTablePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129510211FA785D9001CA3CC /* VideosTablePopoverViewController.swift */; };
+		129510261FA79C9F001CA3CC /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129510251FA79C9F001CA3CC /* PlayerView.swift */; };
+		1295102A1FA7BD5A001CA3CC /* video-cell-swipe.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */; };
 		129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */; };
 		129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A21F97D38000DBDBAA /* NetworkClient.swift */; };
 		129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A31F97D38000DBDBAA /* QuoteClient.swift */; };
@@ -58,6 +63,11 @@
 		12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowcaseAuthPickerViewController.xib; sourceTree = "<group>"; };
 		1292FE531F9A4ACA006B599D /* WatermarkPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkPage.swift; sourceTree = "<group>"; };
 		1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewClient.swift; sourceTree = "<group>"; };
+		1295101D1FA68C44001CA3CC /* GeneralSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
+		1295101F1FA68D3C001CA3CC /* StoryboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardManager.swift; sourceTree = "<group>"; };
+		129510211FA785D9001CA3CC /* VideosTablePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosTablePopoverViewController.swift; sourceTree = "<group>"; };
+		129510251FA79C9F001CA3CC /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "video-cell-swipe.mp4"; sourceTree = "<group>"; };
 		129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		129CB7A21F97D38000DBDBAA /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		129CB7A31F97D38000DBDBAA /* QuoteClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteClient.swift; sourceTree = "<group>"; };
@@ -125,6 +135,7 @@
 				125788F61F95533800ACA76A /* Supporting Files */,
 				125788EB1F95500600ACA76A /* LaunchScreen.storyboard */,
 				12B5B3441F963A1F00F92872 /* Controllers */,
+				1295101D1FA68C44001CA3CC /* GeneralSettings.swift */,
 			);
 			path = Showcase;
 			sourceTree = "<group>";
@@ -135,6 +146,7 @@
 				125788E91F95500600ACA76A /* Assets.xcassets */,
 				125788F71F95545100ACA76A /* GoogleService-Info.plist */,
 				125788EE1F95500600ACA76A /* Info.plist */,
+				129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -182,6 +194,8 @@
 				12B5B3421F9639D700F92872 /* VideosTableViewController.swift */,
 				12468D081FA27E9400863EFD /* VideoViewHelper.swift */,
 				12B5B3471F96980700F92872 /* ViewControllerExtensions.swift */,
+				1295101F1FA68D3C001CA3CC /* StoryboardManager.swift */,
+				129510211FA785D9001CA3CC /* VideosTablePopoverViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -190,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */,
+				129510251FA79C9F001CA3CC /* PlayerView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -280,6 +295,7 @@
 			files = (
 				125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */,
 				125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */,
+				1295102A1FA7BD5A001CA3CC /* video-cell-swipe.mp4 in Resources */,
 				125788EA1F95500600ACA76A /* Assets.xcassets in Resources */,
 				12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */,
 				125788E81F95500600ACA76A /* Main.storyboard in Resources */,
@@ -388,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */,
+				129510221FA785D9001CA3CC /* VideosTablePopoverViewController.swift in Sources */,
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
 				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
 				12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */,
@@ -396,6 +413,7 @@
 				12C8E40A1F983DE400D808F6 /* Video+CoreDataProperties.swift in Sources */,
 				12B5B33B1F96387800F92872 /* ScriptsTableViewController.swift in Sources */,
 				12C8E40E1F984F3300D808F6 /* FIRDatabaseClient.swift in Sources */,
+				129510201FA68D3C001CA3CC /* StoryboardManager.swift in Sources */,
 				12C8E4041F98359100D808F6 /* Model.xcdatamodeld in Sources */,
 				125788E31F95500600ACA76A /* AppDelegate.swift in Sources */,
 				129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */,
@@ -406,9 +424,11 @@
 				12C8E4161F99A74F00D808F6 /* AlertViewHelper.swift in Sources */,
 				12B5B3461F9646F500F92872 /* FUIAuthViewController.swift in Sources */,
 				129CB7A71F97D38000DBDBAA /* QuoteConstants.swift in Sources */,
+				1295101E1FA68C44001CA3CC /* GeneralSettings.swift in Sources */,
 				12C8E40B1F983DE400D808F6 /* Script.swift in Sources */,
 				12C8E4141F99462E00D808F6 /* CoreDataTableViewController.swift in Sources */,
 				12468D091FA27E9400863EFD /* VideoViewHelper.swift in Sources */,
+				129510261FA79C9F001CA3CC /* PlayerView.swift in Sources */,
 				12B5B3431F9639D700F92872 /* VideosTableViewController.swift in Sources */,
 				12B5B33D1F96389D00F92872 /* FavoriteScriptsTableViewController.swift in Sources */,
 				12C8E40C1F983DE400D808F6 /* Script+CoreDataProperties.swift in Sources */,

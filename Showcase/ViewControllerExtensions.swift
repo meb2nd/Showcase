@@ -24,7 +24,17 @@ extension UIViewController {
         let barColor =  UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.0)
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = barColor
-        navigationController?.toolbar.barTintColor =  UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1.0)
+        navigationController?.toolbar.barTintColor = barColor
+    }
+    
+    func enableTabBar(_ isEnabled: Bool) {
+        
+        if  let arrayOfTabBarItems = self.tabBarController?.tabBar.items {
+            
+            for tabBarItem in arrayOfTabBarItems {
+                tabBarItem.isEnabled = isEnabled
+            }
+        }
     }
 }
 
