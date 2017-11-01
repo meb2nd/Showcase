@@ -230,6 +230,30 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iqt-6Y-svy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="8cu-8Q-UsX">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_2" translatesAutoresizingMaskIntoConstraints="NO" id="D26-Ba-HJc">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Scripts Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmi-uB-eQ1">
+                            <rect key="frame" x="99" y="54" width="42" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="leading" secondItem="UKy-Yf-yWR" secondAttribute="leading" id="604-oj-nol"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="bottom" secondItem="UKy-Yf-yWR" secondAttribute="bottom" id="8Jm-ao-twu"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="trailing" secondItem="UKy-Yf-yWR" secondAttribute="trailing" id="Nlk-Qs-fbH"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="top" secondItem="UKy-Yf-yWR" secondAttribute="top" id="ucA-6F-RYD"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="UKy-Yf-yWR"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1396" y="-222"/>
         </scene>
@@ -390,23 +414,10 @@
             </objects>
             <point key="canvasLocation" x="1396" y="509"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="Ike-5x-BiV">
-            <objects>
-                <viewController id="808-Ph-wVy" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5fc-37-Tz4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="W2A-t3-lJg"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Uyc-iR-HrN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="Logo" width="170" height="170"/>
+        <image name="Logo_2" width="512" height="512"/>
         <image name="doucment" width="32" height="32"/>
         <image name="heart" width="32" height="32"/>
     </resources>

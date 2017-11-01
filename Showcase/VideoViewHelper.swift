@@ -16,6 +16,8 @@ class VideoViewHelper {
     
     private init() {}
     
+    let context = CIContext()
+    
     // MARK: - Properties
     var progessViewTimer: Timer!
     @objc var exportSession: AVAssetExportSession!
@@ -93,43 +95,37 @@ class VideoViewHelper {
         }
         
         export.exportAsynchronously(completionHandler: {
-            switch export.status {
-            case .completed:
-                print("success")
-                performUIUpdatesOnMain {
+            
+            performUIUpdatesOnMain {
+                switch export.status {
+                case .completed:
+                    print("success")
+                    if self.progessViewTimer.isValid {
+                        self.progessViewTimer.invalidate()
+                    }
                     self.presentActivityView(withURL: shareURL, presentingController: presentingController, loadingView: loadingWindow)
-                }
-                break
-            case .cancelled:
-                print("cancelled")
-                performUIUpdatesOnMain {
+                    break
+                case .cancelled:
+                    print("cancelled")
                     loadingWindow.hide()
-                }
-                break
-            case .exporting:
-                print("exporting")
-                performUIUpdatesOnMain {
+                    break
+                case .exporting:
+                    print("exporting")
                     loadingWindow.hide()
-                }
-                break
-            case .failed:
-                print("failed: \(String(describing: export.error))")
-                performUIUpdatesOnMain {
+                    break
+                case .failed:
+                    print("failed: \(String(describing: export.error))")
                     loadingWindow.hide()
-                }
-                break
-            case .unknown:
-                print("unknown")
-                performUIUpdatesOnMain {
+                    break
+                case .unknown:
+                    print("unknown")
                     loadingWindow.hide()
-                }
-                break
-            case .waiting:
-                print("waiting")
-                performUIUpdatesOnMain {
+                    break
+                case .waiting:
+                    print("waiting")
                     loadingWindow.hide()
+                    break
                 }
-                break
             }
         })
         
@@ -144,7 +140,7 @@ class VideoViewHelper {
     }
     
     // MARK:  Helper Functions
-    
+    // https://stackoverflow.com/questions/11090760/progress-bar-for-avassetexportsession
     @objc func updateProgressView() {
         
         progressView.progress = exportSession.progress
@@ -235,7 +231,7 @@ class VideoViewHelper {
             let output = titleFilter.outputImage!.cropped(to: request.sourceImage.extent)
             
             // Provide the filter output to the composition
-            request.finish(with: output, context: nil)
+            request.finish(with: output, context: self.context)
         })
         
         return (composition, avAsset)

@@ -22,6 +22,7 @@ class VideosTablePopoverViewController: UIViewController {
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     // MARK: - Actions
+    
     @IBAction func tappedGestureRecognizer(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -39,7 +40,6 @@ class VideosTablePopoverViewController: UIViewController {
         
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedGestureRecognizer))
         view.gestureRecognizers = [tapGestureRecognizer]
-        videosCellSwipePlayerView.gestureRecognizers = [tapGestureRecognizer]
 
         let backgroundcolor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
         view.backgroundColor = backgroundcolor

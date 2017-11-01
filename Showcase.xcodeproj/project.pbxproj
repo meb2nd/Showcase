@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1239D5AF1FAA65C9001D743B /* video-cell-swipe.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1239D5AE1FAA65C9001D743B /* video-cell-swipe.mp4 */; };
 		1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */; };
 		1240E2841FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */; };
 		12468D091FA27E9400863EFD /* VideoViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12468D081FA27E9400863EFD /* VideoViewHelper.swift */; };
@@ -23,7 +24,6 @@
 		129510201FA68D3C001CA3CC /* StoryboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1295101F1FA68D3C001CA3CC /* StoryboardManager.swift */; };
 		129510221FA785D9001CA3CC /* VideosTablePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129510211FA785D9001CA3CC /* VideosTablePopoverViewController.swift */; };
 		129510261FA79C9F001CA3CC /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129510251FA79C9F001CA3CC /* PlayerView.swift */; };
-		1295102A1FA7BD5A001CA3CC /* video-cell-swipe.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */; };
 		129CB7A01F97D2E900DBDBAA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */; };
 		129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A21F97D38000DBDBAA /* NetworkClient.swift */; };
 		129CB7A61F97D38000DBDBAA /* QuoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CB7A31F97D38000DBDBAA /* QuoteClient.swift */; };
@@ -48,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1239D5AE1FAA65C9001D743B /* video-cell-swipe.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "video-cell-swipe.mp4"; sourceTree = "<group>"; };
 		1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewControllerExtensions.swift; sourceTree = "<group>"; };
 		1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowcaseAuthPickerViewController.swift; sourceTree = "<group>"; };
 		1240E2851FA379A3005A6551 /* Showcase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Showcase.entitlements; sourceTree = "<group>"; };
@@ -67,7 +68,6 @@
 		1295101F1FA68D3C001CA3CC /* StoryboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardManager.swift; sourceTree = "<group>"; };
 		129510211FA785D9001CA3CC /* VideosTablePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosTablePopoverViewController.swift; sourceTree = "<group>"; };
 		129510251FA79C9F001CA3CC /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
-		129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "video-cell-swipe.mp4"; sourceTree = "<group>"; };
 		129CB79F1F97D2E900DBDBAA /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		129CB7A21F97D38000DBDBAA /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		129CB7A31F97D38000DBDBAA /* QuoteClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteClient.swift; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 				125788E91F95500600ACA76A /* Assets.xcassets */,
 				125788F71F95545100ACA76A /* GoogleService-Info.plist */,
 				125788EE1F95500600ACA76A /* Info.plist */,
-				129510291FA7BD59001CA3CC /* video-cell-swipe.mp4 */,
+				1239D5AE1FAA65C9001D743B /* video-cell-swipe.mp4 */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 			files = (
 				125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */,
 				125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */,
-				1295102A1FA7BD5A001CA3CC /* video-cell-swipe.mp4 in Resources */,
+				1239D5AF1FAA65C9001D743B /* video-cell-swipe.mp4 in Resources */,
 				125788EA1F95500600ACA76A /* Assets.xcassets in Resources */,
 				12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */,
 				125788E81F95500600ACA76A /* Main.storyboard in Resources */,
