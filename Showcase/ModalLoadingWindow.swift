@@ -11,11 +11,12 @@
 import Foundation
 import UIKit
 public class ModalLoadingWindow: UIView{
-    var overlayWindow:UIView?
-    var infoStackWindow:UIStackView?
-    var titleLabel:UILabel?
-    var subTitleLabel:UILabel?
-    var activityIndicator:UIActivityIndicatorView?
+    var overlayWindow: UIView?
+    var infoStackWindow: UIStackView?
+    var titleLabel: UILabel?
+    var subTitleLabel: UILabel?
+    var activityIndicator: UIActivityIndicatorView?
+    var progressView: UIProgressView?
     public var title:String = "Loading..."{
         didSet{
             if let label = titleLabel{
@@ -54,16 +55,19 @@ public class ModalLoadingWindow: UIView{
         infoStackWindow!.axis = .vertical
         infoStackWindow!.alignment = .center
         infoStackWindow!.distribution = .fill
+        infoStackWindow!.spacing = 8.0
         infoStackWindow!.translatesAutoresizingMaskIntoConstraints = false
         infoStackWindow!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         createActivityIndicator()
         createTitle()
         createSubtitle()
+        createProgressView()
         
         infoStackWindow!.addArrangedSubview(activityIndicator!)
         infoStackWindow!.addArrangedSubview(titleLabel!)
         infoStackWindow!.addArrangedSubview(subTitleLabel!)
+        infoStackWindow!.addArrangedSubview(progressView!)
     }
     
     func createTitle(){
@@ -96,10 +100,18 @@ public class ModalLoadingWindow: UIView{
         activityIndicator!.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    func createProgressView(){
+        progressView = UIProgressView(progressViewStyle: .default)
+        progressView!.progress = 0.0
+        progressView!.isHidden = true
+        progressView!.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     func addViewConstraints(){
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addConstraintsForOverlay()
         addConstraintsForStackView()
+        addConstraintsForProgressView()
     }
     
     func addConstraintsForOverlay(){
@@ -120,6 +132,19 @@ public class ModalLoadingWindow: UIView{
                                                    attribute: .centerY, multiplier: 1, constant: 0)
         overlayWindow!.addConstraint(yCenterConstraint)
     }
+    
+    func addConstraintsForProgressView() {
+        let leadingConstraint = NSLayoutConstraint(item: progressView!, attribute: .leading,
+                                                   relatedBy: .equal, toItem: infoStackWindow,
+                                                   attribute: .leading, multiplier: 1, constant: 20)
+        overlayWindow!.addConstraint(leadingConstraint)
+        
+        let trailingConstraint = NSLayoutConstraint(item: progressView!, attribute: .trailing,
+                                                   relatedBy: .equal, toItem: infoStackWindow,
+                                                   attribute: .trailing, multiplier: 1, constant: -20)
+        overlayWindow!.addConstraint(trailingConstraint)
+    }
+    
     public func hide(){
         removeFromSuperview()
     }

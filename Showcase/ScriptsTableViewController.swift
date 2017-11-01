@@ -175,7 +175,7 @@ extension ScriptsTableViewController {
                 self.view.addSubview(self.quoteScreen!)
                 
                 // set the timer
-                Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
             }
         }
     }

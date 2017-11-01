@@ -9,6 +9,8 @@
 import UIKit
 import FirebaseAuthUI
 
+// MARK: - UIViewController (Common functions)
+
 extension UIViewController {
     
     func logoutSession() {
@@ -38,6 +40,8 @@ extension UIViewController {
     }
 }
 
+// MARK: - UIViewController: FUIAuthDelegate
+
 // https://github.com/firebase/FirebaseUI-iOS/tree/5ed77bced4552bdff7aaf41e8b95bba5f84d4e40/samples/swift
 extension UIViewController: FUIAuthDelegate {
     
@@ -55,7 +59,6 @@ extension UIViewController: FUIAuthDelegate {
             print("Login error: \((detailedError as! NSError).localizedDescription)");
         }
     }
-    
     
     public func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
         return ShowcaseAuthPickerViewController(nibName: "ShowcaseAuthPickerViewController",

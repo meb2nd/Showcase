@@ -248,28 +248,44 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="813-SN-mFP" customClass="PlayerView" customModule="Showcase" customModuleProvider="target">
-                                <rect key="frame" x="8" y="56.5" width="359" height="602.5"/>
+                                <rect key="frame" x="8" y="56" width="359" height="565"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URR-nx-elt">
+                                <rect key="frame" x="164" y="629" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="dontShowAnymore:" destination="Ztu-7e-6dE" eventType="touchUpInside" id="ekB-sL-1zB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="813-SN-mFP" secondAttribute="trailing" constant="8" id="4pt-5G-YOn"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="813-SN-mFP" secondAttribute="trailing" constant="8" identifier="videoCellSwipePlayerViewTrailing" id="4pt-5G-YOn"/>
                             <constraint firstItem="813-SN-mFP" firstAttribute="top" secondItem="HIR-VO-Uhs" secondAttribute="bottom" constant="8" identifier="videosCellSwipePlayerViewTop" id="9Cz-La-5K0"/>
                             <constraint firstItem="HIR-VO-Uhs" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" identifier="swipeToRevealLabelCenter" id="B0b-iK-S0q"/>
                             <constraint firstItem="813-SN-mFP" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" identifier="videosCellSwipePlayerViewCenterX" id="HJm-ZA-EL3"/>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" secondItem="813-SN-mFP" secondAttribute="bottom" constant="8" id="pKf-P7-Wfm"/>
+                            <constraint firstItem="URR-nx-elt" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" id="I7l-MT-b1S"/>
+                            <constraint firstItem="URR-nx-elt" firstAttribute="top" secondItem="813-SN-mFP" secondAttribute="bottom" constant="8" id="iYH-zX-snO"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" secondItem="URR-nx-elt" secondAttribute="bottom" constant="8" id="uJI-fX-mxd"/>
                             <constraint firstItem="HIR-VO-Uhs" firstAttribute="top" secondItem="5Re-bZ-o0J" secondAttribute="top" constant="8" identifier="swipeToRevealLabelTop" id="x1w-JY-ikt"/>
-                            <constraint firstItem="813-SN-mFP" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" constant="8" id="xAD-dU-rFX"/>
+                            <constraint firstItem="813-SN-mFP" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" constant="8" identifier="videoCellSwipePlayerViewLeading" id="xAD-dU-rFX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Re-bZ-o0J"/>
                     </view>
                     <connections>
+                        <outlet property="dontShowAnymoreButton" destination="URR-nx-elt" id="TJA-i2-4Oq"/>
+                        <outlet property="tapGestureRecognizer" destination="dGf-MO-TSj" id="ntv-UN-tLc"/>
                         <outlet property="titleLabel" destination="HIR-VO-Uhs" id="HSo-99-5lx"/>
                         <outlet property="videosCellSwipePlayerView" destination="813-SN-mFP" id="rat-N4-akY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9t-wH-uuO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dGf-MO-TSj">
+                    <connections>
+                        <action selector="tappedGestureRecognizer:" destination="Ztu-7e-6dE" id="rhX-oK-GQy"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2575" y="-669"/>
         </scene>

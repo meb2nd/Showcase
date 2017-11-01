@@ -21,26 +21,6 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     var priorCount = 0
     var hasCapturedFirstVideo = false
     
-    fileprivate func displayPopover(at indexPath: IndexPath) {
-        if let cell = videosTableView.cellForRow(at: indexPath) {
-            let popover = StoryboardManager.videosTablePopoverViewController()
-            popover.modalPresentationStyle = .popover
-            popover.popoverPresentationController?.delegate = self
-            popover.popoverPresentationController?.sourceView = cell
-            popover.popoverPresentationController?.sourceRect = cell.bounds
-            popover.popoverPresentationController?.permittedArrowDirections = .any
-            popover.preferredContentSize = CGSize(width: 320, height: 100)
-            present(popover, animated: true, completion: nil)
-        }
-    }
-    
-    var firstVideoIndexPath: IndexPath! {
-        didSet {
-            
-            //displayPopover(at: firstVideoIndexPath)
-        }
-    }
-    
     // MARK: - Outlets
     
     @IBOutlet weak var videosTableView: UITableView!
@@ -109,14 +89,36 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         cell.accessoryType = .disclosureIndicator
         
         if hasCapturedFirstVideo,
-            indexPath.row == 0 {
+            indexPath.row == 0,
+            !GeneralSettings.isOnboardingFinished() {
             
-            performUIUpdatesOnMain() {
-                self.displayPopover(at: indexPath)
-            }
+                performUIUpdatesOnMain() {
+                    self.displayPopover(at: indexPath)
+                }
         }
         
         return cell
+    }
+    
+    // MARK: Helper function
+    
+    fileprivate func displayPopover(at indexPath: IndexPath) {
+        if let cell = videosTableView.cellForRow(at: indexPath) {
+            let popover = StoryboardManager.videosTablePopoverViewController()
+            popover.modalPresentationStyle = .popover
+            popover.popoverPresentationController?.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+            popover.popoverPresentationController?.delegate = self
+            popover.popoverPresentationController?.sourceView = cell
+            popover.popoverPresentationController?.sourceRect = cell.bounds
+            popover.popoverPresentationController?.permittedArrowDirections = .any
+            // Adjust height for "Don't Show Again" Button
+            popover.preferredContentSize = CGSize(width: 320, height: GeneralSettings.hasLaunchedVideoSwipePopoverBefore() ? 200: 100)
+            present(popover, animated: true, completion: nil)
+            
+            if !GeneralSettings.hasLaunchedVideoSwipePopoverBefore() {
+                GeneralSettings.saveHasLaunchedVideoSwipePopoverBefore()
+            }
+        }
     }
     
     // MARK: - VideosTableViewController: NSFetchedResultsControllerDelegate

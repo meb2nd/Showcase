@@ -16,6 +16,11 @@ class VideoViewHelper {
     
     private init() {}
     
+    // MARK: - Properties
+    var progessViewTimer: Timer!
+    @objc var exportSession: AVAssetExportSession!
+    @objc var progressView: UIProgressView!
+    
     // MARK: - Main Video Functions
     
     fileprivate func presentLoadingWindow(withTitle title: String, subtitle: String?, presentingController: UIViewController) -> ModalLoadingWindow {
@@ -127,9 +132,26 @@ class VideoViewHelper {
                 break
             }
         })
+        
+        // Update progress bar
+        
+        progressView = loadingWindow.progressView
+        exportSession = export
+        progressView.isHidden = false
+        
+        // set the timer
+        progessViewTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateProgressView), userInfo: nil, repeats: true)
     }
     
     // MARK:  Helper Functions
+    
+    @objc func updateProgressView() {
+        
+        progressView.progress = exportSession.progress
+        if progressView.progress > 0.99 {
+            progessViewTimer.invalidate()
+        }
+    }
     
     fileprivate func createTitleImage(forVideo video: Video, request: AVAsynchronousCIImageFilteringRequest) -> UIImage? {
         
