@@ -119,11 +119,38 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundView" destination="hOc-o5-KY1" id="nKv-5J-sIN"/>
                         <outlet property="logoutButton" destination="C8E-wo-881" id="Kue-IY-VMt"/>
+                        <outlet property="noVideosCaputuredLabel" destination="z9i-DY-v7i" id="6wo-er-CwB"/>
                         <outlet property="videosTableView" destination="Zb3-7P-xR3" id="JNB-a0-eyI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mg4-29-6AQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="hOc-o5-KY1">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clapper" translatesAutoresizingMaskIntoConstraints="NO" id="9Ml-fc-8o9">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9i-DY-v7i">
+                            <rect key="frame" x="99.5" y="54" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerX" secondItem="hOc-o5-KY1" secondAttribute="centerX" id="4JY-ge-VSv"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="trailing" secondItem="e9i-oW-i6J" secondAttribute="trailing" id="Q3K-Vl-sxt"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="top" secondItem="e9i-oW-i6J" secondAttribute="top" id="SW3-lW-glz"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="leading" secondItem="e9i-oW-i6J" secondAttribute="leading" id="VTx-T6-bAb"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="bottom" secondItem="e9i-oW-i6J" secondAttribute="bottom" id="tyI-a0-zlg"/>
+                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerY" secondItem="hOc-o5-KY1" secondAttribute="centerY" id="x2C-et-ulD"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="e9i-oW-i6J"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="3520.8000000000002" y="196.55172413793105"/>
         </scene>
@@ -239,8 +266,8 @@
                         <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="D26-Ba-HJc">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Scripts." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmi-uB-eQ1">
-                            <rect key="frame" x="78" y="54" width="84.5" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmi-uB-eQ1">
+                            <rect key="frame" x="99.5" y="54" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -432,20 +459,50 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundImage" destination="tDQ-Ww-UcL" id="v88-LR-SPi"/>
+                        <outlet property="backgroundView" destination="Xgy-FL-h0h" id="NVA-aK-U3F"/>
+                        <outlet property="noFavoritesSelectedLabel" destination="oXM-Dt-OKP" id="px8-S2-net"/>
                         <outlet property="scriptsTableView" destination="8JV-iG-MoS" id="v6y-7g-9lj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CQ8-4L-1bQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Xgy-FL-h0h">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Film_Strip" translatesAutoresizingMaskIntoConstraints="NO" id="tDQ-Ww-UcL">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXM-Dt-OKP">
+                            <rect key="frame" x="99.5" y="54" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="top" secondItem="kLI-Sr-ZE1" secondAttribute="top" id="21V-rM-noa"/>
+                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerY" secondItem="Xgy-FL-h0h" secondAttribute="centerY" id="OhW-EW-hsz"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="leading" secondItem="kLI-Sr-ZE1" secondAttribute="leading" id="QxB-ui-eYP"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="trailing" secondItem="kLI-Sr-ZE1" secondAttribute="trailing" id="dTq-Ez-XBx"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="bottom" secondItem="kLI-Sr-ZE1" secondAttribute="bottom" id="naK-5h-b1P"/>
+                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerX" secondItem="Xgy-FL-h0h" secondAttribute="centerX" id="wth-zo-sxF"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="kLI-Sr-ZE1"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1396" y="509"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Clapper" width="522" height="512"/>
+        <image name="Film_Strip" width="512" height="512"/>
         <image name="Logo" width="170" height="170"/>
         <image name="doucment" width="32" height="32"/>
         <image name="heart" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DTY-Ag-Ll8"/>
+        <segue reference="jGN-Vq-chK"/>
     </inferredMetricsTieBreakers>
 </document>

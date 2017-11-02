@@ -25,13 +25,19 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     
     @IBOutlet weak var videosTableView: UITableView!
     @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var noVideosCaputuredLabel: UILabel!
     
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         videosTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5)
+        videosTableView.tableFooterView = UIView(frame: CGRect.zero)
+        videosTableView.backgroundView = backgroundView
+        
         createFetchController()
         
         captureVideoButton = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))
@@ -225,7 +231,8 @@ extension UIImagePickerController
 extension VideosTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        
+        setBackgroundColor(forCell: cell)
     }
     
     // Code below based on code found at:   https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/MediaPlaybackGuide/Contents/Resources/en.lproj/GettingStarted/GettingStarted.html

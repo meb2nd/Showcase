@@ -49,7 +49,9 @@ class ScriptsTableViewController: CoreDataTableViewController {
         // no lines where there aren't cells
         scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
         scriptsTableView.backgroundView = backgroundView
+
     }
+
 
     deinit {
         
@@ -232,7 +234,7 @@ extension ScriptsTableViewController: UITableViewDelegate {
 
         let label = PaddedLabel(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 20))
         label.text = fetchedResultsController?.sections![section].name.capitalized
-        label.padding = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0)
+        label.padding = UIEdgeInsets(top: 5, left: 5, bottom: 2, right: 0)
         returnedView.addSubview(label)
         
         return returnedView

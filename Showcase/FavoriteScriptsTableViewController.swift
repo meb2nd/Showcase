@@ -25,13 +25,20 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
     // MARK: - Outlets
     
     @IBOutlet var scriptsTableView: UITableView!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var noFavoritesSelectedLabel: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBarColors()
+        
+        scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
+        scriptsTableView.backgroundView = backgroundView
     }
+    
     
     // MARK: - Actions
     
@@ -93,7 +100,8 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
 
 extension FavoriteScriptsTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        
+        setBackgroundColor(forCell: cell)
     }
 }
 
