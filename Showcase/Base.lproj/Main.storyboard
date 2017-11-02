@@ -224,8 +224,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundView" destination="8cu-8Q-UsX" id="tvH-BN-6N0"/>
                         <outlet property="loginStackView" destination="fYe-X8-K5z" id="oZJ-wR-at3"/>
                         <outlet property="logoutButton" destination="twb-qD-Njl" id="0HL-az-mAN"/>
+                        <outlet property="noScriptsLabel" destination="fmi-uB-eQ1" id="fFX-ya-11n"/>
                         <outlet property="scriptsTableView" destination="rWc-hW-U7x" id="OJL-0D-z4s"/>
                     </connections>
                 </viewController>
@@ -234,12 +236,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_2" translatesAutoresizingMaskIntoConstraints="NO" id="D26-Ba-HJc">
+                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="D26-Ba-HJc">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Scripts Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmi-uB-eQ1">
-                            <rect key="frame" x="99" y="54" width="42" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Scripts." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmi-uB-eQ1">
+                            <rect key="frame" x="78" y="54" width="84.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -249,7 +250,9 @@
                     <constraints>
                         <constraint firstItem="D26-Ba-HJc" firstAttribute="leading" secondItem="UKy-Yf-yWR" secondAttribute="leading" id="604-oj-nol"/>
                         <constraint firstItem="D26-Ba-HJc" firstAttribute="bottom" secondItem="UKy-Yf-yWR" secondAttribute="bottom" id="8Jm-ao-twu"/>
+                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerX" secondItem="8cu-8Q-UsX" secondAttribute="centerX" id="CVV-pO-zQf"/>
                         <constraint firstItem="D26-Ba-HJc" firstAttribute="trailing" secondItem="UKy-Yf-yWR" secondAttribute="trailing" id="Nlk-Qs-fbH"/>
+                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerY" secondItem="8cu-8Q-UsX" secondAttribute="centerY" id="hRn-f2-ETn"/>
                         <constraint firstItem="D26-Ba-HJc" firstAttribute="top" secondItem="UKy-Yf-yWR" secondAttribute="top" id="ucA-6F-RYD"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="UKy-Yf-yWR"/>
@@ -439,7 +442,6 @@
     </scenes>
     <resources>
         <image name="Logo" width="170" height="170"/>
-        <image name="Logo_2" width="512" height="512"/>
         <image name="doucment" width="32" height="32"/>
         <image name="heart" width="32" height="32"/>
     </resources>

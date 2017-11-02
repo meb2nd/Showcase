@@ -26,4 +26,12 @@ extension CoreDataTableViewController {
             pdfVC.userName = userName
         }
     }
+    
+    func setBackgroundColor(forCell cell: UITableViewCell) {
+        
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
+        cell.textLabel?.backgroundColor = UIColor(white: 1, alpha: 0.0)
+        cell.detailTextLabel?.backgroundColor = UIColor(white: 1, alpha: 0.0)
+
+    }
 }

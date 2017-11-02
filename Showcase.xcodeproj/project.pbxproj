@@ -44,6 +44,7 @@
 		12C8E40E1F984F3300D808F6 /* FIRDatabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C8E40D1F984F3300D808F6 /* FIRDatabaseClient.swift */; };
 		12C8E4141F99462E00D808F6 /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C8E4131F99462E00D808F6 /* CoreDataTableViewController.swift */; };
 		12C8E4161F99A74F00D808F6 /* AlertViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C8E4151F99A74F00D808F6 /* AlertViewHelper.swift */; };
+		12F6C2701FAB9B6F0084EA76 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6C26F1FAB9B6F0084EA76 /* PaddedLabel.swift */; };
 		D86BF2B17CA96FA45B30700F /* Pods_Showcase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A2AA8867EA55EF3C7D0B96A /* Pods_Showcase.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		12C8E40D1F984F3300D808F6 /* FIRDatabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIRDatabaseClient.swift; sourceTree = "<group>"; };
 		12C8E4131F99462E00D808F6 /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
 		12C8E4151F99A74F00D808F6 /* AlertViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewHelper.swift; sourceTree = "<group>"; };
+		12F6C26F1FAB9B6F0084EA76 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		3B10BEABC99B57114DA58577 /* Pods-Showcase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.debug.xcconfig"; sourceTree = "<group>"; };
 		6A2AA8867EA55EF3C7D0B96A /* Pods_Showcase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Showcase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B9A2857FFBB50B1872ED35 /* Pods-Showcase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Showcase.release.xcconfig"; path = "Pods/Target Support Files/Pods-Showcase/Pods-Showcase.release.xcconfig"; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			children = (
 				12B5B3491F97A1B800F92872 /* ModalLoadingWindow.swift */,
 				129510251FA79C9F001CA3CC /* PlayerView.swift */,
+				12F6C26F1FAB9B6F0084EA76 /* PaddedLabel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				12C8E4041F98359100D808F6 /* Model.xcdatamodeld in Sources */,
 				125788E31F95500600ACA76A /* AppDelegate.swift in Sources */,
 				129CB7A51F97D38000DBDBAA /* NetworkClient.swift in Sources */,
+				12F6C2701FAB9B6F0084EA76 /* PaddedLabel.swift in Sources */,
 				12B5B34A1F97A1B800F92872 /* ModalLoadingWindow.swift in Sources */,
 				12B5B33F1F96393600F92872 /* PDFViewController.swift in Sources */,
 				12A04A491F97F04600C75CC7 /* GCDBlackBox.swift in Sources */,

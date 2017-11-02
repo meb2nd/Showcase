@@ -34,6 +34,8 @@ class ScriptsTableViewController: CoreDataTableViewController {
     @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var scriptsTableView: UITableView!
     @IBOutlet weak var logoutButton: UIBarButtonItem!
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet weak var noScriptsLabel: UILabel!
     
     // MARK: - Life Cycle
     
@@ -41,6 +43,12 @@ class ScriptsTableViewController: CoreDataTableViewController {
         super.viewDidLoad()
         configureAuth()
         setNavigationBarColors()
+        
+        // Table set up based on code found at:  https://grokswift.com/transparent-table-view/
+        //                                      https://stackoverflow.com/questions/28532926/if-no-table-view-results-display-no-results-on-screen
+        // no lines where there aren't cells
+        scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
+        scriptsTableView.backgroundView = backgroundView
     }
 
     deinit {
@@ -209,3 +217,25 @@ extension ScriptsTableViewController {
         // hasShownQuote = true
     }
 }
+
+// MARK: - ScriptsTableViewController: UITableViewDelegate
+
+extension ScriptsTableViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+        setBackgroundColor(forCell: cell)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let returnedView = UIView()
+        returnedView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+
+        let label = PaddedLabel(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 20))
+        label.text = fetchedResultsController?.sections![section].name.capitalized
+        label.padding = UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0)
+        returnedView.addSubview(label)
+        
+        return returnedView
+    }
+}
+
