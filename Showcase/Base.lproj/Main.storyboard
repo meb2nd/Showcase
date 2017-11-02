@@ -265,35 +265,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIR-VO-Uhs">
-                                <rect key="frame" x="166.5" y="28" width="42" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="813-SN-mFP" customClass="PlayerView" customModule="Showcase" customModuleProvider="target">
-                                <rect key="frame" x="8" y="56" width="359" height="565"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URR-nx-elt">
-                                <rect key="frame" x="164" y="629" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="dontShowAnymore:" destination="Ztu-7e-6dE" eventType="touchUpInside" id="ekB-sL-1zB"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zRo-Uo-1Co">
+                                <rect key="frame" x="0.0" y="28" width="375" height="207.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="47y-2p-Dhf">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIR-VO-Uhs">
+                                                <rect key="frame" x="166.5" y="0.0" width="42" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="813-SN-mFP" customClass="PlayerView" customModule="Showcase" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28.5" width="375" height="150"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="125" id="pC3-j7-S7M"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sgI-Vg-Ss1" userLabel="Button Stack View">
+                                        <rect key="frame" x="0.0" y="186.5" width="375" height="21"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BDz-lT-Toq">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URR-nx-elt">
+                                                        <rect key="frame" x="164.5" y="0.0" width="46" height="21"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <connections>
+                                                            <action selector="dontShowAnymore:" destination="Ztu-7e-6dE" eventType="touchUpInside" id="ekB-sL-1zB"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="813-SN-mFP" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" constant="-29" id="TcW-hF-NUg"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="813-SN-mFP" secondAttribute="trailing" constant="8" identifier="videoCellSwipePlayerViewTrailing" id="4pt-5G-YOn"/>
-                            <constraint firstItem="813-SN-mFP" firstAttribute="top" secondItem="HIR-VO-Uhs" secondAttribute="bottom" constant="8" identifier="videosCellSwipePlayerViewTop" id="9Cz-La-5K0"/>
-                            <constraint firstItem="HIR-VO-Uhs" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" identifier="swipeToRevealLabelCenter" id="B0b-iK-S0q"/>
-                            <constraint firstItem="813-SN-mFP" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" identifier="videosCellSwipePlayerViewCenterX" id="HJm-ZA-EL3"/>
-                            <constraint firstItem="URR-nx-elt" firstAttribute="centerX" secondItem="KMT-15-kGe" secondAttribute="centerX" id="I7l-MT-b1S"/>
-                            <constraint firstItem="URR-nx-elt" firstAttribute="top" secondItem="813-SN-mFP" secondAttribute="bottom" constant="8" id="iYH-zX-snO"/>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" secondItem="URR-nx-elt" secondAttribute="bottom" constant="8" id="uJI-fX-mxd"/>
-                            <constraint firstItem="HIR-VO-Uhs" firstAttribute="top" secondItem="5Re-bZ-o0J" secondAttribute="top" constant="8" identifier="swipeToRevealLabelTop" id="x1w-JY-ikt"/>
-                            <constraint firstItem="813-SN-mFP" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" constant="8" identifier="videoCellSwipePlayerViewLeading" id="xAD-dU-rFX"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="zRo-Uo-1Co" secondAttribute="trailing" id="Erm-tH-yrJ"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" id="Sbp-sC-6f5"/>
+                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="top" secondItem="5Re-bZ-o0J" secondAttribute="top" constant="8" id="afe-hb-8tR"/>
+                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" id="sZF-lE-L9v"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Re-bZ-o0J"/>
                     </view>
@@ -301,6 +322,7 @@
                         <outlet property="dontShowAnymoreButton" destination="URR-nx-elt" id="TJA-i2-4Oq"/>
                         <outlet property="tapGestureRecognizer" destination="dGf-MO-TSj" id="ntv-UN-tLc"/>
                         <outlet property="titleLabel" destination="HIR-VO-Uhs" id="HSo-99-5lx"/>
+                        <outlet property="videoPlayerHeightConstraint" destination="pC3-j7-S7M" id="i0W-2S-TQ8"/>
                         <outlet property="videosCellSwipePlayerView" destination="813-SN-mFP" id="rat-N4-akY"/>
                     </connections>
                 </viewController>

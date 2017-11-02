@@ -14,8 +14,14 @@ import AVFoundation
 
 class VideosTablePopoverViewController: UIViewController {
    
+    // MARK: - Properties
+
+    @objc var player: AVPlayer!
+    
     // MARK: - Outlets
     
+
+    @IBOutlet weak var videoPlayerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var videosCellSwipePlayerView: PlayerView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dontShowAnymoreButton: UIButton!
@@ -38,6 +44,18 @@ class VideosTablePopoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if GeneralSettings.hasLaunchedVideoSwipePopoverBefore() {
+            
+            videoPlayerHeightConstraint.constant = 125
+        } else {
+            
+            videoPlayerHeightConstraint.constant = 50
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedGestureRecognizer))
         view.gestureRecognizers = [tapGestureRecognizer]
 
@@ -48,11 +66,11 @@ class VideosTablePopoverViewController: UIViewController {
         let videoPath: String = bundle.path(forResource: "video-cell-swipe", ofType: "mp4")!
         let videoURL : URL = URL(fileURLWithPath: videoPath)
         
-        let player = AVPlayer(url: videoURL as URL)
+        player = AVPlayer(url: videoURL as URL)
         player.automaticallyWaitsToMinimizeStalling = false
         videosCellSwipePlayerView.player = player
         videosCellSwipePlayerView.backgroundColor = backgroundcolor
-        player.play()
+        
 
         // Set the TextField's textColor, font, and text property
         titleLabel.textColor = UIColor.white
@@ -65,5 +83,32 @@ class VideosTablePopoverViewController: UIViewController {
         dontShowAnymoreButton.tintColor = UIColor.white
         dontShowAnymoreButton.backgroundColor = UIColor.red
         dontShowAnymoreButton.isHidden = !GeneralSettings.hasLaunchedVideoSwipePopoverBefore()
+        
+        addObserver(self, forKeyPath: #keyPath(player.currentItem.status), options: [.old, .new], context: nil)
+        
+    }
+    
+    // https://stackoverflow.com/questions/46317061/use-safe-area-layout-programmatically
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObserver(self, forKeyPath: "player.currentItem.status", context: nil)
+    }
+    
+    // MARK: - Key-Value Observing
+    // This is based on information found at: https://cocoacasts.com/key-value-observing-kvo-and-swift-3/
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(player.currentItem.status) {
+            
+            if let status = player.currentItem?.status,
+                status == AVPlayerItemStatus.readyToPlay {
+                player.play()
+            }
+        }
     }
 }
