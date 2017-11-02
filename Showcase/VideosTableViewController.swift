@@ -147,7 +147,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     
    @objc func pickAnImageFromCamera() {
         
-        startCameraFromViewController(viewController: self, withDelegate: self)
+        if !startCameraFromViewController(viewController: self, withDelegate: self) {
+            AlertViewHelper.presentAlert(self, title: "Camera Error", message: "Camera is not available!")
+        }
     }
     
     // MARK:  Helper

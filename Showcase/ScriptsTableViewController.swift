@@ -125,13 +125,36 @@ class ScriptsTableViewController: CoreDataTableViewController {
         return cell
     }
     
+    // Only show index if number of fetched objects exceed visible table rows
+    
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if let fc = fetchedResultsController,
             let fetchedObjectCount = fc.fetchedObjects?.count {
-            return fetchedObjectCount > tableView.visibleCells.count ? fc.sectionIndexTitles: nil
+            return fetchedObjectCount > estimatedMaxVisibleCellCount() ? fc.sectionIndexTitles: nil
         } else {
             return nil
         }
+    }
+    
+    fileprivate func estimatedMaxVisibleCellCount() -> Int {
+        
+        var estimatedMaxVisibleCellCount = 0
+        
+        if let fc = fetchedResultsController,
+            let sectionsCount = fc.sections?.count {
+            
+            let estimatedTableHeight = view.safeAreaLayoutGuide.layoutFrame.size.height
+            let estimatedRowHeight: CGFloat = 44.0
+            let estimatedHeaderHeight: CGFloat = 22.0
+            let numberOfSections = CGFloat(sectionsCount)
+            estimatedMaxVisibleCellCount = Int((estimatedTableHeight - numberOfSections * (estimatedHeaderHeight + estimatedRowHeight))/estimatedRowHeight)
+            
+            if estimatedMaxVisibleCellCount < 0 {
+                estimatedMaxVisibleCellCount = Int(estimatedTableHeight/(estimatedHeaderHeight + estimatedRowHeight))
+            }
+        }
+        
+        return estimatedMaxVisibleCellCount
     }
 }
 
