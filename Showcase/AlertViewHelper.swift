@@ -19,6 +19,10 @@ class AlertViewHelper {
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in controller.dismiss(animated: true, completion: nil)
         }
         
+        // Support display in iPad
+        controller.popoverPresentationController?.sourceView = viewController.view
+        controller.popoverPresentationController?.sourceRect = CGRect(x: viewController.view.bounds.size.width / 2.0, y: viewController.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
         controller.addAction(okAction)
         viewController.present(controller, animated: true, completion: nil)
     }
