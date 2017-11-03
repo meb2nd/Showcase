@@ -137,7 +137,10 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     
     override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
-        guard let currentCount = fetchedResultsController?.fetchedObjects?.count else {return}
+        guard let currentCount = fetchedResultsController?.fetchedObjects?.count else {
+            super.controllerDidChangeContent(controller)
+            return
+        }
         
         if currentCount == 1 && priorCount == 0 {
             hasCapturedFirstVideo = true
