@@ -49,7 +49,12 @@ class ScriptsTableViewController: CoreDataTableViewController {
         scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
         scriptsTableView.backgroundView = backgroundView
         
-        noScriptsLabel.text = "No Scripts Downloaded."
+        // Following lines added to permit word wrapping
+        noScriptsLabel.numberOfLines = 0
+        noScriptsLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        noScriptsLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.width - 16
+        
+        noScriptsLabel.text = "No Scripts Downloaded.\nCheck Internet Connection."
         formatNoTableDataLabel(label: noScriptsLabel)
     }
 
