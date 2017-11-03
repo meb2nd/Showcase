@@ -38,6 +38,9 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         videosTableView.tableFooterView = UIView(frame: CGRect.zero)
         videosTableView.backgroundView = backgroundView
         
+        noVideosCaputuredLabel.text = "No Videos Recorded For This Script."
+        formatNoTableDataLabel(label: noVideosCaputuredLabel)
+        
         createFetchController()
         
         captureVideoButton = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))

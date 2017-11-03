@@ -34,4 +34,11 @@ extension CoreDataTableViewController {
         cell.detailTextLabel?.backgroundColor = UIColor(white: 1, alpha: 0.0)
 
     }
+    
+    func formatNoTableDataLabel(label: UILabel) {
+        label.textColor = UIColor.black
+        label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+        label.textAlignment = .center
+        label.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+    }
 }

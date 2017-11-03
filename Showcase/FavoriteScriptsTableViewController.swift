@@ -37,6 +37,9 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         
         scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
         scriptsTableView.backgroundView = backgroundView
+        
+        noFavoritesSelectedLabel.text = "No Favorites Selected."
+        formatNoTableDataLabel(label: noFavoritesSelectedLabel)
     }
     
     

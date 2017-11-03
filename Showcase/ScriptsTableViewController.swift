@@ -49,7 +49,9 @@ class ScriptsTableViewController: CoreDataTableViewController {
         // no lines where there aren't cells
         scriptsTableView.tableFooterView = UIView(frame: CGRect.zero)
         scriptsTableView.backgroundView = backgroundView
-
+        
+        noScriptsLabel.text = "No Scripts Downloaded."
+        formatNoTableDataLabel(label: noScriptsLabel)
     }
 
 
