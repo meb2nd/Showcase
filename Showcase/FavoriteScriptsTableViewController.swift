@@ -90,7 +90,10 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         
         cell.textLabel?.text = script.title
         cell.detailTextLabel?.text = script.genre
+        
+        // Information abut custom disclosure found at:  https://medium.com/@ronm333/changing-the-color-of-a-disclosure-indicator-666a7fdd9286
         cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.png"))
         
         return cell
     }

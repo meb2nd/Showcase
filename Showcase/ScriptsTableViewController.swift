@@ -130,7 +130,10 @@ class ScriptsTableViewController: CoreDataTableViewController {
         
         cell.textLabel?.text = script.title
         cell.detailTextLabel?.text = "Gender: \(script.gender?.capitalized ?? " ")"
+        
+        // Information abut custom disclosure found at:  https://medium.com/@ronm333/changing-the-color-of-a-disclosure-indicator-666a7fdd9286
         cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.png"))
         
         return cell
     }

@@ -92,7 +92,10 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         if let imageData = video.thumbnail {
             cell.imageView?.image = UIImage(data: imageData as Data)
         }
+        
+        // Information abut custom disclosure found at:  https://medium.com/@ronm333/changing-the-color-of-a-disclosure-indicator-666a7fdd9286
         cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = UIImageView(image: UIImage(named: "chevron.png"))
         
         if hasCapturedFirstVideo,
             indexPath.row == 0,
