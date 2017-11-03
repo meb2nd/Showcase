@@ -112,6 +112,19 @@ class ScriptsTableViewController: CoreDataTableViewController {
         }
     }
     
+    // MARK: - ScriptsTableViewController: NSFetchedResultsControllerDelegate
+    
+    override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        super.controllerDidChangeContent(controller)
+        
+        if let count = fetchedResultsController?.fetchedObjects?.count,
+            count > 0 {
+            noScriptsLabel.isHidden = true
+        } else {
+            noScriptsLabel.isHidden = false
+        }
+    }
+    
     // MARK: - Actions
     
     @IBAction func showLoginView(_ sender: Any) {

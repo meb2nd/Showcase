@@ -84,6 +84,19 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
     }
     
+    // MARK: - FavoriteScriptsTableViewController: NSFetchedResultsControllerDelegate
+    
+    override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        super.controllerDidChangeContent(controller)
+        
+        if let count = fetchedResultsController?.fetchedObjects?.count,
+            count > 0 {
+            noFavoritesSelectedLabel.isHidden = true
+        } else {
+            noFavoritesSelectedLabel.isHidden = false
+        }
+    }
+    
     // MARK: - ScriptsTableViewController: UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

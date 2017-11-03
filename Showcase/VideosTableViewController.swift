@@ -147,6 +147,12 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         
         priorCount = currentCount
         
+        if currentCount > 0 {
+            noVideosCaputuredLabel.isHidden = true
+        } else {
+            noVideosCaputuredLabel.isHidden = false
+        }
+        
         super.controllerDidChangeContent(controller)
     }
     
