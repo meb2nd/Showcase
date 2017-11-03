@@ -36,4 +36,21 @@ class GeneralSettings: NSObject {
         return UserDefaults.standard.bool(forKey: "hasLaunchedVideoSwipePopover-\(uid ?? "")")
     }
     
+    class func saveHasShownQuote() {
+        let uid = FUIAuth.defaultAuthUI()?.auth?.currentUser?.uid
+        UserDefaults.standard.set(true, forKey: "hasShownQuote-\(uid ?? "")")
+        UserDefaults.standard.synchronize()
+    }
+    
+    class func resetHasShownQuote() {
+        let uid = FUIAuth.defaultAuthUI()?.auth?.currentUser?.uid
+        UserDefaults.standard.set(false, forKey: "hasShownQuote-\(uid ?? "")")
+        UserDefaults.standard.synchronize()
+    }
+    
+    class func hasShownQuote() -> Bool {
+        let uid = FUIAuth.defaultAuthUI()?.auth?.currentUser?.uid
+        return UserDefaults.standard.bool(forKey: "hasShownQuote-\(uid ?? "")")
+    }
+    
 }

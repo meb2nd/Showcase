@@ -14,7 +14,6 @@ class ScriptsTableViewController: CoreDataTableViewController {
     
     // MARK: - Properties
     
-    var hasShownQuote = false
     var quoteScreen: ModalLoadingWindow?
     var userName = "Anonymous"
     var _authHandle: AuthStateDidChangeListenerHandle!
@@ -215,7 +214,7 @@ extension ScriptsTableViewController {
     
     func showQuoteIfNeeded() {
         
-        guard !hasShownQuote else {return}
+        guard !GeneralSettings.hasShownQuote() else {return}
         
         QuoteClient.sharedInstance().getMovieQuote { (movieQuote, error) in
             
@@ -226,7 +225,7 @@ extension ScriptsTableViewController {
                 self.view.addSubview(self.quoteScreen!)
                 
                 // set the timer
-                Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.dismissQuote), userInfo: nil, repeats: false)
             }
         }
     }
@@ -234,7 +233,7 @@ extension ScriptsTableViewController {
     @objc func dismissQuote(){
         // Dismiss the view from here
         quoteScreen?.hide()
-        // hasShownQuote = true
+        GeneralSettings.saveHasShownQuote()
     }
 }
 

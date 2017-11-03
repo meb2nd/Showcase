@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="akX-WE-thg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="akX-WE-thg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -103,11 +103,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="leading" secondItem="Ehn-3m-0he" secondAttribute="leading" id="Hjn-iA-byo"/>
-                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="top" secondItem="Ehn-3m-0he" secondAttribute="top" id="Stl-2j-6Pj"/>
-                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerY" secondItem="NJH-tx-Wx8" secondAttribute="centerY" id="V5r-eD-2rP"/>
-                            <constraint firstItem="Ehn-3m-0he" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" id="dLN-Q0-290"/>
-                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerX" secondItem="NJH-tx-Wx8" secondAttribute="centerX" id="zcT-gG-6tK"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="leading" secondItem="Ehn-3m-0he" secondAttribute="leading" identifier="videosTableViewLeading" id="Hjn-iA-byo"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="top" secondItem="Ehn-3m-0he" secondAttribute="top" identifier="videosTableViewTop" id="Stl-2j-6Pj"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerY" secondItem="NJH-tx-Wx8" secondAttribute="centerY" identifier="videosTableViewCenterY" id="V5r-eD-2rP"/>
+                            <constraint firstItem="Ehn-3m-0he" firstAttribute="trailing" secondItem="Zb3-7P-xR3" secondAttribute="trailing" identifier="videosTableViewTrailing" id="dLN-Q0-290"/>
+                            <constraint firstItem="Zb3-7P-xR3" firstAttribute="centerX" secondItem="NJH-tx-Wx8" secondAttribute="centerX" identifier="videosTableViewCenterX" id="zcT-gG-6tK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ehn-3m-0he"/>
                     </view>
@@ -142,12 +142,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerX" secondItem="hOc-o5-KY1" secondAttribute="centerX" id="4JY-ge-VSv"/>
-                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="trailing" secondItem="e9i-oW-i6J" secondAttribute="trailing" id="Q3K-Vl-sxt"/>
-                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="top" secondItem="e9i-oW-i6J" secondAttribute="top" id="SW3-lW-glz"/>
-                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="leading" secondItem="e9i-oW-i6J" secondAttribute="leading" id="VTx-T6-bAb"/>
-                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="bottom" secondItem="e9i-oW-i6J" secondAttribute="bottom" id="tyI-a0-zlg"/>
-                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerY" secondItem="hOc-o5-KY1" secondAttribute="centerY" id="x2C-et-ulD"/>
+                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerX" secondItem="hOc-o5-KY1" secondAttribute="centerX" identifier="noVideosCapturedLabelCenterX" id="4JY-ge-VSv"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="trailing" secondItem="e9i-oW-i6J" secondAttribute="trailing" identifier="videosBackgroundImageTrailing" id="Q3K-Vl-sxt"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="top" secondItem="e9i-oW-i6J" secondAttribute="top" identifier="videosBackgroundImageTop" id="SW3-lW-glz"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="leading" secondItem="e9i-oW-i6J" secondAttribute="leading" identifier="videosBackgroundImageLeading" id="VTx-T6-bAb"/>
+                        <constraint firstItem="9Ml-fc-8o9" firstAttribute="bottom" secondItem="e9i-oW-i6J" secondAttribute="bottom" identifier="videosBackgroundImageBottom" id="tyI-a0-zlg"/>
+                        <constraint firstItem="z9i-DY-v7i" firstAttribute="centerY" secondItem="hOc-o5-KY1" secondAttribute="centerY" identifier="noVideosCapturedLabelCenterY" id="x2C-et-ulD"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="e9i-oW-i6J"/>
                 </view>
@@ -236,10 +236,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tiM-ze-v7e" firstAttribute="trailing" secondItem="AQA-Wa-m12" secondAttribute="trailing" identifier="topLevelStackViewTrailing" id="eBA-VZ-qI3"/>
-                            <constraint firstItem="tiM-ze-v7e" firstAttribute="top" secondItem="AQA-Wa-m12" secondAttribute="top" identifier="topLevelStackViewTop" id="fl2-3n-x0Y"/>
-                            <constraint firstItem="tiM-ze-v7e" firstAttribute="leading" secondItem="AQA-Wa-m12" secondAttribute="leading" identifier="topLevelStackViewLeading" id="uiw-7Z-F1M"/>
-                            <constraint firstItem="tiM-ze-v7e" firstAttribute="bottom" secondItem="AQA-Wa-m12" secondAttribute="bottom" identifier="topLevelStackViewBottom" id="uuu-uE-689"/>
+                            <constraint firstItem="tiM-ze-v7e" firstAttribute="trailing" secondItem="AQA-Wa-m12" secondAttribute="trailing" identifier="scriptsTopLevelStackViewTrailing" id="eBA-VZ-qI3"/>
+                            <constraint firstItem="tiM-ze-v7e" firstAttribute="top" secondItem="AQA-Wa-m12" secondAttribute="top" identifier="scriptsTopLevelStackViewTop" id="fl2-3n-x0Y"/>
+                            <constraint firstItem="tiM-ze-v7e" firstAttribute="leading" secondItem="AQA-Wa-m12" secondAttribute="leading" identifier="scriptsTopLevelStackViewLeading" id="uiw-7Z-F1M"/>
+                            <constraint firstItem="tiM-ze-v7e" firstAttribute="bottom" secondItem="AQA-Wa-m12" secondAttribute="bottom" identifier="scriptsTopLevelStackViewBottom" id="uuu-uE-689"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AQA-Wa-m12"/>
                     </view>
@@ -275,12 +275,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="D26-Ba-HJc" firstAttribute="leading" secondItem="UKy-Yf-yWR" secondAttribute="leading" id="604-oj-nol"/>
-                        <constraint firstItem="D26-Ba-HJc" firstAttribute="bottom" secondItem="UKy-Yf-yWR" secondAttribute="bottom" id="8Jm-ao-twu"/>
-                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerX" secondItem="8cu-8Q-UsX" secondAttribute="centerX" id="CVV-pO-zQf"/>
-                        <constraint firstItem="D26-Ba-HJc" firstAttribute="trailing" secondItem="UKy-Yf-yWR" secondAttribute="trailing" id="Nlk-Qs-fbH"/>
-                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerY" secondItem="8cu-8Q-UsX" secondAttribute="centerY" id="hRn-f2-ETn"/>
-                        <constraint firstItem="D26-Ba-HJc" firstAttribute="top" secondItem="UKy-Yf-yWR" secondAttribute="top" id="ucA-6F-RYD"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="leading" secondItem="UKy-Yf-yWR" secondAttribute="leading" identifier="scriptsBackgroundImageLeading" id="604-oj-nol"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="bottom" secondItem="UKy-Yf-yWR" secondAttribute="bottom" identifier="scriptsBackgroundImageBottom" id="8Jm-ao-twu"/>
+                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerX" secondItem="8cu-8Q-UsX" secondAttribute="centerX" identifier="noScriptsLabelCenterX" id="CVV-pO-zQf"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="trailing" secondItem="UKy-Yf-yWR" secondAttribute="trailing" identifier="scriptsBackgroundImageTrailing" id="Nlk-Qs-fbH"/>
+                        <constraint firstItem="fmi-uB-eQ1" firstAttribute="centerY" secondItem="8cu-8Q-UsX" secondAttribute="centerY" identifier="noScriptsLabelCenterY" id="hRn-f2-ETn"/>
+                        <constraint firstItem="D26-Ba-HJc" firstAttribute="top" secondItem="UKy-Yf-yWR" secondAttribute="top" identifier="scriptsBackgroundImageTop" id="ucA-6F-RYD"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="UKy-Yf-yWR"/>
                 </view>
@@ -295,10 +295,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zRo-Uo-1Co">
-                                <rect key="frame" x="0.0" y="28" width="375" height="207.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zRo-Uo-1Co" userLabel="Top Stack View">
+                                <rect key="frame" x="0.0" y="28" width="375" height="186.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="47y-2p-Dhf">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="47y-2p-Dhf" userLabel="Player Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIR-VO-Uhs">
@@ -313,17 +313,17 @@
                                         <rect key="frame" x="0.0" y="28.5" width="375" height="150"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="125" id="pC3-j7-S7M"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" identifier="videoPlayerHeight" id="pC3-j7-S7M"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sgI-Vg-Ss1" userLabel="Button Stack View">
-                                        <rect key="frame" x="0.0" y="186.5" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="186.5" width="375" height="0.0"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BDz-lT-Toq">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URR-nx-elt">
-                                                        <rect key="frame" x="164.5" y="0.0" width="46" height="21"/>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URR-nx-elt">
+                                                        <rect key="frame" x="0.0" y="-214.5" width="46" height="0.0"/>
                                                         <state key="normal" title="Button"/>
                                                         <connections>
                                                             <action selector="dontShowAnymore:" destination="Ztu-7e-6dE" eventType="touchUpInside" id="ekB-sL-1zB"/>
@@ -335,16 +335,16 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="813-SN-mFP" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" constant="-29" id="TcW-hF-NUg"/>
+                                    <constraint firstItem="813-SN-mFP" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" constant="-29" identifier="videosCellSwiptePlayerBottom" id="TcW-hF-NUg"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="zRo-Uo-1Co" secondAttribute="trailing" id="Erm-tH-yrJ"/>
-                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" id="Sbp-sC-6f5"/>
-                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="top" secondItem="5Re-bZ-o0J" secondAttribute="top" constant="8" id="afe-hb-8tR"/>
-                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" id="sZF-lE-L9v"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="trailing" secondItem="zRo-Uo-1Co" secondAttribute="trailing" identifier="popoverTopStackViewTrailing" id="Erm-tH-yrJ"/>
+                            <constraint firstItem="5Re-bZ-o0J" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zRo-Uo-1Co" secondAttribute="bottom" identifier="popoverTopStackViewBottom" id="Sbp-sC-6f5"/>
+                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="top" secondItem="5Re-bZ-o0J" secondAttribute="top" constant="8" identifier="popoverTopStackViewTop" id="afe-hb-8tR"/>
+                            <constraint firstItem="zRo-Uo-1Co" firstAttribute="leading" secondItem="5Re-bZ-o0J" secondAttribute="leading" identifier="popoverTopStackViewLeading" id="sZF-lE-L9v"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5Re-bZ-o0J"/>
                     </view>
@@ -482,12 +482,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="top" secondItem="kLI-Sr-ZE1" secondAttribute="top" id="21V-rM-noa"/>
-                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerY" secondItem="Xgy-FL-h0h" secondAttribute="centerY" id="OhW-EW-hsz"/>
-                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="leading" secondItem="kLI-Sr-ZE1" secondAttribute="leading" id="QxB-ui-eYP"/>
-                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="trailing" secondItem="kLI-Sr-ZE1" secondAttribute="trailing" id="dTq-Ez-XBx"/>
-                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="bottom" secondItem="kLI-Sr-ZE1" secondAttribute="bottom" id="naK-5h-b1P"/>
-                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerX" secondItem="Xgy-FL-h0h" secondAttribute="centerX" id="wth-zo-sxF"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="top" secondItem="kLI-Sr-ZE1" secondAttribute="top" identifier="favoritesBackgroundImageTop" id="21V-rM-noa"/>
+                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerY" secondItem="Xgy-FL-h0h" secondAttribute="centerY" identifier="noFavoritesSelectedLabelCenterY" id="OhW-EW-hsz"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="leading" secondItem="kLI-Sr-ZE1" secondAttribute="leading" identifier="favoritesBackgroundImageLeading" id="QxB-ui-eYP"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="trailing" secondItem="kLI-Sr-ZE1" secondAttribute="trailing" identifier="favoritesBackgroundImageTrailing" id="dTq-Ez-XBx"/>
+                        <constraint firstItem="tDQ-Ww-UcL" firstAttribute="bottom" secondItem="kLI-Sr-ZE1" secondAttribute="bottom" identifier="favoritesBackgroundImageBottom" id="naK-5h-b1P"/>
+                        <constraint firstItem="oXM-Dt-OKP" firstAttribute="centerX" secondItem="Xgy-FL-h0h" secondAttribute="centerX" identifier="noFavoritesSelectedLabelCenterX" id="wth-zo-sxF"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="kLI-Sr-ZE1"/>
                 </view>

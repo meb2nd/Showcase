@@ -33,9 +33,10 @@ extension UIViewController {
     
     func handleLogout(alertAction: UIAlertAction!) -> Void {
         do {
+            GeneralSettings.resetHasShownQuote()
             try Auth.auth().signOut()
         } catch {
-            print("unable to sign out: \(error)")
+            print("Unable to sign out: \(error)")
         }
     }
     

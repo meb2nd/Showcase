@@ -125,10 +125,10 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
             popover.popoverPresentationController?.permittedArrowDirections = .any
             // Adjust height for "Don't Show Again" Button
             popover.preferredContentSize = CGSize(width: 320, height: GeneralSettings.hasLaunchedVideoSwipePopoverBefore() ? 200: 100)
-            present(popover, animated: true, completion: nil)
-            
-            if !GeneralSettings.hasLaunchedVideoSwipePopoverBefore() {
-                GeneralSettings.saveHasLaunchedVideoSwipePopoverBefore()
+            present(popover, animated: true) {
+                if !GeneralSettings.hasLaunchedVideoSwipePopoverBefore() {
+                    GeneralSettings.saveHasLaunchedVideoSwipePopoverBefore()
+                }
             }
         }
     }
