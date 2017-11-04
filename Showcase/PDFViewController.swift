@@ -81,7 +81,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
                     
                 default:
                     self.pdfView.document = nil
-                    AlertViewHelper.presentAlert(self, title: "Script Unavailble", message: "The document requested could not be found.")
+                    AlertViewHelper.presentAlert(self, title: "Script Unavailable", message: "The document requested could not be found.")
                 }
                 
                 // Renable UI
