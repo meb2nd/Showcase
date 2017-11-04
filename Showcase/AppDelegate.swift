@@ -45,13 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
         }
-        
-        do {
-            try stack.dropAllData()
-        } catch {
-            print("Error during drop all data")
-        }
-        
+
         return true
     }
     

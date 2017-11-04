@@ -239,7 +239,7 @@ extension FIRDatabaseClient {
         
         var watermark = userName.uppercased()
         
-        if watermark.characters.count >= 16 {
+        if watermark.count >= 16 {
             watermark = String(watermark.truncated())
         } else {
             var padding:Int = (15 - watermark.count)/2
