@@ -18,6 +18,7 @@
 		125788ED1F95500600ACA76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 125788EB1F95500600ACA76A /* LaunchScreen.storyboard */; };
 		125788F81F95545200ACA76A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 125788F71F95545100ACA76A /* GoogleService-Info.plist */; };
 		12684B321FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */; };
+		126BDFF01FAD490B00994707 /* FUIAuthExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126BDFEF1FAD490B00994707 /* FUIAuthExtensions.swift */; };
 		1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE531F9A4ACA006B599D /* WatermarkPage.swift */; };
 		1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */; };
 		1295101E1FA68C44001CA3CC /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1295101D1FA68C44001CA3CC /* GeneralSettings.swift */; };
@@ -63,6 +64,7 @@
 		125788EE1F95500600ACA76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		125788F71F95545100ACA76A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowcaseAuthPickerViewController.xib; sourceTree = "<group>"; };
+		126BDFEF1FAD490B00994707 /* FUIAuthExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthExtensions.swift; sourceTree = "<group>"; };
 		1292FE531F9A4ACA006B599D /* WatermarkPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkPage.swift; sourceTree = "<group>"; };
 		1292FE551F9AACD4006B599D /* FUIAuthViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUIAuthViewClient.swift; sourceTree = "<group>"; };
 		1295101D1FA68C44001CA3CC /* GeneralSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				1240E2811FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift */,
 				12B5B33C1F96389D00F92872 /* FavoriteScriptsTableViewController.swift */,
 				12B5B3451F9646F500F92872 /* FUIAuthViewController.swift */,
+				126BDFEF1FAD490B00994707 /* FUIAuthExtensions.swift */,
 				12684B311FA43C20003F77E7 /* ShowcaseAuthPickerViewController.xib */,
 				1240E2831FA2D699005A6551 /* ShowcaseAuthPickerViewController.swift */,
 				12B5B33E1F96393600F92872 /* PDFViewController.swift */,
@@ -409,6 +412,7 @@
 				1240E2821FA2B92F005A6551 /* CoreDataTableViewControllerExtensions.swift in Sources */,
 				129510221FA785D9001CA3CC /* VideosTablePopoverViewController.swift in Sources */,
 				12B5B3481F96980700F92872 /* ViewControllerExtensions.swift in Sources */,
+				126BDFF01FAD490B00994707 /* FUIAuthExtensions.swift in Sources */,
 				1292FE541F9A4ACA006B599D /* WatermarkPage.swift in Sources */,
 				12468D0B1FA28C8D00863EFD /* VideoManager.swift in Sources */,
 				1292FE561F9AACD4006B599D /* FUIAuthViewClient.swift in Sources */,

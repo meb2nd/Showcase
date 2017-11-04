@@ -26,8 +26,6 @@ class ShowcaseAuthPickerViewController: FUIAuthPickerViewController {
             } else {
                 logoImageView.alpha = 1.0
             }
-            
         }
     }
-
 }
