@@ -34,15 +34,16 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createFetchController()
+        
         videosTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5)
         videosTableView.tableFooterView = UIView(frame: CGRect.zero)
         videosTableView.backgroundView = backgroundView
         
         noVideosCaputuredLabel.text = "No Videos Recorded For This Script."
         formatNoTableDataLabel(label: noVideosCaputuredLabel)
-        
-        createFetchController()
-        
+        hideNoVideosCaputuredLabelIfNeeded()
+
         captureVideoButton = UIBarButtonItem(title: "Capture Video", style: .plain, target: self, action: #selector(pickAnImageFromCamera))
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
@@ -150,13 +151,19 @@ class VideosTableViewController: CoreDataTableViewController, UINavigationContro
         
         priorCount = currentCount
         
-        if currentCount > 0 {
+        hideNoVideosCaputuredLabelIfNeeded()
+        
+        super.controllerDidChangeContent(controller)
+    }
+    
+    fileprivate func hideNoVideosCaputuredLabelIfNeeded() {
+        
+        if let currentCount = fetchedResultsController?.fetchedObjects?.count,
+            currentCount > 0 {
             noVideosCaputuredLabel.isHidden = true
         } else {
             noVideosCaputuredLabel.isHidden = false
         }
-        
-        super.controllerDidChangeContent(controller)
     }
     
     // MARK: - Actions
@@ -230,7 +237,7 @@ extension VideosTableViewController: UIImagePickerControllerDelegate {
 }
 
 // MARK: - UIImagePickerController
-// https://stackoverflow.com/questions/33058691/use-uiimagepickercontroller-in-landscape-mode-in-swift-2-0
+// This is based on information found at: https://stackoverflow.com/questions/33058691/use-uiimagepickercontroller-in-landscape-mode-in-swift-2-0
 
 extension UIImagePickerController
 {

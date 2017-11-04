@@ -56,12 +56,24 @@ class ScriptsTableViewController: CoreDataTableViewController {
         
         noScriptsLabel.text = "No Scripts Downloaded.\nCheck Internet Connection."
         formatNoTableDataLabel(label: noScriptsLabel)
+        
+        addObserver(self, forKeyPath: #keyPath(fetchedResultsController), options: [.new], context: nil)
     }
-
 
     deinit {
         
         Auth.auth().removeStateDidChangeListener(_authHandle)
+        removeObserver(self, forKeyPath: "fetchedResultsController", context: nil)
+    }
+    
+    // MARK: - Key-Value Observing
+    // This is based on information found at: https://cocoacasts.com/key-value-observing-kvo-and-swift-3/
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(fetchedResultsController) {
+            
+            hideNoScriptsLabelIfNeeded()
+        }
     }
     
     // MARK: - Navigation
@@ -121,6 +133,11 @@ class ScriptsTableViewController: CoreDataTableViewController {
     override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         super.controllerDidChangeContent(controller)
         
+        hideNoScriptsLabelIfNeeded()
+    }
+    
+    fileprivate func hideNoScriptsLabelIfNeeded () {
+    
         if let count = fetchedResultsController?.fetchedObjects?.count,
             count > 0 {
             noScriptsLabel.isHidden = true

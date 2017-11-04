@@ -88,12 +88,6 @@ class VideosTablePopoverViewController: UIViewController {
         
     }
     
-    // https://stackoverflow.com/questions/46317061/use-safe-area-layout-programmatically
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeObserver(self, forKeyPath: "player.currentItem.status", context: nil)

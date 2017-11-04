@@ -16,7 +16,7 @@ class CoreDataTableViewController: UIViewController {
     // MARK: Properties
     var tableView: UITableView?
     
-    var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
+    @objc dynamic var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
         didSet {
             // Whenever the frc changes, we execute the search and
             // reload the table

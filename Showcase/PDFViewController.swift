@@ -36,7 +36,7 @@ class PDFViewController: UIViewController, FUIAuthViewClient {
         
         super.viewDidLoad()
         
-        // https://www.hackingwithswift.com/example-code/uikit/how-to-show-and-hide-a-toolbar-inside-a-uinavigationcontroller
+        // This is based on information found at: https://www.hackingwithswift.com/example-code/uikit/how-to-show-and-hide-a-toolbar-inside-a-uinavigationcontroller
         
         printButton = UIBarButtonItem(title: "Print", style: .plain, target: self, action: #selector(printPdf))
         favoriteButton = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(toggleFavorite))

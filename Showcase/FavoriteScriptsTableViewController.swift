@@ -40,8 +40,10 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         
         noFavoritesSelectedLabel.text = "No Favorites Selected."
         formatNoTableDataLabel(label: noFavoritesSelectedLabel)
+        
+        hideNoFavoritesSelectedLabelIfNeeded()
     }
-    
+
     
     // MARK: - Actions
     
@@ -88,6 +90,11 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
     
     override func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         super.controllerDidChangeContent(controller)
+        
+        hideNoFavoritesSelectedLabelIfNeeded()
+    }
+    
+    fileprivate func hideNoFavoritesSelectedLabelIfNeeded() {
         
         if let count = fetchedResultsController?.fetchedObjects?.count,
             count > 0 {

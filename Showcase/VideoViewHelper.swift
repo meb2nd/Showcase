@@ -140,7 +140,7 @@ class VideoViewHelper {
     }
     
     // MARK:  Helper Functions
-    // https://stackoverflow.com/questions/11090760/progress-bar-for-avassetexportsession
+    // This is based on information found at: https://stackoverflow.com/questions/11090760/progress-bar-for-avassetexportsession
     @objc func updateProgressView() {
         
         progressView.progress = exportSession.progress
