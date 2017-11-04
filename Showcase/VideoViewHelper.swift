@@ -70,7 +70,7 @@ class VideoViewHelper {
     func share(video: Video, presentingController: UIViewController) {
         
         // Prepare loading window
-        let loadingWindow = presentLoadingWindow(withTitle: "Loading Video", subtitle: "Please wait ...", presentingController: presentingController)
+        let loadingWindow = presentLoadingWindow(withTitle: "Preparing Video", subtitle: "Please wait ...", presentingController: presentingController)
         
         // Begin composition
         let (comp, asset) = createComposition(forVideo: video)
