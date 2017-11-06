@@ -36,13 +36,22 @@ enum ScriptsResult {
 class FIRDatabaseClient: NSObject {
     
     var ref: DatabaseReference!
+    var connectedRef: DatabaseReference!
     var storageRef: StorageReference!
     fileprivate var _refAddHandle: DatabaseHandle!
     fileprivate var _refChangedHandle: DatabaseHandle!
+    fileprivate var _connectedRefChangedHandle: DatabaseHandle!
     static let sharedInstance = FIRDatabaseClient()
+    var shouldShowConnectionResumeAlert = false
+    var shouldShowConnectionFailedAlert = true
+    var isWaitingForInitialConnection = true
+    fileprivate var intitialConnectionTimer: Timer?
+    fileprivate var connectionAlert: UIAlertController?
     
+    // MARK:  - Init
     private override init() {}
     
+    // MARK: - Configuration Functions
     
     func configureDatabase() {
         ref = Database.database().reference()
@@ -55,6 +64,56 @@ class FIRDatabaseClient: NSObject {
             
             self.updateContextFromSnapshot(snapshot)
         }
+        
+        // Code below based on information from:  https://firebase.google.com/docs/database/ios/offline-capabilities#section-connection-state
+        connectedRef = Database.database().reference(withPath: ".info/connected")
+        _connectedRefChangedHandle = connectedRef.observe(.value, with: { snapshot in
+            
+            if snapshot.value as? Bool ?? false {
+                print("Connected")
+                
+                if self.shouldShowConnectionResumeAlert {
+                    performUIUpdatesOnMain {
+                        
+                        if let timer = self.intitialConnectionTimer,
+                            timer.isValid {
+                            timer.invalidate()
+                            self.intitialConnectionTimer = nil
+                        }
+                        
+                        self.shouldShowConnectionResumeAlert = false
+                        self.shouldShowConnectionFailedAlert = true
+                        
+                        // Do not display the alert if this is the initial connection
+                        if self.isWaitingForInitialConnection {
+                            self.isWaitingForInitialConnection = false
+                            return
+                        }
+                        
+                        self.presentAlert(withTitle: "Showcase Connection Status", message: "Connected to Server. Full functionality will resume.")
+                    }
+                }
+                
+            } else {
+                print("Not connected")
+                
+                if self.shouldShowConnectionFailedAlert {
+                    
+                    self.shouldShowConnectionResumeAlert = true
+                    self.shouldShowConnectionFailedAlert = false
+                    
+                    performUIUpdatesOnMain {
+                        
+                        // Delay alert if we're waiting for initial connection
+                        if self.isWaitingForInitialConnection {
+                            self.intitialConnectionTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(self.waitForInitialConnectionTimedOut), userInfo: nil, repeats: false)
+                        } else {
+                            self.presentConnectionFailedAlert()
+                        }
+                    }
+                }
+            }
+        })
     }
     
     func configureStorage() {
@@ -64,6 +123,49 @@ class FIRDatabaseClient: NSObject {
     deinit {
         ref.child("scripts").removeObserver(withHandle: _refAddHandle)
         ref.child("scripts").removeObserver(withHandle: _refChangedHandle)
+        ref.child("scripts").removeObserver(withHandle: _connectedRefChangedHandle)
+    }
+    
+    // MARK:  Helper Functions
+    
+    @objc fileprivate func waitForInitialConnectionTimedOut() {
+        
+        isWaitingForInitialConnection = false
+        intitialConnectionTimer = nil
+        presentConnectionFailedAlert()
+    }
+    
+    fileprivate func presentConnectionFailedAlert() {
+        presentAlert(withTitle: "Showcase Connection Error", message: "Showcase cannot connect to server. Limited functionality until connection restored.")
+    }
+    
+    
+    fileprivate func presentAlert(withTitle title: String, message: String?) {
+        
+        if let viewController = UIApplication.shared.topMostViewController() {
+            
+            presentAlert(viewController, title: title, message: message)
+        }
+    }
+    
+    fileprivate func presentAlert(_ viewController: UIViewController, title: String, message: String?) {
+        
+        if connectionAlert != nil {
+            connectionAlert?.dismiss(animated: true, completion: nil)
+        }
+        connectionAlert = UIAlertController()
+        connectionAlert?.title = title
+        connectionAlert?.message = message
+        
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { action in self.connectionAlert?.dismiss(animated: true, completion: {self.connectionAlert = nil})
+        }
+        
+        // Support display in iPad
+        connectionAlert?.popoverPresentationController?.sourceView = viewController.view
+        connectionAlert?.popoverPresentationController?.sourceRect = CGRect(x: viewController.view.bounds.size.width / 2.0, y: viewController.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        connectionAlert?.addAction(okAction)
+        viewController.present(connectionAlert!, animated: true, completion: nil)
     }
 }
 
@@ -96,7 +198,7 @@ extension FIRDatabaseClient {
         }
         
         if finalScripts.isEmpty && !snapshotsArray.isEmpty {
-            // We weren't able to parse any of the photos
+            // We weren't able to parse any of the scripts
             // Maybe the JSON format for scripts has changed
             return .failure(APIError.jsonMappingError(converstionError: .custom("Could not parse any of the scripts.")))
         }
