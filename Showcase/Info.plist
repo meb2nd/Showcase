@@ -6,6 +6,8 @@
 	<string>This app will use the microphone to record the video&apos;s sound.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app will use the camera for video recording.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app will use the photo library to save recorded videos.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
