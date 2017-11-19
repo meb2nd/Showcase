@@ -276,6 +276,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Copyright 2017 Google
 
+## FirebaseABTesting
+
+Copyright 2017 Google
+
 ## FirebaseAnalytics
 
 Copyright 2017 Google
