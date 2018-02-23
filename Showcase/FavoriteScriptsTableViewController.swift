@@ -104,7 +104,7 @@ class FavoriteScriptsTableViewController: CoreDataTableViewController, FUIAuthVi
         }
     }
     
-    // MARK: - ScriptsTableViewController: UITableViewDataSource
+    // MARK: - FavoriteScriptsTableViewController: UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

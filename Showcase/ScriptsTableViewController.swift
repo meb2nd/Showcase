@@ -269,7 +269,7 @@ extension ScriptsTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let returnedView = UIView()
-        returnedView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
+        returnedView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.96)
 
         let label = PaddedLabel(frame: CGRect(x:0, y:0, width: tableView.frame.size.width, height: 20))
         label.text = fetchedResultsController?.sections![section].name.capitalized
