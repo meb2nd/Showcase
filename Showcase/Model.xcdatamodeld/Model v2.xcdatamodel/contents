@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13241" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Script" representedClassName="Script" syncable="YES">
+        <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="document" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" attributeType="String" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <relationship name="videos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Video" inverseName="script" inverseEntity="Video" syncable="YES"/>
+        <fetchIndex name="byDateCreatedIndex">
+            <fetchIndexElement property="dateCreated" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byIsFavoriteIndex">
+            <fetchIndexElement property="isFavorite" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byGenderIndex">
+            <fetchIndexElement property="gender" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byGenreIndex">
+            <fetchIndexElement property="genre" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byTitleIndex">
+            <fetchIndexElement property="title" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byURLIndex">
+            <fetchIndexElement property="url" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byDateModifiedIndex">
+            <fetchIndexElement property="dateModified" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byUIDIndex">
+            <fetchIndexElement property="uid" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="Video" representedClassName="Video" syncable="YES">
+        <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="script" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Script" inverseName="videos" inverseEntity="Script" syncable="YES"/>
+        <fetchIndex name="byDateCreatedIndex">
+            <fetchIndexElement property="dateCreated" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byScriptIndex">
+            <fetchIndexElement property="script" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byTitleIndex">
+            <fetchIndexElement property="title" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <elements>
+        <element name="Script" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="Video" positionX="-54" positionY="45" width="128" height="120"/>
+    </elements>
+</model>
