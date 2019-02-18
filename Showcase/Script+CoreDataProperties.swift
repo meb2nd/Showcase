@@ -17,12 +17,14 @@ extension Script {
         return NSFetchRequest<Script>(entityName: "Script")
     }
 
+    @NSManaged public var ageGroup: String?
     @NSManaged public var dateCreated: NSDate?
     @NSManaged public var dateModified: NSDate?
     @NSManaged public var document: NSData?
     @NSManaged public var isFavorite: Bool
     @NSManaged public var gender: String?
     @NSManaged public var genre: String?
+    @NSManaged public var scriptType: String?
     @NSManaged public var title: String?
     @NSManaged public var uid: String?
     @NSManaged public var url: String?
