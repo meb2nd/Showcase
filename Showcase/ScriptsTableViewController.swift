@@ -104,7 +104,9 @@ class ScriptsTableViewController: CoreDataTableViewController {
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Script")
         let predicate = NSPredicate(format: "uid = %@", argumentArray: [user.uid])
         fr.predicate = predicate
-        fr.sortDescriptors = [NSSortDescriptor(key: "genre", ascending: true),
+        fr.sortDescriptors = [NSSortDescriptor(key: "scriptType", ascending: true),
+                              NSSortDescriptor(key: "ageGroup", ascending: true),
+                              NSSortDescriptor(key: "genre", ascending: true),
                               NSSortDescriptor(key: "title", ascending: true),
                               NSSortDescriptor(key: "dateCreated", ascending: false)]
         

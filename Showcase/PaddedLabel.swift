@@ -5,7 +5,7 @@
 //  Created by Pete Barnes on 11/2/17.
 //  Copyright © 2017 Pete Barnes. All rights reserved.
 //
-// Class taken from infomration found at: https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
+// Class taken from information found at: https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
 
 import UIKit
 

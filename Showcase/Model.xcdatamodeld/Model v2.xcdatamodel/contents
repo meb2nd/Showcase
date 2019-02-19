@@ -37,6 +37,12 @@
         <fetchIndex name="byUIDIndex">
             <fetchIndexElement property="uid" type="Binary" order="ascending"/>
         </fetchIndex>
+        <fetchIndex name="byScriptTypeIndex">
+            <fetchIndexElement property="scriptType" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byAgeGroup Index">
+            <fetchIndexElement property="ageGroup" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
